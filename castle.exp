@@ -1,4 +1,4 @@
-TITLE=Wecome to Medieval Castle!\This adventure was created by Joe Peterson and De Crandell.
+TITLE=Welcome to Medieval Castle!\This adventure was created by Joe Peterson and De Crandell.
 START_ROOM=1,4,0
 INVENTORY_LIMIT=7
 
@@ -190,7 +190,7 @@ ACTION=/1,2,0
 
 GLOBAL
 COMMAND=UNLOCK CHEST,OPEN CHEST:GOLD KEY
-ACTION=+WIZARD'S STAFF;%CHEST,OPEN CHEST:A wizard's staff falls out onto the floor!\Suddenly a voice says,\     "This can free anything from the tightest of situations."
+ACTION=%CHEST,OPEN CHEST;+WIZARD'S STAFF:A wizard's staff falls out onto the floor!\Suddenly a voice says,\     "This can free anything from the tightest of situations."
 
 LOCAL=0,4,0
 COMMAND=CLIMB DOWN,CLIMB,D,DOWN
