@@ -1,0 +1,19 @@
+TITLE=Welcome to Joe and Joanne's USA Roadtrip!  Come join our adventure as we travel through America, and see if you make it back to Boston alive!
+START_ROOM=south_end
+
+ROOM=south_end
+DESC=You're sitting in the Jeep in Boston's South End.  The streets are damp with the previous night's rain, and you have everything you need for three months of camping.  To the west is the Mass Pike, and to the north is the old apartment.
+WEST=mass_pike
+NORTH=apartment
+
+ROOM=apartment
+DESC=You have walked into 129 Saint Botolph Street, Apartment 9.  There is hardly anything here, since you have just moved all of your stuff into storage.  The hardwood floors extend to the two windows overlooking a back alley, and the kitchen floor is adorned with a few empty boxes and a half-used roll of packing tape.  The exit is to the south.
+SOUTH=south_end
+
+ROOM=mass_pike
+DESC=The Pike stretches out before you to the west.  The rolling hills of Massachusetts invite you to keep driving west, but you could always exit here and go back east.
+EAST=south_end
+WEST=amherst
+
+ROOM=amherst
+DESC=You have pulled off of the highway into the small college town of Amherst, where Joanne went to school.

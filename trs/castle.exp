@@ -1,0 +1,83 @@
+Wecome to Medieval Castle!
+This adventure was created by Joe Peterson and De Crandell. 1               3               4               0               1               4               7 You have entered the King's chambers.  His closet contains only
+the most elegant of clothes.  His beautiful brass bed is
+covered with white silk sheets.  You can see the setting sun
+through the huge bay window.  The room exits to the east...E...This room is the holding place for the Royal Crown Jewels.
+The plentiful supply of gold, silver and precious jewels must
+be worth millions!  There are rooms to the west and south and
+an open gate to the east.ROYAL CROWN.SEW..This is a magnificent room with a ceiling twenty feet high.  At
+one end sits a beautiful throne made of solid gold.  The red
+carpet ends at the foot of the throne.  There is a doorway to
+the west.  To the south is a low archway.The steel bar door to the west is so rusty it won't budge.RC,R.S....OIL DOOR,POUR OIL:FLASK OF OIL[W;%FLASK OF OIL,FLASK;*+:The door opens easily.You are in the Priest's chamber.  There are many sacred objects
+and prayer books here.  There is a curtain to the south.Imbedded in a quartz slab is a sparkling ruby!RC,R.S....WAVE STAFF,SWING STAFF,MOVE STAFF:WIZARD'S STAFF+RUBY;*+:The quartz disappears and the ruby falls to the ground.This is the Queen's Chambers.  Her bed is covered with pink
+silk sheets.  Many beautiful gowns are hanging on the walls.
+The room exits to the north.N.....You are in a low north/south hallway between two arches.  There
+is a small statue resting on a pedestal on the right side of
+the hall.  The statue is missing one of its ruby eyes!NS....INSERT RUBY,INSERT EYE,REPLACE RUBY,REPLACE EYE,FIX EYE:RUBY#1,1,1>RUBY;/1,1,1:You feel the floor give way beneath your feet as you fall down
+into a dark and gloomy dungeon.  The ruby bounces off your head
+and lands on the floor beside you.You are standing on the altar of the cathedral.  There is a low
+platform in front of you with an imbedded gold ring about the
+size of a crown.  High above you is a hole in the ceiling about
+as large as the altar.  There is a curtain to the north and anaisle leading south.NS....LAY CROWN,DROP CROWN,PLACE CROWN,LOWER CROWN:ROYAL CROWN#1,4,1>ROYAL CROWN;/1,4,1:The crown glows white hot as the altar suddenly begins to rise
+towards the hole in the ceiling.  When the platform completes
+its ascent, you find yourself in a room high above the
+cathedral.You are standing on a branch near the top of the tree.HANG GLIDER......CLIMB DOWN,CLIMB,D,DOWN/1,3,0You are in the main hall of the castle.  You are greeted by a
+majestic red carpet, which extends through a low archway to the
+north.  Sunlight reflected off the waters of the moat can beseen through a large archway to the south.  You can see an
+immense room to the east.  A spiral staircase twists up out of
+sight.NSE.U.You have walked into a lavishly decorated cathedral.  There are
+huge windows on the east and south walls and colorful banners
+hanging from the ceiling.  An aisle leads north to the altar,
+and the main exit is to the west.N..W..You are at the base of a tree.  There seems to be something
+caught in the top.  A dirt path goes south.You are at the base of the tree.  A dirt path goes south.R,C.S....+HANG GLIDER*+You are directly outside the castle.  There is a large archway
+to the north, which serves as the main entrance.  To the south
+is the bridge and the moat.SCROLLNS....SWIM,SWIM MOATYou make it half way across the moat when a vicious crocodile
+eats you up!You have entered a wood cutter's cabin.  There are many tools
+lying about.  At one end is a bed, and at the other is a window
+and a large table.  There is a door to the south.AXE.S....You are the top of the ladder tube, directly below a steel
+grate.  There is a latch on this side of the grate.  The
+ladder goes down from here.......OPEN GRATE,PULL LATCH/0,4,1:You emerge in a room full of weapons.  The grate snaps shut.You are standing at the edge of a cliff.  Far off in the
+distance you see a large castle surrounded by a moat and
+engulfed in an ominous fog.  About a mile below you is a
+winding river.  There is a dirt path to the north.N.....FLY,RUN,JUMP,TAKE OFF:HANG GLIDER/2,4,0:You fly off the cliff and soar through the air a mile off the
+ground.  You land safely on a patch of soft grass.You are on a grassy knoll south of a huge castle.  Between you
+and the castle is a moat full of crocodiles.  There is a tree
+at the edge of the moat.  A path goes east.You are on a grassy knoll south of a huge castle.  Between you
+and the castle is a moat full of crocodiles.  A tree now spans
+the moat creating a bridge.  A path goes east.R,C..E...CUT TREE,CHOP TREE,SWING AXE,CHOP:AXE[N;*+:The tree falls and forms a bridge across the moat.Here the path becomes overgrown and is hard to see.  It goes
+north and west.N..W..This is a very damp section of the dungeon.  You can hear water
+dripping somewhere.  Spanish moss is hanging from the ceiling,
+and there is a large pool of oil in the center of the room.
+You can see some torture equipment off to the south..S....FILL FLASK,GET OIL:FLASK%FLASK,FLASK OF OIL:The flask is now full of oil.At this end of the dungeon there are old rusty ladder rungs
+bolted to the stone wall.  The rungs go up through a tubular
+hole in the ceiling.  You can see a skeleton off to the south..S....CLIMB LADDER,CLIMB,U,UP/0,4,0This seems to be a torture chamber.  You are surrounded by many
+medieval devices used for the darkest of purposes.  There is a
+rack, a pinwheel, cages, whips, and chains, just to name a few.
+You can see a skeleton off to the east and can hear waterdripping to the north.N.E...You are in a dark and gloomy dungeon.  A horrifying skeleton
+is chained to the wall and is looking down at you with haunting
+eyes.  There is a hole in the ceiling to the north and some
+kind of equipment to the west.N..W..You are standing in front of an open window looking out over
+the river valley.  The room exits to the east...E...The walls of this room are covered with black velvet, which
+gives it an eerie appearance.  The mood is only broken by a
+beam of sunlight coming from the west.  There is a dark passage
+to the south and a flight of stairs to the east..SEW..You are at the top of a spiral staircase.  There is a dark room
+to the west....W.DThis must be the wizard's laboratory, for there are many
+bottles filled with strange colored liquids and powders.
+There is a small tunnel to the south and a curtain to the east.FLASK,BOTTLE OF LIQUID.SE...You are in the wizard's quarters.  There is a strange looking
+pointed hat on a night stand beside an unmade bed.  There is a
+curtain to the west, and the room exits to the north.CHESTN..W..You are in the weapons room.  There are all kinds of swords,
+daggers, shields, and crossbows resting against the walls.
+There is a grate in the floor, but the latch is on the other
+side.  A tunnel goes north.N.....You are in a room resembling an attic.  You are still standing
+on the altar, but your surroundings have changed greatly.  Dust
+is everywhere, and the room has a smell of mildew.  Light is
+coming in from the east...E...You are looking out of a large French window.  You can see a
+small village in the distance.  Under your feet is an Oriental
+rug that seems to be vibrating.  The room goes in to the west....W..FLY,TAKE OFF!You almost lose your balance as the rug takes off and glides
+through the window.  The rug takes you over an immense field to
+the town, where the people eye you very suspiciously.READ SCROLL:SCROLL:It says,
+     "PHLURF" is the key to this adventure.PHLURF,SAY PHLURF+GOLD KEY;#2,4,0>GOLD KEY:Oops!  Your magic is not too accurate.
+You will have to find the key for yourself!CLIMB TREE,CLIMB,U,UP/1,2,01,3,0UNLOCK CHEST,OPEN CHEST:GOLD KEY+WIZARD'S STAFF;%CHEST,OPEN CHEST:A wizard's staff falls out onto the floor!
+Suddenly a voice says,
+     "This can free anything from the tightest of situations."CLIMB DOWN,CLIMB,D,DOWN/1,0,10,4,0SWIM,SWIM MOATYou make it half way across the moat when a vicious crocodile
+eats you up!2,4,0DRINK LIQUID,DRINK BOTTLE:BOTTLE OF LIQUIDArrrrrggghhhh!!  You fall to the floor...dead.DRINK OIL,DRINK FLASK:FLASK OF OIL%FLASK OF OIL,FLASK;+PUDDLE OF VOMIT:You throw up on the floor!

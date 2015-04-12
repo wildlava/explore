@@ -1,0 +1,21 @@
+TITLE=Welcome to Skydive!  It is thought that there is treasure in the forest\surrounding Turners Falls Airport.  Can you find it?  You start out in\a plane somewhere over Massachusetts...\(This adventure written by Joe Peterson)
+INVENTORY_LIMIT=5
+START_ROOM=GOING_DOWN
+
+ROOM=GOING_DOWN
+DESC=Whoa!  You are in a Cesna 182, and it's going down!  As it spirals out of\control, you hear the pilot saying, "Bail out now!"  The door is open,\and the wind is swirling around the plane.
+CONTENTS=PARACHUTE
+COMMAND=JUMP,BAIL OUT,GET OUT,EXIT,OUT
+ACTION=/AIR_PEPP
+
+ROOM=AIR_PEPP
+DESC=You are in freefall.
+COMMAND=-PARACHUTE
+ACTION=Silly you!  You forgot your parachute!
+
+LOCAL=AIR_PEPP
+COMMAND=PULL,DEPLOY,OPEN,OPEN PARACHUTE
+ACTION=%PARACHUTE,DEPLOYED PARACHUTE;/OPEN_PEPP:The canopy opens over your head.
+
+ROOM=OPEN_PEPP
+DESC=You are flying your canopy over pepperell.

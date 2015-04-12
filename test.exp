@@ -1,0 +1,43 @@
+INVENTORY_LIMIT=2
+
+ROOM=room1
+DESC=You are in the first room.  The floor is dirt.
+NORTH=room2
+SOUTH=room3
+COMMAND=HI
+ACTION=:Hi back!
+COMMAND=BYE
+ACTION=:see ya!
+COMMAND=THROW DART:DART
+ACTION=:You hit the bullseye!
+COMMAND=DIG
+ACTION=[Dhole:You have dug a hole.
+COMMAND=BLOCK NORTH
+ACTION=[$N
+COMMAND=DETOUR SOUTH
+ACTION=[Shole:Don't fall in the hole!
+                
+ROOM=hole
+DESC=You are down in a hole.
+UP=room1
+
+ROOM=room2
+ACTION=/room1:Get out!
+
+ROOM=room3
+DESC=You are in the third room.
+NORTH=room1
+CONTENTS=DART,PEN,GUN
+
+GLOBAL
+COMMAND=GO
+ACTION=:Go home!
+COMMAND=COME
+ACTION=:How close?
+
+LOCAL=room1
+COMMAND=YOU
+ACTION=:Me?
+COMMAND=I
+ACTION=:You what?
+ACTION=:Oh well...

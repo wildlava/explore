@@ -1,0 +1,209 @@
+TITLE=Wecome to Medieval Castle!\This adventure was created by Joe Peterson and De Crandell.
+START_ROOM=1,4,0
+INVENTORY_LIMIT=7
+
+ROOM=0,0,0
+DESC=You have entered the King's chambers.  His closet contains only\the most elegant of clothes.  His beautiful brass bed is\covered with white silk sheets.  You can see the setting sun\through the huge bay window.  The room exits to the east.
+EAST=1,0,0
+
+ROOM=1,0,0
+DESC=This room is the holding place for the Royal Crown Jewels.\The plentiful supply of gold, silver and precious jewels must\be worth millions!  There are rooms to the west and south and\an open gate to the east.
+CONTENTS=ROYAL CROWN
+SOUTH=1,1,0
+EAST=2,0,0
+WEST=0,0,0
+
+ROOM=2,0,0
+DESC=This is a magnificent room with a ceiling twenty feet high.  At\one end sits a beautiful throne made of solid gold.  The red\carpet ends at the foot of the throne.  There is a doorway to\the west.  To the south is a low archway.
+ALT_DESC=The steel bar door to the west is so rusty it won't budge.
+DESC_CONTROL=RC,R
+SOUTH=2,1,0
+COMMAND=OIL DOOR,POUR OIL:FLASK OF OIL
+ACTION=[W1,0,0;%FLASK OF OIL,FLASK;*+:The door opens easily.
+
+ROOM=3,0,0
+DESC=You are in the Priest's chamber.  There are many sacred objects\and prayer books here.  There is a curtain to the south.
+ALT_DESC=Imbedded in a quartz slab is a sparkling ruby!
+DESC_CONTROL=RC,R
+SOUTH=3,1,0
+COMMAND=WAVE STAFF,SWING STAFF,MOVE STAFF:WIZARD'S STAFF
+ACTION=+RUBY;*+:The quartz disappears and the ruby falls to the ground.
+
+ROOM=1,1,0
+DESC=This is the Queen's Chambers.  Her bed is covered with pink\silk sheets.  Many beautiful gowns are hanging on the walls.\The room exits to the north.
+NORTH=1,0,0
+
+ROOM=2,1,0
+DESC=You are in a low north/south hallway between two arches.  There\is a small statue resting on a pedestal on the right side of\the hall.  The statue is missing one of its ruby eyes!
+NORTH=2,0,0
+SOUTH=2,2,0
+COMMAND=INSERT RUBY,INSERT EYE,REPLACE RUBY,REPLACE EYE,FIX EYE:RUBY
+ACTION=#1,1,1>RUBY;/1,1,1:You feel the floor give way beneath your feet as you fall down\into a dark and gloomy dungeon.  The ruby bounces off your head\and lands on the floor beside you.
+
+ROOM=3,1,0
+DESC=You are standing on the altar of the cathedral.  There is a low\platform in front of you with an imbedded gold ring about the\size of a crown.  High above you is a hole in the ceiling about\as large as the altar.  There is a curtain to the north and an
+ALT_DESC=aisle leading south.
+NORTH=3,0,0
+SOUTH=3,2,0
+COMMAND=LAY CROWN,DROP CROWN,PLACE CROWN,LOWER CROWN:ROYAL CROWN
+ACTION=#1,4,1>ROYAL CROWN;/1,4,1:The crown glows white hot as the altar suddenly begins to rise\towards the hole in the ceiling.  When the platform completes\its ascent, you find yourself in a room high above the\cathedral.
+
+ROOM=1,2,0
+DESC=You are standing on a branch near the top of the tree.
+CONTENTS=HANG GLIDER
+COMMAND=CLIMB DOWN,CLIMB,D,DOWN
+ACTION=/1,3,0
+
+ROOM=2,2,0
+DESC=You are in the main hall of the castle.  You are greeted by a\majestic red carpet, which extends through a low archway to the\north.  Sunlight reflected off the waters of the moat can be
+ALT_DESC=seen through a large archway to the south.  You can see an\immense room to the east.  A spiral staircase twists up out of\sight.
+NORTH=2,1,0
+SOUTH=2,3,0
+EAST=3,2,0
+UP=2,2,1
+
+ROOM=3,2,0
+DESC=You have walked into a lavishly decorated cathedral.  There are\huge windows on the east and south walls and colorful banners\hanging from the ceiling.  An aisle leads north to the altar,\and the main exit is to the west.
+NORTH=3,1,0
+WEST=2,2,0
+
+ROOM=1,3,0
+DESC=You are at the base of a tree.  There seems to be something\caught in the top.  A dirt path goes south.
+ALT_DESC=You are at the base of the tree.  A dirt path goes south.
+DESC_CONTROL=R,C
+SOUTH=1,4,0
+COMMAND=+HANG GLIDER
+ACTION=*+
+
+ROOM=2,3,0
+DESC=You are directly outside the castle.  There is a large archway\to the north, which serves as the main entrance.  To the south\is the bridge and the moat.
+CONTENTS=SCROLL
+NORTH=2,2,0
+SOUTH=2,4,0
+COMMAND=SWIM,SWIM MOAT
+ACTION=You make it half way across the moat when a vicious crocodile\eats you up!
+
+ROOM=3,3,0
+DESC=You have entered a wood cutter's cabin.  There are many tools\lying about.  At one end is a bed, and at the other is a window\and a large table.  There is a door to the south.
+CONTENTS=AXE
+SOUTH=3,4,0
+
+ROOM=0,4,0
+DESC=You are the top of the ladder tube, directly below a steel\grate.  There is a latch on this side of the grate.  The\ladder goes down from here.
+COMMAND=OPEN GRATE,PULL LATCH
+ACTION=/0,4,1:You emerge in a room full of weapons.  The grate snaps shut.
+
+ROOM=1,4,0
+DESC=You are standing at the edge of a cliff.  Far off in the\distance you see a large castle surrounded by a moat and\engulfed in an ominous fog.  About a mile below you is a\winding river.  There is a dirt path to the north.
+NORTH=1,3,0
+COMMAND=FLY,RUN,JUMP,TAKE OFF:HANG GLIDER
+ACTION=/2,4,0:You fly off the cliff and soar through the air a mile off the\ground.  You land safely on a patch of soft grass.
+
+ROOM=2,4,0
+DESC=You are on a grassy knoll south of a huge castle.  Between you\and the castle is a moat full of crocodiles.  There is a tree\at the edge of the moat.  A path goes east.
+ALT_DESC=You are on a grassy knoll south of a huge castle.  Between you\and the castle is a moat full of crocodiles.  A tree now spans\the moat creating a bridge.  A path goes east.
+DESC_CONTROL=R,C
+EAST=3,4,0
+COMMAND=CUT TREE,CHOP TREE,SWING AXE,CHOP:AXE
+ACTION=[N2,3,0;*+:The tree falls and forms a bridge across the moat.
+
+ROOM=3,4,0
+DESC=Here the path becomes overgrown and is hard to see.  It goes\north and west.
+NORTH=3,3,0
+WEST=2,4,0
+
+ROOM=0,0,1
+DESC=This is a very damp section of the dungeon.  You can hear water\dripping somewhere.  Spanish moss is hanging from the ceiling,\and there is a large pool of oil in the center of the room.\You can see some torture equipment off to the south.
+SOUTH=0,1,1
+COMMAND=FILL FLASK,GET OIL:FLASK
+ACTION=%FLASK,FLASK OF OIL:The flask is now full of oil.
+
+ROOM=1,0,1
+DESC=At this end of the dungeon there are old rusty ladder rungs\bolted to the stone wall.  The rungs go up through a tubular\hole in the ceiling.  You can see a skeleton off to the south.
+SOUTH=1,1,1
+COMMAND=CLIMB LADDER,CLIMB,U,UP
+ACTION=/0,4,0
+
+ROOM=0,1,1
+DESC=This seems to be a torture chamber.  You are surrounded by many\medieval devices used for the darkest of purposes.  There is a\rack, a pinwheel, cages, whips, and chains, just to name a few.\You can see a skeleton off to the east and can hear water
+ALT_DESC=dripping to the north.
+NORTH=0,0,1
+EAST=1,1,1
+
+ROOM=1,1,1
+DESC=You are in a dark and gloomy dungeon.  A horrifying skeleton\is chained to the wall and is looking down at you with haunting\eyes.  There is a hole in the ceiling to the north and some\kind of equipment to the west.
+NORTH=1,0,1
+WEST=0,1,1
+
+ROOM=0,2,1
+DESC=You are standing in front of an open window looking out over\the river valley.  The room exits to the east.
+EAST=1,2,1
+
+ROOM=1,2,1
+DESC=The walls of this room are covered with black velvet, which\gives it an eerie appearance.  The mood is only broken by a\beam of sunlight coming from the west.  There is a dark passage\to the south and a flight of stairs to the east.
+SOUTH=1,3,1
+EAST=2,2,1
+WEST=0,2,1
+
+ROOM=2,2,1
+DESC=You are at the top of a spiral staircase.  There is a dark room\to the west.
+WEST=1,2,1
+DOWN=2,2,0
+
+ROOM=0,3,1
+DESC=This must be the wizard's laboratory, for there are many\bottles filled with strange colored liquids and powders.\There is a small tunnel to the south and a curtain to the east.
+CONTENTS=FLASK,BOTTLE OF LIQUID
+SOUTH=0,4,1
+EAST=1,3,1
+
+ROOM=1,3,1
+DESC=You are in the wizard's quarters.  There is a strange looking\pointed hat on a night stand beside an unmade bed.  There is a\curtain to the west, and the room exits to the north.
+CONTENTS=CHEST
+NORTH=1,2,1
+WEST=0,3,1
+
+ROOM=0,4,1
+DESC=You are in the weapons room.  There are all kinds of swords,\daggers, shields, and crossbows resting against the walls.\There is a grate in the floor, but the latch is on the other\side.  A tunnel goes north.
+NORTH=0,3,1
+
+ROOM=1,4,1
+DESC=You are in a room resembling an attic.  You are still standing\on the altar, but your surroundings have changed greatly.  Dust\is everywhere, and the room has a smell of mildew.  Light is\coming in from the east.
+EAST=2,4,1
+
+ROOM=2,4,1
+DESC=You are looking out of a large French window.  You can see a\small village in the distance.  Under your feet is an Oriental\rug that seems to be vibrating.  The room goes in to the west.
+WEST=1,4,1
+COMMAND=FLY,TAKE OFF
+ACTION=!You almost lose your balance as the rug takes off and glides\through the window.  The rug takes you over an immense field to\the town, where the people eye you very suspiciously.
+
+GLOBAL
+COMMAND=READ SCROLL:SCROLL
+ACTION=:It says,\     "PHLURF" is the key to this adventure.
+
+GLOBAL
+COMMAND=PHLURF,SAY PHLURF
+ACTION=+GOLD KEY;#2,4,0>GOLD KEY:Oops!  Your magic is not too accurate.\You will have to find the key for yourself!
+
+LOCAL=1,3,0
+COMMAND=CLIMB TREE,CLIMB,U,UP
+ACTION=/1,2,0
+
+GLOBAL
+COMMAND=UNLOCK CHEST,OPEN CHEST:GOLD KEY
+ACTION=+WIZARD'S STAFF;%CHEST,OPEN CHEST:A wizard's staff falls out onto the floor!\Suddenly a voice says,\     "This can free anything from the tightest of situations."
+
+LOCAL=0,4,0
+COMMAND=CLIMB DOWN,CLIMB,D,DOWN
+ACTION=/1,0,1
+
+LOCAL=2,4,0
+COMMAND=SWIM,SWIM MOAT
+ACTION=You make it half way across the moat when a vicious crocodile\eats you up!
+
+GLOBAL
+COMMAND=DRINK LIQUID,DRINK BOTTLE:BOTTLE OF LIQUID
+ACTION=Arrrrrggghhhh!!  You fall to the floor...dead.
+
+GLOBAL
+COMMAND=DRINK OIL,DRINK FLASK:FLASK OF OIL
+ACTION=%FLASK OF OIL,FLASK;+PUDDLE OF VOMIT:You throw up on the floor!

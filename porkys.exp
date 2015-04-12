@@ -1,0 +1,324 @@
+TITLE=Welcome to Porky's...  An adventure written by Robert Braver\and Matt Melton.  Your goal: get through Porky's cathouse!!\Identification necessary!
+START_ROOM=0,2,0
+INVENTORY_LIMIT=8
+
+ROOM=0,0,0
+DESC=You are in Porky's waiting room.  The bar is to the east,\and the exit is to the south.
+SOUTH=0,1,0
+EAST=1,0,0
+
+ROOM=1,0,0
+DESC=You are in Porky's bar!!  The waiting room is to the west,\and there are rooms to the south and east.
+SOUTH=1,1,0
+EAST=2,0,0
+WEST=0,0,0
+COMMAND=-IDENTIFICATION
+ACTION=/0,0,0:The attendant says, "Hey!!  You don't got no ID!! You can't\come in here!!!" and bars your passage.
+
+ROOM=2,0,0
+DESC=This is a small room with a chair and side-table, dimly lit\by a lamp on the table.
+CONTENTS=CARD
+WEST=1,0,0
+
+ROOM=3,0,0
+DESC=You are almost blinded by an intense light.  The door behind\you slams shut!  The source of light is a button on the wall!!
+COMMAND=PUSH BUTTON,PRESS BUTTON
+ACTION=!Porky's electrical system shorts out and the building goes\up in flames as you jump out through an emergency door!!\Congratulations!!!!!!  You made it!!!
+
+ROOM=0,1,0
+DESC=You are on a north-south dirt road.  Laughter and music can be\heard to the north.
+NORTH=0,0,0
+SOUTH=0,2,0
+
+ROOM=1,1,0
+DESC=You are in the Pink Room!!  There is a spiral staircase leading\up through the ceiling.  Exits are to the north and east.\There is a girl sitting at a counter under a sign, "WARNING!"
+NORTH=1,0,0
+EAST=2,1,0
+UP=1,1,1
+COMMAND=FUCK GIRL,SCREW GIRL
+ACTION=:The girl says,\   "Can't you read??? I'm under quarrantine!!!"
+
+ROOM=2,1,0
+DESC=You are in an east-west hallway.  There is a door at the east\end with a sign "PORKY" on the door.  There is a restroom to\the south.
+SOUTH=2,2,0
+EAST=3,1,0
+WEST=1,1,0
+
+ROOM=3,1,0
+DESC=You are in Porky's office!!!  His men check your pass, and\say, "Whaddya want???"  There is a room to the north...  The\door behind you is blocked by Porky's men!!!
+NORTH=3,0,0
+COMMAND=-PASS
+ACTION=You come into my office without a pass!!!!  Butch!!!  Show\this whimp a lesson!!   You are severley beaten and thrown\into the Mississippi!!
+
+ROOM=0,2,0
+DESC=You are on a north-south dirt road.  A trail leads east.
+NORTH=0,1,0
+SOUTH=0,3,0
+EAST=1,2,0
+
+ROOM=1,2,0
+DESC=You are at a clearing in the trees.  There is a deserted\'57 Chevy parked here!   The trail leads west.
+WEST=0,2,0
+COMMAND=OPEN DOOR,DRIVE CAR,DRIVE CHEVY,ENTER CAR,ENTER CHEVY
+ACTION=+IDENTIFICATION:You find a phony Identification card!
+
+ROOM=2,2,0
+DESC=You are in a restroom.  There is some writing on the mirror!\The door is to the north.
+NORTH=2,1,0
+COMMAND=READ MIRROR,READ MESSAGE
+ACTION=:It says:\  "Don't go into Porky's office without a pass!!!"
+
+ROOM=0,3,0
+DESC=You are at the south end of a north-south road.  A trail leads\east.
+CONTENTS=BROCHURE
+NORTH=0,2,0
+EAST=1,3,0
+
+ROOM=1,3,0
+DESC=You are on a small trail in the woods.  There are Women's\undergarments hanging on some limbs, and there is giggling\to the east.  The main trail is to the west.
+EAST=2,3,0
+WEST=0,3,0
+COMMAND=TAKE UNDERGARMENTS,TAKE UNDERWEAR,TAKE CLOTHES
+ACTION=:Now that wouldn't be too nice, now would it???
+
+ROOM=2,3,0
+DESC=-
+ACTION=There is a couple fucking here.  The man sees you, and beats\the holy $H!T outa you for spying on them, chunks your battered\body over some shrubbery, and continues with Laura where he\left off!!!!
+
+ROOM=3,3,0
+DESC=You are in an office.  There is a woman sitting behind a\desk with "Candice Bacon" on the nameplate.
+SOUTH=3,4,0
+COMMAND=+INGOT
+ACTION=%INGOT,PASS:Candice says,\    "Since you've brought me the ingot, here is the pass to\Porky's office.  Good luck and thank you.  The door is to the\South.  Good day!"
+
+ROOM=1,4,0
+DESC=You are on the third level.  A sign here says, "PIGLET CLUB."\The door is to the east.  The spiral staircase leads down.
+EAST=2,4,0
+COMMAND=D,DOWN
+ACTION=/1,4,1
+
+ROOM=2,4,0
+DESC=You are in a room full of giggling girls, many of whom are very\scantily dressed.  The exit is to the west, and a door to the\north has a sign on it that reads:\                    "CANDICE BACON'S OFFICE"
+WEST=1,4,0
+COMMAND=N,NORTH
+ACTION=/3,3,0
+
+ROOM=3,4,0
+DESC=-
+ACTION=/2,4,0
+
+ROOM=0,0,1
+DESC=You are in the Men's restroom.  There is a message lipsticked\on the mirror (Again!).
+SOUTH=0,1,1
+COMMAND=READ MESSAGE,READ MIRROR,READ LIPSTICK
+ACTION=:It says,\    "Only Ginger is USDA Approved!!!!!"
+
+ROOM=1,0,1
+DESC=You are in Rhonda's Bedroom.  She is nude on her bed reading\a newspaper.  The exit is to the south.
+ALT_DESC=You are in Rhonda's bedroom.  Rhonda isn't here.
+DESC_CONTROL=R,C
+SOUTH=1,1,1
+COMMAND=FUCK RHONDA,FUCK GIRL,SCREW RHONDA,SCREW GIRL
+ACTION=*+:As she comes she says,\    "If you want to get out, get your pass on the third floor."\Rhonda leaves the room.
+
+ROOM=2,0,1
+DESC=You're in Candy's dressing room.
+CONTENTS=KEY
+EAST=3,0,1
+
+ROOM=3,0,1
+DESC=You are in Candy's bedroom!  Candy is laying nude on her bed\with a big grin on her face!!  There is a door to the west.
+SOUTH=3,1,1
+WEST=2,0,1
+COMMAND=FUCK CANDY,SCREW CANDY,FUCK GIRL,SCREW GIRL
+ACTION=Agghhhh!!!!  You got the Clap!!!!  You died!!!!
+
+ROOM=4,0,1
+DESC=You are in a small room.  Traced in the dust is a message!
+EAST=5,0,1
+COMMAND=READ MESSAGE,READ
+ACTION=:It says,\    The Master Key is in Candy's Dressing room!!!
+
+ROOM=5,0,1
+DESC=You are in another room in the attic.  There are hundereds\of nudie magazines here, mostly decayed from age.  There are\rooms to the south and west.
+SOUTH=5,1,1
+WEST=4,0,1
+COMMAND=READ MAGAZINE,READ MAGAZINES
+ACTION=:Awww... It's nothing you haven't seen before... or maybe it is!
+
+ROOM=0,1,1
+DESC=You are in the Upstairs bar.  The Men's restroom is to the\north and the Women's is to the south.  The exit is to the\east.
+CONTENTS=BOTTLE OF WHISKY
+NORTH=0,0,1
+SOUTH=0,2,1
+EAST=1,1,1
+
+ROOM=1,1,1
+DESC=You are in the Upstairs Pink room.  The spiral staircase leads\down, and there are rooms in all directions.  The door to the\south says, "Servants' Quarters."  That door is locked.
+ALT_DESC=You are in the Upstairs Pink room.  The spiral staircase leads\down, and there are rooms in all directions.  The door to the\south is open.
+DESC_CONTROL=R,C
+NORTH=1,0,1
+EAST=2,1,1
+WEST=0,1,1
+DOWN=1,1,0
+COMMAND=OPEN DOOR,UNLOCK DOOR:KEY
+ACTION=[S1,2,1;*+:The door is now open.
+
+ROOM=2,1,1
+DESC=You are in an east-west hallway.  The door to the east has a\sign on it.  It reads: "Phase Fantasia."
+EAST=3,1,1
+WEST=1,1,1
+COMMAND=OPEN DOOR
+ACTION=[E3,1,1:The door is now open
+
+ROOM=3,1,1
+DESC=You are in a waiting room of some sort.  A door to the north\has "Candy" on it.  A door to the east has "Ginger" on it. A\door to the south has "Julie" on it.  The exit is to the\west.
+ALT_DESC=A girl at the desk here says gravely, "I hope you know which\girl is the right one!!"  And she briskly walks out.
+NORTH=3,0,1
+SOUTH=3,2,1
+EAST=4,1,1
+WEST=2,1,1
+
+ROOM=4,1,1
+DESC=You are in Ginger's room.  She has her legs spread, and\she's laying nude on her bed.  Her persimmon lipsticked\mouth says, "Make love to me, baby!"
+ALT_DESC=You're in Ginger's room.  She has left to take a shower.
+DESC_CONTROL=R,C
+WEST=3,1,1
+COMMAND=FUCK GINGER,SCREW GINGER,FUCK GIRL,SCREW GIRL
+ACTION=*+:As she comes, she tells you, "You're great, baby... You ought\to go and check out the Kinky Room... It's just around the\corner."  Then she promptly leaves the room.
+
+ROOM=5,1,1
+DESC=You've crawled into the attic.  A room leads to the north,\and there is a small hole in the wall to the south.  There is a\strong smell of purfume here.
+NORTH=5,0,1
+SOUTH=5,2,1
+
+ROOM=0,2,1
+DESC=You're in the Women's bathroom.  The door is to the north.\There is a Tampon dispenser here.  The sign on it reads:\         "INSERT DIME"
+ALT_DESC=You're in the Women's restroom.  A sign on the tampon dispenser\reads:\                "SOLD OUT"
+DESC_CONTROL=R,C
+CONTENTS=DIME
+NORTH=0,1,1
+COMMAND=INSERT DIME:DIME
+ACTION=+TAMPON;-DIME;*+:You get a tampon with a message on it!  The tampon\machine is now sold out.
+
+ROOM=1,2,1
+DESC=You are in the Servants' Quarters.  There are exits to the\north, south and east.
+NORTH=1,1,1
+SOUTH=1,3,1
+EAST=2,2,1
+
+ROOM=2,2,1
+DESC=You are in a broom closet.  The exit is to the west, and\there is another small door to the south.
+SOUTH=2,3,1
+WEST=1,2,1
+
+ROOM=3,2,1
+DESC=You're in Julie's room.  She's all sweaty and is laying\on her bed exhausted!   There's doorways to the north and\east.
+NORTH=3,1,1
+EAST=4,2,1
+COMMAND=FUCK JULIE,FUCK GIRL,SCREW GIRL,SCREW JULIE
+ACTION=OH NO!!!!   You get herpes!!!!  You're given the boot!!!!
+
+ROOM=4,2,1
+DESC=You're in the Kinky room!  There are a bed of nails, whips,\and other assorted paraphanalia!  Spice is here, and when she\sees you, she promptly lifts her skirt up, extends her ass in\the air, and bends over!  There are exits to the east and west.
+ALT_DESC=You're in the Kinky room!!  There are all kinds of S & M\accessories laying around here!  There are exits to the\east and west.
+DESC_CONTROL=R,C
+EAST=5,2,1
+WEST=3,2,1
+COMMAND=FUCK GIRL,FUCK SPICE,SCREW GIRL,SCREW SPICE
+ACTION=*+;+$INGOT:After you come in her ass, she gives you a gold ingot\and briskly walks out of the room.
+
+ROOM=5,2,1
+DESC=You are in some kind of storeroom.  A west passage leads to\the Kinky Room, and there is another doorway to the south.\There is a small room to the north.
+NORTH=5,1,1
+SOUTH=5,3,1
+WEST=4,2,1
+
+ROOM=0,3,1
+DESC=You are in the Servants' restrooms.  There is a message\lipsticked on the mirror!!!
+EAST=1,3,1
+COMMAND=READ MESSAGE,READ MIRROR
+ACTION=:It says,\     "Kilroy was here!!!"
+
+ROOM=1,3,1
+DESC=You are in what appears to be a waiting room for the Servants'\Quarters.  There is some shabby looking furniture in the room,\which is dimly lit by a single light bulb hanging from the\ceiling.  There are rooms to the north, west, and south.
+NORTH=1,2,1
+SOUTH=1,4,1
+WEST=0,3,1
+
+ROOM=2,3,1
+DESC=You're in a linen closet.  Exits are to the north, south,\and east.
+NORTH=2,2,1
+SOUTH=2,4,1
+EAST=3,3,1
+
+ROOM=3,3,1
+DESC=You are in the utility room.  Big Bertha is here ironing\clothes.  She has a real big grin on her face and she says,\      "Hi there, big boy!"
+WEST=2,3,1
+COMMAND=FUCK GIRL,FUCK BERTHA,SCREW GIRL,SCREW BERTHA
+ACTION=You were sucked in and never seen again!!!!!
+
+ROOM=4,3,1
+DESC=You are in Porky's wine cellar.  There are rooms to the\south and east, but the door to the south is locked!
+ALT_DESC=You are in Porky's wine cellar.  There are rooms to the\south and east.  The door to the south is open!
+DESC_CONTROL=R,C
+EAST=5,3,1
+COMMAND=OPEN DOOR,UNLOCK DOOR:KEY
+ACTION=[S4,4,1;*+:The door is now open.
+
+ROOM=5,3,1
+DESC=You are in an empty storeroom.  There is another room to\the north and to the west.
+NORTH=5,2,1
+WEST=4,3,1
+
+ROOM=0,4,1
+DESC=You are in a servant's bedroom.  There is a phone on the wall!\The exit is to the east.
+EAST=1,4,1
+COMMAND=DIAL PHONE,ANSWER PHONE,GET PHONE,TAKE PHONE
+ACTION=:A synthesized voice says,\     "This telephone is for incomming calls only!!"
+
+ROOM=1,4,1
+DESC=You are at a staircase which leads up to the third level!\The exit is to the north, and a bedroom is to the west.
+NORTH=1,3,1
+WEST=0,4,1
+COMMAND=U,UP
+ACTION=/1,4,0
+
+ROOM=2,4,1
+DESC=You are in the head maid's bedroom.  The exit is to the north.
+CONTENTS=CREDIT CARD
+NORTH=2,3,1
+
+ROOM=3,4,1
+DESC=You are in a small room.  There is a carcas of a half-eaten\hog laying on the grimy floor.  The exit is to the east.
+EAST=4,4,1
+COMMAND=EAT HOG
+ACTION=You get sick and die!!!!!!!!!
+
+ROOM=4,4,1
+DESC=You are in Porky's private library.  There is a small table\in the middle of the room with Porky's diary.  The diary\is open!  The exit is to the north, and there are some small\rooms off to the east and west.
+NORTH=4,3,1
+EAST=5,4,1
+WEST=3,4,1
+COMMAND=READ DIARY,READ BOOK,READ
+ACTION=:It says,\   "They'll never figure out that the exit is from my office!!"
+
+ROOM=5,4,1
+DESC=You have walked out onto a balcony overlooking the Mississippi.\The air is cold and damp.  The door is to the west.
+WEST=4,4,1
+
+GLOBAL
+COMMAND=READ BROCHURE:BROCHURE
+ACTION=:It says,\    "Welcome to Porky's cathouse!  C'mon in for a special\     treat!  We've got three floors of solid fun!\     Identification is necessary."
+
+GLOBAL
+COMMAND=READ CARD:CARD
+ACTION=:For a good time call 867-5309.
+
+GLOBAL
+COMMAND=READ TAMPON,READ MESSAGE:TAMPON
+ACTION=:It says,\   "Staircase to third floor in Servants' wing."
+
+GLOBAL
+COMMAND=DRINK WHISKY,DRINK WHISKEY,DRINK BOTTLE:BOTTLE OF WHISKY
+ACTION=-BOTTLE OF WHISKY;/0,1,0:After thoroughly blitzing yourself, one of Porky's bouncers\picks you up, carries you outside and says, "We don't want your \kind here!!"

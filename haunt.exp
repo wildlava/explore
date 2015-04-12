@@ -1,0 +1,221 @@
+TITLE=Welcome to Haunted House!\This adventure was reproduced from Radio Shack's Haunted House\by Joe Peterson.
+START_ROOM=6,0,0
+INVENTORY_LIMIT=8
+
+ROOM=3,0,0
+DESC=You are at the blue bedroom.
+ALT_DESC=There's a panel on the east wall.
+SOUTH=3,1,0
+COMMAND=PANEL,OPEN PANEL,MOVE PANEL,PUSH PANEL,PULL PANEL
+ACTION=/4,0,0
+
+ROOM=4,0,0
+DESC=You are at the secret passage.
+CONTENTS=ROPE
+EAST=5,0,0
+WEST=3,0,0
+
+ROOM=5,0,0
+DESC=You are at the green bedroom.
+ALT_DESC=There's a panel on the west wall.
+SOUTH=5,1,0
+COMMAND=PANEL,OPEN PANEL,MOVE PANEL,PUSH PANEL,PULL PANEL
+ACTION=/4,0,0
+
+ROOM=6,0,0
+DESC=You are at the outside of the house.
+CONTENTS=CRUMPLED PIECE OF PAPER
+COMMAND=PLUGH
+ACTION=/6,1,0:You materialize inside the door.
+
+ROOM=3,1,0
+DESC=You are at the west end of the hall.
+ALT_DESC=A locked door bars the way south.
+NORTH=3,0,0
+EAST=4,1,0
+COMMAND=S,SOUTH:KEY
+ACTION=/3,2,0
+
+ROOM=4,1,0
+DESC=-
+ACTION=/5,1,0
+
+ROOM=5,1,0
+DESC=You are at the east end of the hall.
+NORTH=5,0,0
+EAST=6,1,0
+COMMAND=W,WEST
+ACTION=/3,1,0
+
+ROOM=6,1,0
+DESC=You are at the foyer.
+SOUTH=6,2,0
+EAST=7,1,0
+WEST=5,1,0
+
+ROOM=7,1,0
+DESC=You are at the living room.
+CONTENTS=KNIFE,MYSTERIOUS SCROLL
+EAST=8,1,0
+WEST=6,1,0
+COMMAND=-CRUMPLED PIECE OF PAPER
+ACTION=Suddenly, the knife whooshes off the floor and\cuts your throat!  You are dead.
+
+ROOM=8,1,0
+DESC=You are at the dining room.
+SOUTH=8,2,0
+WEST=7,1,0
+
+ROOM=3,2,0
+DESC=You are at the master bedroom.
+ALT_DESC=A wall of raging fire blocks the way east.
+NORTH=3,1,0
+COMMAND=E,EAST
+ACTION=:Are you just going to walk right through that raging fire?
+
+ROOM=4,2,0
+DESC=You are at the library.\There is a hole in the ceiling.
+ALT_DESC=A rope is stretching from the ground to the hole in the\ceiling.
+DESC_CONTROL=R,RC
+WEST=3,2,0
+COMMAND=DROP ROPE,THROW ROPE:ROPE
+ACTION=[U4,2,1;-ROPE;*+:Instantly, the rope unwinds and levitates to the hole in the\ceiling!
+
+ROOM=6,2,0
+DESC=You are at the den.
+NORTH=6,1,0
+COMMAND=E,EAST
+ACTION=/8,2,0
+
+ROOM=8,2,0
+DESC=You are at the kitchen.
+CONTENTS=BUCKET OF WATER
+NORTH=8,1,0
+SOUTH=8,3,0
+COMMAND=W,WEST
+ACTION=/6,2,0
+
+ROOM=9,2,0
+DESC=You are at the servant's quarters.
+ALT_DESC=There is a cabinet on the wall.
+SOUTH=9,3,0
+COMMAND=OPEN CABINET,OPEN
+ACTION=+KEY:There is a key in it.
+
+ROOM=8,3,0
+DESC=A suit of armour here flees when it spots your knife.\You are at the breakfast room.
+NORTH=8,2,0
+EAST=9,3,0
+COMMAND=-KNIFE
+ACTION=/8,2,0:You are at the breakfast room.\An animated suit of armour throws you out.
+
+ROOM=9,3,0
+DESC=You are at the servant's quarters.
+ALT_DESC=There is a cabinet on the wall.
+NORTH=9,2,0
+WEST=8,3,0
+COMMAND=OPEN CABINET,OPEN
+ACTION=:It's empty.
+
+ROOM=1,1,1
+DESC=You are in a dimly lit room.
+CONTENTS=GHOST
+SOUTH=1,2,1
+EAST=2,1,1
+
+ROOM=2,1,1
+DESC=You are in a dimly lit room.
+CONTENTS=GHOST
+SOUTH=2,2,1
+WEST=1,1,1
+COMMAND=+MAGIC SWORD
+ACTION=/2,2,1:The ghost will not let you pass!
+
+ROOM=0,2,1
+DESC=-
+ACTION=You fell through a trap door to your death!
+
+ROOM=1,2,1
+DESC=You are in a dimly lit room.
+CONTENTS=RUSTY OLD SIGN
+NORTH=1,1,1
+SOUTH=1,3,1
+WEST=0,2,1
+COMMAND=E,EAST
+ACTION=!You walk through a door and find yourself on a balcony.\You climb down a tree and escape to safety!  Congratulations!\You made it!
+
+ROOM=2,2,1
+DESC=You are in a dimly lit room.
+CONTENTS=GHOST
+NORTH=2,1,1
+EAST=3,2,1
+COMMAND=KILL GHOST,ATTACK GHOST,STAB GHOST:MAGIC SWORD
+ACTION=:The ghost is immune to your attack!
+
+ROOM=3,2,1
+DESC=You are in a dimly lit room.
+CONTENTS=GHOST
+EAST=4,2,1
+WEST=2,2,1
+COMMAND=KILL GHOST,ATTACK GHOST,STAB GHOST:MAGIC SWORD
+ACTION=%GHOST,BODY OF A DEAD GHOST:Your magic sword enables you to kill the ghost!
+
+ROOM=4,2,1
+DESC=You are in a dimly lit room.
+ALT_DESC=There is a hole in the floor.
+CONTENTS=MAGIC SWORD
+SOUTH=4,3,1
+EAST=5,2,1
+WEST=3,2,1
+COMMAND=CLIMB DOWN,CLIMB,D,DOWN
+ACTION=You just fell through the hole and broke your neck.\You are dead.
+
+ROOM=5,2,1
+DESC=You are in a dimly lit room.
+CONTENTS=GHOST
+WEST=4,2,1
+COMMAND=KILL GHOST,ATTACK GHOST,STAB GHOST:MAGIC SWORD
+ACTION=%GHOST,BODY OF A DEAD GHOST:Your magic sword enables you to kill the ghost!
+
+ROOM=1,3,1
+DESC=-
+ACTION=You fell through a trap door to your death!
+
+ROOM=4,3,1
+DESC=You are in a dimly lit room.
+CONTENTS=GHOST
+NORTH=4,2,1
+COMMAND=KILL GHOST,ATTACK GHOST,STAB GHOST:MAGIC SWORD
+ACTION=%GHOST,BODY OF A DEAD GHOST:Your magic sword enables you to kill the ghost!
+
+GLOBAL
+COMMAND=READ PAPER:CRUMPLED PIECE OF PAPER
+ACTION=:It says, "Magic word - PLUGH."
+
+GLOBAL
+COMMAND=READ SCROLL:MYSTERIOUS SCROLL
+ACTION=:It says, "There is escape from the second floor!"
+
+GLOBAL
+COMMAND=DRINK WATER:BUCKET OF WATER
+ACTION=You feel sick.  In fact, you just died.  It was poison!
+
+GLOBAL
+COMMAND=READ SIGN:RUSTY OLD SIGN
+ACTION=:It says, "There are three exits from this room,\          but only one is true..."
+
+LOCAL=4,2,0
+COMMAND=CLIMB ROPE,CLIMB
+ACTION==U
+
+LOCAL=3,2,0
+COMMAND=YES
+ACTION=/4,2,0
+
+LOCAL=3,2,0
+COMMAND=NO
+ACTION=:A wise decision.
+
+GLOBAL
+COMMAND=THROW WATER,POUR WATER:BUCKET OF WATER
+ACTION=:The ground is wet.  The bucket magically refills!

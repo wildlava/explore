@@ -1,0 +1,330 @@
+TITLE=Welcome to the Enchanted Cave!\This adventure was created by Joe Peterson and De Crandell.
+START_ROOM=1,1,1
+INVENTORY_LIMIT=7
+
+ROOM=0,0,0
+DESC=You are out on a ledge overlooking an immense forest.\Ten feet away is a hawk's nest.  There is a hole in the\rock to the south.
+CONTENTS=HAWK EGG
+COMMAND=S
+ACTION=/4,1,1
+
+ROOM=1,0,0
+DESC=In this room there are many African relics strewn about the\floor and walls.  A large painting of an African king covers\one entire wall.  Tunnels lead south and east.
+CONTENTS=AFRICAN WAR DRUM
+SOUTH=1,1,0
+EAST=2,0,0
+
+ROOM=2,0,0
+DESC=This room is decorated with old prehistoric cave paintings.\The most outstanding painting is one of a cave man with\a bare stone slab in his hand.  Dim tunnels go south and west.
+SOUTH=2,1,0
+WEST=1,0,0
+COMMAND=WAVE BONE,SWING BONE,MOVE BONE:DINOSAUR BONE
+ACTION=+BARE SLAB:Suddenly you hear a tremendous blast as the cave man comes to\life, drops the slab, and returns to the wall, where another\slab materializes in his hand!
+
+ROOM=3,0,0
+DESC=You are at the intersection of east and south passages.\To the east light can be seen in the distance.  There\is a massive stone door to the north - with a keyhole!
+ALT_DESC=The door feels warm.
+SOUTH=3,1,0
+EAST=4,0,0
+COMMAND=OPEN DOOR,UNLOCK DOOR,TURN KEY,USE KEY:STONE KEY
+ACTION=Suddenly, as you open the door, boiling water gushes out\and boils you alive!
+
+ROOM=4,0,0
+DESC=You have just walked out onto a large stone outlook.\Below you is a pool of steaming water, curving around\like a moat.  Beyond the pool is a green field of grass\and clover, scattered with a few scrawny trees.
+ALT_DESC=The opening to the west leads back into the cave.
+WEST=3,0,0
+COMMAND=JUMP,CLIMB,FALL
+ACTION=You plunge down into the steaming pool and are boiled alive!
+
+ROOM=1,1,0
+DESC=The air is very foggy here.  You hear a foghorn in the\distance.  On the wall is a portrait of the King of England.\Tunnels go north, south, and east.
+CONTENTS=S-SHAPED PIPE
+NORTH=1,0,0
+SOUTH=1,2,0
+EAST=2,1,0
+
+ROOM=2,1,0
+DESC=This room is the first of the Rooms of the World.\There are many painted objects, including a picture of a\fiesta.  On one table is a taco.  Tunnels go north and west,\and a passage leads out to the east.
+CONTENTS=SOMBRERO
+NORTH=2,0,0
+EAST=3,1,0
+WEST=1,1,0
+COMMAND=EAT TACO,EAT FOOD
+ACTION=:Ouch!  That was hot!\Another taco magically appears on the table!
+
+ROOM=3,1,0
+DESC=You are standing beneath a large hole in the ceiling.\It's too far up for you to reach.  Dim passages exit to the\south and west, and a large opening goes north.
+NORTH=3,0,0
+SOUTH=3,2,0
+WEST=2,1,0
+COMMAND=LEVITATE,RISE
+ACTION=/3,1,1:You float up through the hole.
+
+ROOM=4,1,0
+DESC=You are in a room with brightly glowing walls.  This is the\Spell Room.  There is a shining plaque on the wall.  To the\south is a dim passage.
+SOUTH=4,2,0
+COMMAND=READ PLAQUE
+ACTION=:It says,\     "To rise up in the world, you must LEVITATE!"
+
+ROOM=1,2,0
+DESC=In this room oriental decorations cover the walls and hang\from the ceiling.  A statue of Buddha is sitting in one corner.\A tunnel goes north.
+CONTENTS=TINY URN
+NORTH=1,1,0
+
+ROOM=3,2,0
+DESC=A south passage ends here.  A large canyon slopes down to\the east.
+NORTH=3,1,0
+EAST=4,2,0
+
+ROOM=4,2,0
+DESC=A large canyon slopes up to the west.  The walls are glowing\brightly to the north.
+NORTH=4,1,0
+WEST=3,2,0
+
+ROOM=4,3,0
+DESC=-
+ACTION=/3,1,2
+
+ROOM=0,0,1
+DESC=You are walking through a dense forest.
+SOUTH=0,1,1
+EAST=1,0,1
+
+ROOM=1,0,1
+DESC=You are walking through a dense forest.
+SOUTH=1,1,1
+WEST=0,0,1
+
+ROOM=2,0,1
+DESC=This room is full of colored mist.  It is coming from a\small pool of colored water in the center of the room.\There is a pipe in the ceiling sucking the mist up from\the pool.  A low crawl exits to the east.
+EAST=3,0,1
+COMMAND=DRINK,DRINK WATER,DRINK POOL
+ACTION=/2,0,2:Suddenly you are vaporized and turned into a wisp of\multicolored mist.  Before you know it, you are sucked\up the pipe and then returned to normal.
+
+ROOM=3,0,1
+DESC=You are at the intersection of a south and west passage.
+SOUTH=3,1,1
+WEST=2,0,1
+
+ROOM=4,0,1
+DESC=You are out on a ledge overlooking an immense forest.\A hawk is carefully guarding its nest.  There is a hole\in the rock to the south.
+SOUTH=4,1,1
+COMMAND=THROW POWDER,TOSS POWDER:MAGIC POWDER
+ACTION=-MAGIC POWDER;/0,0,0:The hawk's eyes fill with fright as it soars off\into the distance.
+
+ROOM=0,1,1
+DESC=You are walking through a dense forest.
+NORTH=0,0,1
+SOUTH=0,2,1
+EAST=1,1,1
+
+ROOM=1,1,1
+DESC=To the east is a large opening in a wall of rock.\You are surrounded by a dense forest.
+NORTH=1,0,1
+SOUTH=1,2,1
+EAST=2,1,1
+WEST=0,1,1
+
+ROOM=2,1,1
+DESC=You are in a room dimly lit by torches.  Light is pouring\in through a large opening to the west.  A passage goes\south.
+SOUTH=2,2,1
+WEST=1,1,1
+
+ROOM=3,1,1
+DESC=You are standing at the edge of a large hole in the floor.\If you go down, you probably won't be able to climb back\up.  There is a low crawl to the north and a passage to\the south.
+NORTH=3,0,1
+SOUTH=3,2,1
+DOWN=3,1,0
+COMMAND=JUMP,CLIMB
+ACTION==D
+
+ROOM=4,1,1
+DESC=There is an opening in the rock to the north.  You can hear\something screeching in that direction.  There is a passage\to the south.
+NORTH=4,0,1
+SOUTH=4,2,1
+
+ROOM=0,2,1
+DESC=You are walking through a dense forest.
+NORTH=0,1,1
+SOUTH=0,3,1
+EAST=1,2,1
+
+ROOM=1,2,1
+DESC=You are walking through a dense forest.
+NORTH=1,1,1
+SOUTH=1,3,1
+WEST=0,2,1
+
+ROOM=2,2,1
+DESC=You are in an antechamber.  There is dust everywhere.\This room must have served as a waiting room because there\are comfortable looking chairs along one wall.
+ALT_DESC=The room exits to the north and south.
+NORTH=2,1,1
+SOUTH=2,3,1
+COMMAND=SIT,SIT DOWN,SIT CHAIR
+ACTION=/4,3,2:As you sit down, the chair falls back and you find\yourself in another room.  Looking back, you see nothing\but a chair sitting against the wall.
+
+ROOM=3,2,1
+DESC=You have come to a fork in the path.  Passages go north and\east.  The main passage goes south.
+ALT_DESC=There is a gold plaque imbedded in the rock.
+NORTH=3,1,1
+SOUTH=3,3,1
+EAST=4,2,1
+COMMAND=READ PLAQUE
+ACTION=:It says,\     "You have entered a place of magic and enchantment.\You have already come across some magic, but there is much\more.  Remember this:  Powder may scare animals, but a\moving bone will surely bring the non-living to life..."
+
+ROOM=4,2,1
+DESC=A twisting path continues north and west.
+NORTH=4,1,1
+WEST=3,2,1
+
+ROOM=0,3,1
+DESC=You have just entered a small hut.\A message scratched in the dirt reads,
+ALT_DESC=     "Roses are red, violets are blue,\      Leaves are green, but only dandelions are true..."
+NORTH=0,2,1
+EAST=1,3,1
+COMMAND=+UNLIT LANTERN
+ACTION=+MATCHES:There are MATCHES on the floor.
+
+ROOM=1,3,1
+DESC=You are walking through a dense forest.
+NORTH=1,2,1
+WEST=0,3,1
+
+ROOM=2,3,1
+DESC=A tall canyon looms above, which contains the last torch\in sight.  There is a cryptic message etched in the wall.
+ALT_DESC=There is a large opening to the north and a dim passage to the\east.
+NORTH=2,2,1
+EAST=3,3,1
+COMMAND=READ MESSAGE,READ WALL
+ACTION=:It says,\     "Those who venture beyond this point without a source\of light will be doomed..."
+
+ROOM=3,3,1
+DESC=You are crossing a thin bridge overlooking a chasm.\The bridge goes north, while to the west is a large canyon.
+NORTH=3,2,1
+WEST=2,3,1
+COMMAND=-SHINING LANTERN
+ACTION=I'ts too dark to see!  Ahhhhhhh...\You fell into a deep chasm and were never seen again.
+
+ROOM=4,3,1
+DESC=You are in a room with red walls.\There is a button on the wall.
+DOWN=4,3,0
+COMMAND=PUSH BUTTON,PRESS BUTTON
+ACTION=Suddenly, the wall blows up allowing lava to pour in on you!
+
+ROOM=2,0,2
+DESC=You are at the edge of a small stream.  Colored mist is\rising out of a pipe that is protruding from the floor.\There is a large passage to the south.
+SOUTH=2,1,2
+COMMAND=SWIM,SWIM STREAM,SWIM WATER
+ACTION=/2,0,1:You are suddenly swept downstream by the current.\The current carries you into a whirlpool where you\are sucked down into the murky depths.  You emerge\in a multicolored pool.
+
+ROOM=3,0,2
+DESC=You are in a room with blue walls.\There is a button on the wall.
+SOUTH=3,1,2
+COMMAND=PUSH BUTTON,PRESS BUTTON
+ACTION=A blue lightening bolt strikes you!  You are fried to a crisp!
+
+ROOM=0,1,2
+DESC=This seems to be an old tool storage room.  There is a\low crawl to the south and a wooden door to the east.
+CONTENTS=SHOVEL
+SOUTH=0,2,2
+COMMAND=OPEN DOOR
+ACTION=/1,1,2:After you walk through the doorway, the door slams shut!
+
+ROOM=1,1,2
+DESC=Scattered about you are small pieces of leather and wood.\This must be a workshop of some kind.  The elves who worked\here must have been very secretive, for the wooden door to\the west has no doorknob!
+EAST=2,1,2
+
+ROOM=2,1,2
+DESC=Four paths meet here.  One from each direction.
+NORTH=2,0,2
+SOUTH=2,2,2
+EAST=3,1,2
+WEST=1,1,2
+
+ROOM=3,1,2
+DESC=You have walked into a chamber shaped like a cylinder.\In the center of the room is a pedestal, on top of which\is a large stone slab.  The inscription on it says:
+ALT_DESC=     "This is the center of four colors.  There is one\in each of four directions - North, South, East, and Up.\Not all bring you good, so listen to what was first said;\this will get you through..."
+NORTH=3,0,2
+SOUTH=3,2,2
+EAST=4,1,2
+WEST=2,1,2
+COMMAND=U,UP
+ACTION=/4,3,1
+
+ROOM=4,1,2
+DESC=You are in a room with green walls.\There is a button on the wall.
+WEST=3,1,2
+COMMAND=PUSH BUTTON,PRESS BUTTON
+ACTION=A huge green dragon crashes through the wall and eats you up!
+
+ROOM=0,2,2
+DESC=The crawl widens, and there is a massive stone door to the\south - with a keyhole!
+NORTH=0,1,2
+COMMAND=OPEN DOOR,UNLOCK DOOR,TURN KEY,USE KEY:STONE KEY
+ACTION=[S0,3,2:Through the doorway you can see a bright light!
+
+ROOM=2,2,2
+DESC=You are standing on bare dirt.  This seems to be a burial\ground for the dinosaurs.  A passage exits to the north.
+NORTH=2,1,2
+COMMAND=DIG,DIG DIRT,DIG HOLE:SHOVEL
+ACTION=+DINOSAUR BONE:As you are digging, you strike something hard!  It's a bone!
+
+ROOM=3,2,2
+DESC=This is a room with yellow walls.\There is a button on the wall.
+NORTH=3,1,2
+COMMAND=PUSH BUTTON,PRESS BUTTON
+ACTION=/0,1,2:A sepulchral voice says,\     "You have chosen the right color.  I will now reward you\by taking you beyond the door with no knob."
+
+ROOM=0,3,2
+DESC=You are outside the cave!
+ACTION=!As you step through the doorway, you hear a tremendous roar\as the entire cave crumbles behind you!\                        YOU ARE FREE!
+
+ROOM=4,3,2
+DESC=You are in a secret anteroom.  There is a chair against\one wall.
+CONTENTS=UNLIT LANTERN,METALLIC SHEET
+COMMAND=SIT,SIT DOWN,SIT CHAIR
+ACTION=/2,2,1:The chair falls back again, and you find yourself\back in the antechamber.
+
+GLOBAL
+COMMAND=LIGHT LANTERN:MATCHES
+ACTION=%UNLIT LANTERN,SHINING LANTERN:The LANTERN is now shining brightly.
+
+GLOBAL
+COMMAND=DROP LANTERN:SHINING LANTERN
+ACTION=The lantern hits the ground with a crash!\There is no point in continuing because you have no source\of light.
+
+GLOBAL
+COMMAND=BREAK EGG,CRACK EGG,OPEN EGG:HAWK EGG
+ACTION=+PIECE OF PAPER;%HAWK EGG,EGG SHELLS:A PIECE OF PAPER falls out.
+
+GLOBAL
+COMMAND=READ PAPER:PIECE OF PAPER
+ACTION=:It says,\     "Fresh ash, when sprinkled, is known to make things\more legible..."
+
+GLOBAL
+COMMAND=BURN PAPER,LIGHT PAPER:MATCHES
+ACTION=%PIECE OF PAPER,ASHES:The paper burns up and leaves nothing but ash.
+
+GLOBAL
+COMMAND=SPRINKLE ASH,SPRINKLE ASHES:ASHES
+ACTION=%BARE SLAB,SLAB:The writing magically appears on the slab!;=DROP ASHES
+
+GLOBAL
+COMMAND=READ SLAB:SLAB
+ACTION=%SLAB,STONE KEY:It says,\     "Use this for higher purposes only!"\The slab then changes shape and becomes a key!
+
+GLOBAL
+COMMAND=OPEN URN,EMPTY URN:TINY URN
+ACTION=+MAGIC POWDER:Some magic powder spills out!
+
+GLOBAL
+COMMAND=LEVITATE,RISE
+ACTION=:You rise up and hit your head on the ceiling!
+
+GLOBAL
+COMMAND=SMOKE PIPE,LIGHT PIPE:S-SHAPED PIPE
+ACTION=:The room fills with smoke and blanks out everything.\For a moment, you see a vision of Sherlock Holmes, but\when the smoke clears, the image disappears.
+
+GLOBAL
+COMMAND=READ SHEET:METALLIC SHEET
+ACTION=:It says,\     "Matches can be found where things burn..."

@@ -1,0 +1,48 @@
+TITLE=Welcome to Joe's condo!  This adventure was created by Joe Peterson.
+INVENTORY_LIMIT=5
+
+ROOM=DOOR
+DESC=You are in the hallway at the door of Joe's condo.
+WEST=W_HALL
+EAST=E_HALL
+COMMAND=OPEN DOOR
+ACTION=[NFRONT_HALL:The door opens to the north.
+
+ROOM=FRONT_HALL
+DESC=You are in the front hall.  There is a picture of the space shuttle\on the wall.  The kitchen is to the east, and the powder room is to the west.\The place opens up to the north.
+EAST=KITCHEN
+WEST=POWDER
+NORTH=LIVING
+SOUTH=DOOR
+
+ROOM=KITCHEN
+DESC=This is the kitchen.
+WEST=FRONT_HALL
+
+ROOM=POWDER
+DESC=This is the powder room.
+CONTENTS=ROLL OF TOILET PAPER
+EAST=FRONT_HALL
+
+ROOM=LIVING
+DESC=Above you is a rotating ceiling fan.  This is a spacious room.\Some stairs lead up.
+SOUTH=FRONT_HALL
+UP=BEDROOM
+
+ROOM=BEDROOM
+DESC=A magnificant brass bed lies before you.  To one side is a dresser with\a marble top, and to the other side is a nightstand.  Stairs lead down.
+ALT_DESC=There is a naked woman in the bed.
+DESC_CONTROL=R,RC
+DOWN=LIVING
+COMMAND=SLEEP,LIE DOWN,TAKE NAP
+ACTION=*+:Just as you start to lie down, you discover a woman under the covers!
+
+ROOM=W_HALL
+DESC=You are walking down the hall...
+WEST=W_HALL
+EAST=DOOR
+
+ROOM=E_HALL
+DESC=You are walking down the hall...
+EAST=E_HALL
+WEST=DOOR
