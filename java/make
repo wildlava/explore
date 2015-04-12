@@ -1,0 +1,3 @@
+#!/usr/bin/env bash
+
+CLASSPATH=src javac src/com/wildlava/explore/Explore.java
