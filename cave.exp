@@ -1,3 +1,4 @@
+VERSION=1
 TITLE=Welcome to the Enchanted Cave!\This adventure was created by Joe Peterson and De Crandell.
 START_ROOM=1,1,1
 INVENTORY_LIMIT=7
@@ -183,7 +184,7 @@ ALT_DESC=     "Roses are red, violets are blue,\      Leaves are green, but only
 NORTH=0,2,1
 EAST=1,3,1
 COMMAND=+UNLIT LANTERN
-ACTION=+MATCHES:There are MATCHES on the floor.
+ACTION=+PACK OF MATCHES:There are matches on the floor.
 
 ROOM=1,3,1
 DESC=You are walking through a dense forest.
@@ -203,7 +204,7 @@ DESC=You are crossing a thin bridge overlooking a chasm.\The bridge goes north, 
 NORTH=3,2,1
 WEST=2,3,1
 COMMAND=-SHINING LANTERN
-ACTION=I'ts too dark to see!  Ahhhhhhh...\You fell into a deep chasm and were never seen again.
+ACTION=It's too dark to see!  Ahhhhhhh...\You fell into a deep chasm and were never seen again.
 
 ROOM=4,3,1
 DESC=You are in a room with red walls.\There is a button on the wall.
@@ -286,8 +287,8 @@ COMMAND=SIT,SIT DOWN,SIT CHAIR
 ACTION=/2,2,1:The chair falls back again, and you find yourself\back in the antechamber.
 
 GLOBAL
-COMMAND=LIGHT LANTERN:MATCHES
-ACTION=%UNLIT LANTERN,SHINING LANTERN:The LANTERN is now shining brightly.
+COMMAND=LIGHT LANTERN:PACK OF MATCHES
+ACTION=%UNLIT LANTERN,SHINING LANTERN:The lantern is now shining brightly.
 
 GLOBAL
 COMMAND=DROP LANTERN:SHINING LANTERN
@@ -295,14 +296,14 @@ ACTION=The lantern hits the ground with a crash!\There is no point in continuing
 
 GLOBAL
 COMMAND=BREAK EGG,CRACK EGG,OPEN EGG:HAWK EGG
-ACTION=+PIECE OF PAPER;%HAWK EGG,EGG SHELLS:A PIECE OF PAPER falls out.
+ACTION=+PIECE OF PAPER;%HAWK EGG,EGG SHELLS:A piece of paper falls out.
 
 GLOBAL
 COMMAND=READ PAPER:PIECE OF PAPER
 ACTION=:It says,\     "Fresh ash, when sprinkled, is known to make things\more legible..."
 
 GLOBAL
-COMMAND=BURN PAPER,LIGHT PAPER:MATCHES
+COMMAND=BURN PAPER,LIGHT PAPER:PACK OF MATCHES
 ACTION=%PIECE OF PAPER,ASHES:The paper burns up and leaves nothing but ash.
 
 GLOBAL
@@ -328,3 +329,5 @@ ACTION=:The room fills with smoke and blanks out everything.\For a moment, you s
 GLOBAL
 COMMAND=READ SHEET:METALLIC SHEET
 ACTION=:It says,\     "Matches can be found where things burn..."
+
+OLD OBJECT MATCHES=PACK OF MATCHES
