@@ -1,0 +1,4 @@
+To create the needed files for building with ant, do:
+
+    android update project --target 4 -p .
+    cd tools; ./mkicons

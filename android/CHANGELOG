@@ -1,0 +1,31 @@
+Version 4.8.6:
+
+* Fixes to grammar logic
+
+Version 4.8.5:
+
+* Make some response logic more intelligent
+* Make use of improved logic in games
+
+Version 4.8.4 (2010-12-27)
+
+* Fix multiple layout issues:
+  - Use more available screen area for game text
+  - Fix UI visibility on small screens
+  - Fix UI visibility in landscape orientation
+* Fix message when trying to get already held object
+
+Version 4.8.3 (2010-08-16)
+
+* Fix a corner case in which resuming a game can fail
+* Make "help" command more helpful
+* Hide "play" buttons while playing a game
+
+Version 4.8.2 (2010-07-29)
+
+* Bug fix: object name changes now propagated when loading suspended games from old versions
+
+2010-07-18
+
+* Minor tweaks to "cave" adventure to correct grammer, etc.
+* Display object names in lower case to integrate better with text
