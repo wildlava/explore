@@ -13,8 +13,10 @@ class Player extends ItemContainer
 
    Room current_room;
 
-   Player(ExpIO i)
+   Player(ExpIO i, World world)
    {
+      super(world);
+      
       io = i;
    }
    
@@ -27,17 +29,58 @@ class Player extends ItemContainer
       {
          if (hasItem(full_item_self))
          {
-            io.print("You are already carrying the " + full_item_self + ".");
-         }
-         else
-         {
             if (World.trs_look)
             {
-               io.print("I see no " + item + " here that you can pick up.");
+               io.print("You are already carrying the " + full_item_self + ".");
             }
             else
             {
-               io.print("I see no " + item.toLowerCase() + " here that you can pick up.");
+               io.print("You are already carrying the " + full_item_self.toLowerCase() + ".");
+            }
+         }
+         else
+         {
+            if (World.trs_compat || !World.use_fixed_objects)
+            {
+               if (World.trs_look)
+               {
+                  io.print("I see no " + item + " here that you can pick up.");
+               }
+               else
+               {
+                  io.print("I see no " + item.toLowerCase() + " here that you can pick up.");
+               }
+            }
+            else
+            {
+               String[] word_list = ExpUtil.parseToArray(item, " ");
+               String item_part = word_list[word_list.length - 1];
+               boolean found_fixed_object = true;
+               
+               if (!current_room.hasFixedObject(item_part))
+               {
+                  if (word_list.length > 1)
+                  {
+                     item_part = word_list[0];
+                     if (!current_room.hasFixedObject(item_part))
+                     {
+                        found_fixed_object = false;
+                     }
+                  }
+                  else
+                  {
+                     found_fixed_object = false;
+                  }
+               }
+
+               if (found_fixed_object)
+               {
+                  io.print("I see no way to pick up the " + item_part.toLowerCase() + ".");
+               }
+               else
+               {
+                  io.print("I see no " + item.toLowerCase() + " here.");
+               }
             }
          }
       }
@@ -63,15 +106,23 @@ class Player extends ItemContainer
       if (!removeItem(full_item))
       {
          String item_lower = item.toLowerCase();
-         if (World.trs_look)
+         
+         if (World.trs_compat)
          {
-            io.print("You are not carrying " +
-                     ExpUtil.aOrAn(item_lower) + " " + item + ".");
+            if (World.trs_look)
+            {
+               io.print("You are not carrying " +
+                        ExpUtil.aOrAn(item_lower) + " " + item + ".");
+            }
+            else
+            {
+               io.print("You are not carrying " +
+                        ExpUtil.aOrAn(item_lower) + " " + item_lower + ".");
+            }
          }
          else
          {
-            io.print("You are not carrying " +
-                     ExpUtil.aOrAn(item_lower) + " " + item_lower + ".");
+            io.print("You have no " + item_lower + ".");
          }
       }
       else
@@ -97,18 +148,15 @@ class Player extends ItemContainer
          io.print("You are currently holding the following:");
          io.print("");
 
-         for (int i=0; i<items.length; ++i)
+         for (int i=0; i<items.size(); ++i)
          {
-            if (items[i] != null)
+            if (World.trs_look)
             {
-               if (World.trs_look)
-               {
-                  io.print("- " + items[i] + " -");
-               }
-               else
-               {
-                  io.print("- " + items[i].toLowerCase());
-               }
+               io.print("- " + items.get(i) + " -");
+            }
+            else
+            {
+               io.print("- " + items.get(i).toLowerCase());
             }
          }
 

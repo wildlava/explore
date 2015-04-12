@@ -7,32 +7,52 @@
 
 package com.wildlava.explore;
 
+import java.util.ArrayList;
+
 class ItemContainer
 {
-   String[] items;
+   World world;
+   
+   ArrayList<String> items;
+   int item_limit = -1;
+   
+   ItemContainer(World world)
+   {
+      this.world = world;
+      
+      items = new ArrayList<String>();
+   }
 
    String expandItemName(String item)
    {
-      if (items != null)
+      String same_item = null;
+      
+      if (world.same_items.containsKey(item))
       {
-         for (int i=0; i<items.length; ++i)
+         same_item = world.same_items.get(item);
+      }
+      
+      for (int i=0; i<items.size(); ++i)
+      {
+         String test_item = items.get(i);
+         
+         if (test_item.equals(item))
          {
-            if (items[i] != null)
+            return test_item;
+         }
+         
+         if (same_item != null && test_item.equals(same_item))
+         {
+            return test_item;
+         }
+         
+         String[] word_list = ExpUtil.parseToArray(test_item, " ");
+         if (word_list.length > 1)
+         {
+            if (word_list[0].equals(item) ||
+                word_list[word_list.length - 1].equals(item))
             {
-               if (items[i].equals(item))
-               {
-                  return items[i];
-               }
-
-               String[] word_list = ExpUtil.parseToArray(items[i], " ");
-               if (word_list.length > 1)
-               {
-                  if (word_list[0].equals(item) ||
-                      word_list[word_list.length - 1].equals(item))
-                  {
-                     return items[i];
-                  }
-               }
+               return test_item;
             }
          }
       }
@@ -42,109 +62,42 @@ class ItemContainer
 
    boolean hasNoItems()
    {
-      if (items != null)
-      {
-         for (int i=0; i<items.length; ++i)
-         {
-            if (items[i] != null)
-            {
-               return false;
-            }
-         }
-      }
-
-      return true;
+      return items.isEmpty();
    }
     
    boolean hasItem(String item)
    {
-      if (items != null)
-      {
-         for (int i=0; i<items.length; ++i)
-         {
-            if (items[i] != null && items[i].equals(item))
-            {
-               return true;
-            }
-         }
-      }
-        
-      return false;
+      return items.contains(item);
    }
 
    boolean isFull()
    {
-      if (items != null)
-      {
-         for (int i=0; i<items.length; ++i)
-         {
-            if (items[i] == null)
-            {
-               return false;
-            }
-         }
-      }
-
-      return true;
+      return ((item_limit != -1) && (items.size() >= item_limit));
    }
     
-   boolean addItem(String item, boolean mayExpand)
+   boolean addItem(String item, boolean no_limit)
    {
-      if (items != null)
-      {
-         for (int i=0; i<items.length; ++i)
-         {
-            if (items[i] == null)
-            {
-               items[i] = new String(item);
-
-               return true;
-            }
-         }
-      }
-        
-      if (!mayExpand)
+      if (isFull() && !no_limit)
       {
          return false;
       }
-
-      expandItemList(1);
-      items[items.length - 1] = new String(item);
+      
+      items.add(new String(item));
 
       return true;
    }
 
-   void expandItemList(int n)
+   void setItemLimit(int n)
    {
-      if (items == null)
-      {
-         items = new String[n];
-      }
-      else
-      {
-         String[] old_items = items;
-         items = new String[old_items.length + n];
-            
-         for (int i=0; i<old_items.length; ++i)
-         {
-            items[i] = old_items[i];
-         }
-      }
+      item_limit = n;
    }
     
    boolean removeItem(String item)
    {
-      if (items != null)
+      if (items.contains(item))
       {
-         for (int i=0; i<items.length; ++i)
-         {
-            if (items[i] != null && items[i].equals(item))
-            {
-               items[i] = null;
-
-               return true;
-            }
-         }
+         items.remove(items.indexOf(item));
+         return true;
       }
 
       return false;

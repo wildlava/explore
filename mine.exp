@@ -1,44 +1,52 @@
+VERSION=1
 TITLE=Welcome to the Lost Mine!\This adventure was created by Joe Peterson and De Crandell.
 START_ROOM=3,2,2
 INVENTORY_LIMIT=4
 
 ROOM=1,1,0
 DESC=A large dome of glassy rock surrounds you.  In the middle of\the room is a glass case with a miner's pick safely housed\inside.  The room exits to the south.
+FIXED_OBJECTS=DOME,ROCK,CASE,PICK
 SOUTH=1,2,0
 COMMAND=CUT GLASS,CUT CASE:GLASS CUTTER
 ACTION=+PICK:After the pick falls out, the glass repairs itself and another\pick materializes inside the case.
 
 ROOM=0,2,0
 DESC=You are in a large empty room.  The only thing unusual is a\door in the ceiling with a handle.  There is a low crawl to the\east.
+FIXED_OBJECTS=ROOM,DOOR,CEILING,HANDLE,CRAWL
 EAST=1,2,0
 COMMAND=OPEN DOOR,PULL HANDLE
 ACTION=[U0,2,1:The door falls open.
 
 ROOM=1,2,0
 DESC=You are in an open north/south passage.  A low crawl goes west.
+FIXED_OBJECTS=PASSAGE,CRAWL
 NORTH=1,1,0
 SOUTH=1,3,0
 WEST=0,2,0
 
 ROOM=2,2,0
 DESC=The walls in this room seem to be collapsing.  Loose sand\covers the floor, and among the sand grains are tiny particles\of glass.  A passage exits to the south.
+FIXED_OBJECTS=WALL,WALLS,ROOM,SAND,FLOOR,GRAINS,PARTICLES,GLASS,PASSAGE
 CONTENTS=BUCKET OF SAND
 SOUTH=2,3,0
 
 ROOM=0,3,0
 DESC=You are in the mine elevator.  It is on the lower level.\The doors open to the east, and there is a button on the wall.
+FIXED_OBJECTS=ELEVATOR,DOOR,DOORS,BUTTON,WALL,WALLS
 EAST=1,3,0
 COMMAND=PUSH BUTTON,PRESS BUTTON
 ACTION=/0,3,1:There is a humming sound as the elevator does its stuff.
 
 ROOM=1,3,0
 DESC=There is a wide open passage to the north and a small tunnel\to the east.  To the west is the mine elevator.
+FIXED_OBJECTS=PASSAGE,TUNNEL,ELEVATOR
 NORTH=1,2,0
 EAST=2,3,0
 WEST=0,3,0
 
 ROOM=2,3,0
 DESC=A ghastly sight lies before you!  Sitting against the wall is a\skeleton.  It looks like he hasn't eaten for a hundred years!\Passages go north, east, and west.
+FIXED_OBJECTS=SIGHT,WALL,WALLS,SKELETON,PASSAGE,PASSAGES
 NORTH=2,2,0
 EAST=3,3,0
 WEST=1,3,0
@@ -47,6 +55,7 @@ ACTION=%CONTAINER OF FOOD,EMPTY CONTAINER:The skeleton looks at you and says,\  
 
 ROOM=3,3,0
 DESC=Extending from the wall is the bottom of a long chute.\There is an exit to the west.
+FIXED_OBJECTS=WALL,WALLS,CHUTE,EXIT
 WEST=2,3,0
 COMMAND=U,UP,CLIMB,CLIMB CHUTE,GO CHUTE
 ACTION=:The chute is too slick to climb!
@@ -57,6 +66,7 @@ ACTION=Suddenly the mining car starts rolling toward you!\You make a futile atte
 
 ROOM=1,0,1
 DESC=You are in a gaping cavern.  To the west a railroad track\extends into the distance.  On the track is an old mining car\chained to the wall.  To the south is a clear passage.
+FIXED_OBJECTS=CAVERN,TRACK,CAR,WALL,WALLS,PASSAGE
 SOUTH=1,1,1
 WEST=0,0,1
 COMMAND=CUT CHAIN,SAW CHAIN:HACKSAW
@@ -64,6 +74,7 @@ ACTION=!The chain breaks, and the car starts to roll.  You jump in just\in time!
 
 ROOM=2,0,1
 DESC=Scattered about you are scraps and shavings of wood and metal.\A single bare electrical wire hangs from the ceiling.  There\are tunnels to the south and east.
+FIXED_OBJECTS=SCRAP,SCRAPS,SHAVINGS,WOOD,METAL,WIRE,CEILING,TUNNEL,TUNNELS
 SOUTH=2,1,1
 EAST=3,0,1
 COMMAND=GRAB WIRE,TOUCH WIRE,HOLD WIRE,PULL WIRE,GET WIRE,TAKE WIRE
@@ -71,45 +82,53 @@ ACTION=/1,1,2:You feel a tremendous surge of energy pass through your body as\yo
 
 ROOM=3,0,1
 DESC=You are in a long room with a pit stretching out before you to\the south.  Across the pit you can see another room.  There is\a tunnel to the west.
+FIXED_OBJECTS=ROOM,PIT,ROOM,TUNNEL
 WEST=2,0,1
-COMMAND=THROW SPEAR,CHUCK SPEAR:SPEAR AND ROPE
-ACTION=-SPEAR AND ROPE;[S3,1,1:The spear flies across the pit with the rope trailing behind.\It penetrates the rock on the opposite side, and the rope\creates a bridge to the south.
+COMMAND=THROW SPEAR,CHUCK SPEAR:SPEAR WITH ROPE
+ACTION=-SPEAR WITH ROPE;[S3,1,1:The spear flies across the pit with the rope trailing behind.\It penetrates the rock on the opposite side, and the rope\creates a bridge to the south.
 
 ROOM=0,1,1
 DESC=You are in a hands and knees passage that exits to the south\and east.
+FIXED_OBJECTS=PASSAGE
 SOUTH=0,2,1
 EAST=1,1,1
 
 ROOM=1,1,1
 DESC=There is a clear passage to the north and crawls to the east\and west.
+FIXED_OBJECTS=PASSAGE
 NORTH=1,0,1
 EAST=2,1,1
 WEST=0,1,1
 
 ROOM=2,1,1
 DESC=The walls of this room are covered with pictures of lightning\bolts.  Tunnels lead north and south, and a low crawl goes\west.
+FIXED_OBJECTS=WALL,WALLS,ROOM,PICTURE,PICTURES,BOLT,BOLTS,TUNNEL,TUNNELS,CRAWL
 NORTH=2,0,1
 SOUTH=2,2,1
 WEST=1,1,1
 
 ROOM=3,1,1
 DESC=There is a spear protruding from the south wall.  To the north\is the pit you just crossed.  A rope creates a bridge between\the spear and the far side of the pit.
+FIXED_OBJECTS=SPEAR,WALL,WALLS,PIT,ROPE,BRIDGE
 CONTENTS=COIN
 NORTH=3,0,1
 
 ROOM=0,2,1
 DESC=You are in a small room with debris everywhere.  There is a\small door in the floor which leads down to a lower level.\To the north is a low crawl.
+FIXED_OBJECTS=ROOM,DEBRIS,DOOR,FLOOR,CRAWL
 NORTH=0,1,1
 DOWN=0,2,0
 
 ROOM=1,2,1
 DESC=You have entered a small room with a low ceiling.  Cobwebs\hang from the walls in every direction.  To the south is a wall\of crumbled rock.
+FIXED_OBJECTS=ROOM,CEILING,COBWEB,COBWEBS,WALL,WALLS,ROCK
 CONTENTS=CONTAINER OF FOOD
 COMMAND=PICK ROCK,HIT ROCK,CHOP ROCK,DIG ROCK:PICK
 ACTION=/1,3,1:You dig through the rock and emerge on the other side.\The wall behind you crumbles!
 
 ROOM=2,2,1
 DESC=You are walking through a winding tunnel.  The walls glimmer as\if they were metallic.  The tunnel exits to the north and east.
+FIXED_OBJECTS=TUNNEL,WALL,WALLS
 NORTH=2,1,1
 EAST=3,2,1
 COMMAND=+COIN
@@ -118,18 +137,21 @@ ACTION=/2,1,1:ZAP!!!  A bolt of lightening suddenly strikes the coin and\thrusts
 ROOM=3,2,1
 DESC=You are in a large empty room.  At one end is a slot with a\message under it.  The message says:\     "Insert coin in slot to get an edge on this adventure!"\High above you is a steel grate, which lights the room with a
 ALT_DESC=beam of sunlight.  There is an exit to the west.
+FIXED_OBJECTS=ROOM,SLOT,MESSAGE,GRATE,BEAM,SUNLIGHT,EXIT
 WEST=2,2,1
 COMMAND=INSERT COIN,DROP COIN:COIN
 ACTION=-COIN;+HACKSAW:A hacksaw appears on the floor in front of you.
 
 ROOM=0,3,1
 DESC=You are in the mine elevator.  It is on the upper level.\The doors open to the east, and there is a button on the wall.
+FIXED_OBJECTS=ELEVATOR,DOOR,DOORS,BUTTON,WALL,WALLS
 EAST=1,3,1
 COMMAND=PUSH BUTTON,PRESS BUTTON
 ACTION=/0,3,0:There is a hum as you feel yourself moving downward.
 
 ROOM=1,3,1
 DESC=You are in an east/west passage.  There was once a passage\going north, but it is now blocked by fallen rock.
+FIXED_OBJECTS=PASSAGE,ROCK
 EAST=2,3,1
 WEST=0,3,1
 COMMAND=PICK ROCK,CHOP ROCK,HIT ROCK,DIG ROCK:PICK
@@ -137,6 +159,7 @@ ACTION=/1,2,1:You break through the rock and fall into the next room.\The wall c
 
 ROOM=2,3,1
 DESC=You are standing on a platform jutting out from the rock wall.\A rope is dangling from the cliff above.  The rock opens to the\west.
+FIXED_OBJECTS=PLATFORM,ROCK,WALL,ROPE,CLIFF
 WEST=1,3,1
 UP=2,3,2
 COMMAND=CLIMB,CLIMB ROPE,CLIMB UP
@@ -144,29 +167,34 @@ ACTION==U
 
 ROOM=0,0,2
 DESC=The walls of this room are very smooth.  In one wall is a chute\sloping down into the darkness.  There is a tunnel to the\south.
+FIXED_OBJECTS=WALL,WALLS,ROOM,CHUTE,TUNNEL
 SOUTH=0,1,2
 COMMAND=D,DOWN,SLIDE,SLIDE DOWN,SLIDE CHUTE,GO CHUTE
 ACTION=/3,3,0:You feel as if you're falling through space as you slide down\the long dark chute.  Suddenly, you hit something hard - it's\the floor of a room!
 
 ROOM=0,1,2
 DESC=Passages go south and east, and a dark tunnel goes north.
+FIXED_OBJECTS=PASSAGE,PASSAGES,TUNNEL
 NORTH=0,0,2
 SOUTH=0,2,2
 EAST=1,1,2
 
 ROOM=1,1,2
 DESC=You are standing below an empty light socket.  The room exits\to the west.
+FIXED_OBJECTS=SOCKET
 WEST=0,1,2
 
 ROOM=0,2,2
 DESC=This room looks as if it was once a worship place.  There is a\round slab of rock in the center of the room.  Imbedded in the\rock is the point of a spear.  The spear is standing vertically
 ALT_DESC=in the slab and has a rope tied to the end.  A passage leads\out to the north.
+FIXED_OBJECTS=ROOM,SLAB,ROCK,SPEAR
 NORTH=0,1,2
 COMMAND=ZWOOF,SAY ZWOOF
-ACTION=+SPEAR AND ROPE:The rock slab turns to dust, and the spear falls out.\The image of another spear magically appears in place of the\real one.
+ACTION=+SPEAR WITH ROPE:The rock slab turns to dust, and the spear falls out.\The image of another spear magically appears in place of the\real one.
 
 ROOM=2,2,2
 DESC=Sand covers the ground all around you.  Under your feet is a\steel grate through which you can see a large room.  Paths go\south and east.
+FIXED_OBJECTS=SAND,GROUND,GRATE,PATH,PATHS
 SOUTH=2,3,2
 EAST=3,2,2
 COMMAND=DROP COIN,THROW COIN:COIN
@@ -174,6 +202,7 @@ ACTION=#3,2,1>COIN:Ker-plink!  The coin drops through the grate.
 
 ROOM=3,2,2
 DESC=You are standing on a sand covered plateau.  To one side is a\big boulder.  To the south you see a tree growing out of the\side of the cliff with a rope tied to the very end.  A clear\path leads west.
+FIXED_OBJECTS=SAND,PLATEAU,BOULDER,TREE,CLIFF,ROPE,PATH
 SOUTH=3,3,2
 WEST=2,2,2
 COMMAND=MOVE BOULDER,PUSH BOULDER,ROLL BOULDER,LIFT BOULDER
@@ -181,6 +210,7 @@ ACTION=+ROPE:There is a rope hidden under the boulder!
 
 ROOM=2,3,2
 DESC=You are standing at the edge of a cliff.  Far below you a\platform extends from the cliff.  There is no way to climb down\on the rocks.  Off to one side is a cactus, and a path exits to\the north.
+FIXED_OBJECTS=EDGE,CLIFF,PLATFORM,ROCK,ROCKS,CACTUS,PATH
 NORTH=2,2,2
 COMMAND=DROP ROPE,THROW ROPE,TOSS ROPE,TIE ROPE:ROPE
 ACTION=-ROPE;[D2,3,1:The rope is now hanging over the edge.
@@ -200,3 +230,5 @@ ACTION==D
 LOCAL=1,1,0
 COMMAND=BREAK GLASS,CRACK GLASS,BREAK CASE,CRACK CASE
 ACTION=Your ears are pierced by a screeching siren!\A group of guards comes rushing in and riddles you with bullets!\You are dead.
+
+OLD ITEM SPEAR AND ROPE=SPEAR WITH ROPE

@@ -34,7 +34,7 @@ class Game
 
       io.print("");
       io.print("");
-      io.print("*** EXPLORE ***  ver 4.8.4");
+      io.print("*** EXPLORE ***  ver 4.8.6");
       
       io.print("");
       
@@ -119,8 +119,8 @@ class Game
 
       if ((result & world.RESULT_NO_CHECK) == 0)
       {
-         int check_result = world.checkForAuto();
-         if (check_result != world.RESULT_NOTHING)
+         int check_result = world.checkForAuto(result);
+         if (check_result != world.RESULT_NORMAL)
          {
             result = check_result;
          }

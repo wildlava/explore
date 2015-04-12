@@ -15,6 +15,7 @@ class Room extends ItemContainer
    String desc;
    String desc_alt;
    String desc_ctrl;
+   ArrayList<String> fixed_objects;
    String north_room;
    String south_room;
    String east_room;
@@ -24,6 +25,11 @@ class Room extends ItemContainer
     
    Room next;
 
+   Room(World world)
+   {
+      super(world);
+   }
+   
    String description()
    {
       ArrayList<String> desc_strings = new ArrayList<String>();
@@ -66,28 +72,55 @@ class Room extends ItemContainer
          desc_strings.add(desc_alt);
       }
 
-      if (items != null)
+      for (int i=0; i<items.size(); ++i)
       {
-         for (int i=0; i<items.length; ++i)
+         String item = items.get(i);
+         String item_lower = item.toLowerCase();
+
+         if (World.trs_compat)
          {
-            if (items[i] != null)
+            if (World.trs_look)
             {
-               String item_lower = items[i].toLowerCase();
-               if (World.trs_look)
-               {
-                  desc_strings.add("There is " + ExpUtil.aOrAn(item_lower) +
-                                   " " + items[i] + " here.");
-               }
-               else
-               {
-                  desc_strings.add("There is " + ExpUtil.aOrAn(item_lower) +
-                                   " " + item_lower + " here.");
-               }
+               desc_strings.add("There is " + ExpUtil.aOrAn(item_lower) +
+                                " " + items.get(i) + " here.");
+            }
+            else
+            {
+               desc_strings.add("There is " + ExpUtil.aOrAn(item_lower) +
+                                " " + item_lower + " here.");
             }
          }
-      }            
+         else
+         {
+            if (world.plural_items.contains(item))
+            {
+               desc_strings.add("There are some " + item_lower + " here.");
+            }
+            else if (world.mass_items.contains(item))
+            {
+               desc_strings.add("There is some " + item_lower + " here.");
+            }
+            else
+            {
+               desc_strings.add("There is " + ExpUtil.aOrAn(item_lower) +
+                                " " + item_lower + " here.");
+            }
+         }
+      }
 
       return ExpUtil.join(desc_strings, "\n");
+   }
+
+   boolean hasFixedObject(String item)
+   {
+      if (fixed_objects != null)
+      {
+         return fixed_objects.contains(item);
+      }
+      else
+      {
+         return false;
+      }
    }
 
    static String blockWay(String dir_room)
