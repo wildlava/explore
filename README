@@ -1,0 +1,141 @@
+Explore
+   - The Adventure Interpreter
+
+
+Copyright (c) 2007, Joe Peterson
+All rights reserved.
+(see LICENSE file - a BSD-style license)
+
+
+Running Explore
+---------------
+Simply type "explore" (it is a python program).  Three adventures are
+included, so if you want to try one, type the name of the adventure
+(cave, mine, or castle) when asked.  There are several command line
+options as well, mostly for running the program inside another script
+or program.  Some day, I may document these.  :)
+
+Contact info:
+
+    Email: joe@skyrush.com
+    URL:   http://www.skyrush.com/explore/
+
+
+History
+-------
+When I was 15 or so, my cousin and I were into playing adventure games.
+We wanted to make our own, so we wrote a simple one, but it was hard-coded
+and was a pain to create.  So we came up with the idea to make a program
+that could interpret adventure "game files" that were written in a kind
+of advanture "language".  So we both wrote programs in BASIC to do this,
+and we wrote adventures in separate text files.  I convinced him to
+start using my program (it was better of course!) and we'd merge his features
+into this program.  We came up with three adventures that were written
+in the wee hours of the morning on three separate occasions.  It was kind
+of a mystical inspiration I would say.
+
+Years later I dug up the old BASIC program and re-wrote it in C.  Now it
+works on all unix machines.  It is in my home in the "explore" directory.
+if you run /mcet1/macdata/386bsd/usr/guest/joep/bin/explore, you will
+be asked to enter the name of an adventure.  Here are the choices:
+
+(these are the three original ones:)
+
+cave
+castle
+mine
+
+(this is a forgery of Radio Shack's Haunted House - weak:)
+
+haunt
+
+(this is an X-rated one that some guy wrote who had our program:)
+
+porkys
+
+(these are two tiny ones I wrote that are not really full games -
+ I was just testing some new features:)
+
+joes
+skydive
+
+
+Questions
+---------
+
+* Old BASIC Explore did a "You can't do that yet." if you try a custom
+  command that's also a builtin without the required object.  New
+  java & python ones fall through to the builtin.  Which is more right?
+  Crown example (castle) suggests the new way, oil example perhaps not.
+  Python, Java, and Ruby versions now have a variable called "trs_compat"
+  that controls this.
+
+* If you go to a non-existant room, you get "you can't go that way" - maybe OK.
+
+* Should we break on error in takeAction()?  We don't break on error if, e.g.,
+  = command is used to do a regular command that may fail.  Perhaps we should
+  let all actions get run (or do later actions rely on successful completion
+  of previous ones?).
+
+
+TODO
+----
+
+* Fix checksum code to keep bytes <= 0x3f (to avoid workaround for '`' to ' '
+  workaround for "corner case where resume can fail" in 4.8.3 (note that we
+  need to keep corner case fix for suspend versions before this fix).
+
+* Include adventure name in suspend string
+
+* Remove logic for now-unsupported suspend_version < 1
+
+
+General bugs/questions
+----------------------
+
+* If there is a room with name None or nil, it would serve as a destination
+  for walking to a blocked or non-existant room.
+
+* If "/" command tries to send you to a non-existant room, no error
+  message is returned.
+
+* Walking into breakfast room and dropping knife prints "Ok"
+  grouped with action stuff (getting thrown out by knight).
+  Old BASIC version prints "Ok" normally with blank line after.
+
+* multiple duplicate globals should work requiring different objects.
+
+* what should be done for multiple ACTION lines after one COMMAND?
+
+* variables (TITLE, ROOM, etc.) are not case insensitive.
+
+* commands have to be upper case
+
+* if commands typed too fast, they appear before prompt (Linux issue)
+
+
+Java issues
+-----------
+
+* If there is minimal stuff in file, NullPointerException (fixed now?)
+
+* String passing or referencing (i.e. pass a copy or the string itself?)
+  might need checking (e.g. expandItemName returns a reference
+  to a string in the list).
+
+
+Java applet issues
+------------------
+
+* is there a limit to the textArea length in explore?
+  ...and do lockups when playing a long time and/or fast typing command<cr>
+  have to do with this limit or with deadlocking threads?
+  Also, it gets really slow when this gets too large!
+
+* resume/suspend: can't cut/paste from applet
+
+
+C Issues
+--------
+
+* rework itemcontainer so it doesn't leave holes in list
