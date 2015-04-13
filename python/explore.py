@@ -33,7 +33,7 @@ class ExpIO:
         self.no_delay = False
 
     def tell(self, s, backslash_to_newline=True):
-        if backslash_to_newline and s.find('\\') != -1:
+        if backslash_to_newline:
             s = s.replace('\\', '\n')
 
         lines = s.split('\n')
@@ -360,8 +360,7 @@ class World:
         file_stream = file(filename)
 
         for line in file_stream:
-            line = string.translate(string.strip(line), \
-                                    string.maketrans('\\', '\n'))
+            line = line.strip()
 
             if line.find("=") != -1:
                 keyword, params = line.split("=", 1)
