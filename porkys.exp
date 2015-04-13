@@ -321,4 +321,4 @@ ACTION=:It says,\   "Staircase to third floor in Servants' wing."
 
 GLOBAL
 COMMAND=DRINK WHISKY,DRINK WHISKEY,DRINK BOTTLE:BOTTLE OF WHISKY
-ACTION=-BOTTLE OF WHISKY;/0,1,0:After thoroughly blitzing yourself, one of Porky's bouncers\picks you up, carries you outside and says, "We don't want your \kind here!!"
+ACTION=-BOTTLE OF WHISKY;/0,1,0:After thoroughly blitzing yourself, one of Porky's bouncers\picks you up, carries you outside and says, "We don't want your\kind here!!"
