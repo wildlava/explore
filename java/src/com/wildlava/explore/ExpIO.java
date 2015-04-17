@@ -25,25 +25,16 @@ class ExpIO
    {
       String out_str;
       
-      if (s.indexOf("\\") != -1)
+
+      if (wrap)
       {
-         if (wrap)
-         {
-            out_str = s.replace("\\\\", "\n\n");
-            out_str = out_str.replace("\\ ", "\n ");
-            out_str = out_str.replace("!\\", "!  ");
-            out_str = out_str.replace("?\\", "?  ");
-            out_str = out_str.replace(".\\", ".  ");
-            out_str = out_str.replace("\\", " ");
-         }
-         else
-         {
-            out_str = s.replace("\\", "\n");
-         }
+         out_str = s.replace("\\\\", "\n\n");
+         out_str = out_str.replace("\\ ", "\n ");
+         out_str = out_str.replace("\\", " ");
       }
       else
       {
-         out_str = s;
+         out_str = s.replace("\\", "\n");
       }
 
       for (String line : out_str.split("\n"))

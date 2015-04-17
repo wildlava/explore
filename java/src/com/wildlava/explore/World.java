@@ -36,6 +36,9 @@ class World
    World(ExpIO i, String a)
    {
       io = i;
+      if (trs_look)
+         io.wrap = false;
+
       advname = a;
       
       player = new Player(io, this);
@@ -186,7 +189,7 @@ class World
             }
             else
             {
-               io.print("I'm not sure how to get there.  Try a direction.");
+               io.print("I'm not sure how to get there. Try a direction.");
             }
          }
          else if (command.equals("LOOK"))
@@ -262,7 +265,7 @@ class World
             }
             else
             {
-               io.print("Welcome!  In this game you will use commands to move around,\\manipulate objects or your environment, and do various things.\\To move, type a cardinal direction or up or down (first letter\\is fine: \"n\" for north, \"d\" for down, etc.).  To see where you\\are again, type \"look\".  When you find objects, you can pick\\them up (\"get bottle\"), drop them (\"drop gold\"), or do other\\things (\"eat food\", \"wave wand\", etc.).  To see what you are\\carrying, type \"inventory\" (\"invent\" for short).  To save your\\game for later, type \"suspend\".  To resume it later, type\\\"resume\".  To end the game, type \"quit\".  The key is to use\\your imagination and just try things (\"fly\", \"open door\",\\\"push button\", etc.).  Have fun, and good luck!");
+               io.print("Welcome! In this game you will use commands to move around,\\manipulate objects or your environment, and do various things.\\To move, type a cardinal direction or up or down (first letter\\is fine: \"n\" for north, \"d\" for down, etc.). To see where you\\are again, type \"look\". When you find objects, you can pick\\them up (\"get bottle\"), drop them (\"drop gold\"), or do other\\things (\"eat food\", \"wave wand\", etc.). To see what you are\\carrying, type \"inventory\" (\"invent\" for short). To save your\\game for later, type \"suspend\". To resume it later, type\\\"resume\". To end the game, type \"quit\". The key is to use\\your imagination and just try things (\"fly\", \"open door\",\\\"push button\", etc.). Have fun, and good luck!");
             }
             
             io.print("");
@@ -322,7 +325,7 @@ class World
                if (!io.saveSuspendedState(advname + ".sus",
                                           state()))
                {
-                  io.print("Hmm, for some reason the game cannot be suspended.  Sorry.");
+                  io.print("Hmm, for some reason the game cannot be suspended. Sorry.");
                }
                else
                {
@@ -339,13 +342,13 @@ class World
             String old_state = io.loadSuspendedState(advname + ".sus");
             if (old_state == null)
             {
-               io.print("Hmm, there seems to be no suspended game information.  Sorry.");
+               io.print("Hmm, there seems to be no suspended game information. Sorry.");
             }
             else
             {
                if (!state(old_state))
                {
-                  io.print("Hmm, the suspended game information doesn't look valid.  Sorry.");
+                  io.print("Hmm, the suspended game information doesn't look valid. Sorry.");
                }
                else
                {
@@ -365,7 +368,7 @@ class World
             {
                if (!state(verbatim_argument))
                {
-                  io.print("Hmm, that resume code just doesn't seem to make sense!  Sorry.");
+                  io.print("Hmm, that resume code just doesn't seem to make sense! Sorry.");
                }
                else
                {
@@ -819,6 +822,14 @@ class World
             
          line = line.trim();
             
+         if (!trs_look)
+         {
+            // Remove double spaces after punctuation
+            line = line.replace("!  ", "! ");
+            line = line.replace("?  ", "? ");
+            line = line.replace(".  ", ". ");
+         }
+
          if (line.startsWith("VERSION="))
          {
             version = Integer.parseInt(line.substring(line.indexOf("=") + 1));
@@ -1064,7 +1075,7 @@ class World
             player.current_room = new Room(this);
             player.current_room.name = "limbo";
             player.current_room.desc =
-               "This adventure has no rooms.  You are in limbo!";
+               "This adventure has no rooms. You are in limbo!";
          }
          else
          {
@@ -1431,10 +1442,10 @@ class World
             }
             else
             {
-               io.print("Warning!  Error in decoding suspended game.");
-               io.print("          The state of your game is inconsistent.");
-               io.print("          Please start game over and report this");
-               io.print("          problem to the developer.");
+               io.print("Warning! Error in decoding suspended game.");
+               io.print("         The state of your game is inconsistent.");
+               io.print("         Please start game over and report this");
+               io.print("         problem to the developer.");
                return false;
             }
          }

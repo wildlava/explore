@@ -362,6 +362,11 @@ class World:
         for line in file_stream:
             line = line.strip()
 
+            # Remove double spaces after punctuation
+            line = line.replace('!  ', '! ');
+            line = line.replace('?  ', '? ');
+            line = line.replace('.  ', '. ');
+
             if line.find("=") != -1:
                 keyword, params = line.split("=", 1)
             else:
@@ -514,7 +519,7 @@ class World:
             self.player.current_room = Room(self)
             self.player.current_room.name = "limbo"
             self.player.current_room.desc = \
-                "This adventure has no rooms.  You are in limbo!"
+                "This adventure has no rooms. You are in limbo!"
 
         file_stream.close()
 
@@ -737,7 +742,7 @@ class World:
                 elif argument in DIRECTION_COMMANDS:
                      self.exp_io.tell('No need to say "go" for the simple directions.')
                 else:
-                     self.exp_io.tell("I'm not sure how to get there.  Try a direction.")
+                     self.exp_io.tell("I'm not sure how to get there. Try a direction.")
 
             elif command == "LOOK":
                 if argument != None:
@@ -751,7 +756,7 @@ class World:
 
             elif command == "HELP":
                 self.exp_io.tell("")
-                self.exp_io.tell("Welcome!  In this game you will use commands to move around,\\manipulate objects or your environment, and do various things.\\To move, type a cardinal direction or up or down (first letter\\is fine: \"n\" for north, \"d\" for down, etc.).  To see where you\\are again, type \"look\".  When you find objects, you can pick\\them up (\"get bottle\"), drop them (\"drop gold\"), or do other\\things (\"eat food\", \"wave wand\", etc.).  To see what you are\\carrying, type \"inventory\" (\"invent\" for short).  To save your\\game for later, type \"suspend\".  To resume it later, type\\\"resume\".  To end the game, type \"quit\".  The key is to use\\your imagination and just try things (\"fly\", \"open door\",\\\"push button\", etc.).  Have fun, and good luck!")
+                self.exp_io.tell("Welcome! In this game you will use commands to move around,\\manipulate objects or your environment, and do various things.\\To move, type a cardinal direction or up or down (first letter\\is fine: \"n\" for north, \"d\" for down, etc.). To see where you\\are again, type \"look\". When you find objects, you can pick\\them up (\"get bottle\"), drop them (\"drop gold\"), or do other\\things (\"eat food\", \"wave wand\", etc.). To see what you are\\carrying, type \"inventory\" (\"invent\" for short). To save your\\game for later, type \"suspend\". To resume it later, type\\\"resume\". To end the game, type \"quit\". The key is to use\\your imagination and just try things (\"fly\", \"open door\",\\\"push button\", etc.). Have fun, and good luck!")
                 self.exp_io.tell("")
 
             elif (command == "QUIT" or \
@@ -797,11 +802,11 @@ class World:
                  (self.suspend_mode != SUSPEND_INTERACTIVE and argument == None):
                 if self.last_suspend != None:
                     if not self.set_state(self.last_suspend):
-                        self.exp_io.tell("Hmm, the suspended game information doesn't look valid.  Sorry.")
+                        self.exp_io.tell("Hmm, the suspended game information doesn't look valid. Sorry.")
                     else:
                         result |= (RESULT_DESCRIBE | RESULT_NO_CHECK)
                 else:
-                    self.exp_io.tell("Hmm, there seems to be no suspended game information.  Sorry.")
+                    self.exp_io.tell("Hmm, there seems to be no suspended game information. Sorry.")
 
             elif (command == "RESUME" or command == "RESTORE") and \
                  self.suspend_mode == SUSPEND_INTERACTIVE:
@@ -811,7 +816,7 @@ class World:
                     self.exp_io.tell("when you suspended your game.")
                 else:
                     if not self.set_state(verbatim_argument):
-                        self.exp_io.tell("Hmm, that resume code just doesn't seem to make sense!  Sorry.")
+                        self.exp_io.tell("Hmm, that resume code just doesn't seem to make sense! Sorry.")
                     else:
                         result |= (RESULT_DESCRIBE | RESULT_NO_CHECK)
 
@@ -1078,10 +1083,10 @@ class World:
                     room_code.append(old[1])
                 else:
                    # How would we recover from this?
-                   exp_io.tell("Warning!  Error in decoding suspended game.")
-                   exp_io.tell("          The state of your game is inconsistent.")
-                   exp_io.tell("          Please start game over and report this")
-                   exp_io.tell("          problem to the developer.")
+                   exp_io.tell("Warning! Error in decoding suspended game.")
+                   exp_io.tell("         The state of your game is inconsistent.")
+                   exp_io.tell("         Please start game over and report this")
+                   exp_io.tell("         problem to the developer.")
                    return False
 
             # first the description control
@@ -1094,7 +1099,7 @@ class World:
             # now the possible directions
             for i in range(1, 7):
                 # Remove "^orig_room" from the end of the string if it appears
-                # appears after a "curr_room".  This retains compatibility with
+                # appears after a "curr_room". This retains compatibility with
                 # various save formats that either tack this on or not.
                 #
                 # Note that we currently do tack this information on, since
