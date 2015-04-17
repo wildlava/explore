@@ -518,8 +518,7 @@ class World:
         else:
             self.player.current_room = Room(self)
             self.player.current_room.name = "limbo"
-            self.player.current_room.desc = \
-                "This adventure has no rooms. You are in limbo!"
+            self.player.current_room.desc = "This adventure has no rooms. You are in limbo!"
 
         file_stream.close()
 
@@ -648,14 +647,14 @@ class World:
         result = RESULT_NORMAL
 
         for c in self.commands:
-            if (c.location == None or \
-                c.location == self.player.current_room.name) and \
-                len(c.commands) == 0:
-                if c.condition == None or \
-                   (c.condition[0] == "-" and \
-                    not self.player.has_item(c.condition[1:])) or \
-                   (c.condition != "-" and \
-                    self.player.has_item(c.condition)):
+            if ((c.location == None or
+                 c.location == self.player.current_room.name) and
+                len(c.commands) == 0):
+                if (c.condition == None or
+                    (c.condition[0] == "-" and
+                     not self.player.has_item(c.condition[1:])) or
+                    (c.condition != "-" and
+                     self.player.has_item(c.condition))):
 
                     result |= self.take_action(c, True, previous_result)
 
@@ -700,16 +699,16 @@ class World:
         custom = self.find_custom(wish, self.player.current_room)
 
         if custom != None:
-            if custom.condition == None or \
-               (custom.condition[0] == "-" and \
-                not self.player.has_item(custom.condition[1:])) or \
-               (custom.condition != "-" and \
-                self.player.has_item(custom.condition)):
+            if (custom.condition == None or
+                (custom.condition[0] == "-" and
+                 not self.player.has_item(custom.condition[1:])) or
+                (custom.condition != "-" and
+                 self.player.has_item(custom.condition))):
 
                 player_meets_condition = True
 
-            if custom.location == None or \
-               self.player.current_room.name == custom.location:
+            if (custom.location == None or
+                self.player.current_room.name == custom.location):
 
                 player_in_correct_room = True
 
@@ -759,9 +758,8 @@ class World:
                 self.exp_io.tell("Welcome! In this game you will use commands to move around,\\manipulate objects or your environment, and do various things.\\To move, type a cardinal direction or up or down (first letter\\is fine: \"n\" for north, \"d\" for down, etc.). To see where you\\are again, type \"look\". When you find objects, you can pick\\them up (\"get bottle\"), drop them (\"drop gold\"), or do other\\things (\"eat food\", \"wave wand\", etc.). To see what you are\\carrying, type \"inventory\" (\"invent\" for short). To save your\\game for later, type \"suspend\". To resume it later, type\\\"resume\". To end the game, type \"quit\". The key is to use\\your imagination and just try things (\"fly\", \"open door\",\\\"push button\", etc.). Have fun, and good luck!")
                 self.exp_io.tell("")
 
-            elif (command == "QUIT" or \
-                  command == "STOP") and \
-                 argument == None:
+            elif ((command == "QUIT" or command == "STOP") and
+                  argument == None):
                 if acknowledge:
                     self.exp_io.tell("Ok")
 
@@ -779,12 +777,12 @@ class World:
                 else:
                     self.exp_io.tell("Drop what?")
 
-            elif (command == "INVENT" or command == "INVENTORY") and \
-                 argument == None:
+            elif ((command == "INVENT" or command == "INVENTORY") and
+                  argument == None):
                 self.player.list_items()
 
-            elif (command == "SUSPEND" or command == "SAVE") and \
-                 argument == None:
+            elif ((command == "SUSPEND" or command == "SAVE") and
+                  argument == None):
                 #self.exp_io.tell("Sorry, suspend has not yet been implemented.")
                 if self.suspend_mode == SUSPEND_INTERACTIVE:
                     self.exp_io.tell("")
@@ -798,8 +796,9 @@ class World:
                         self.exp_io.tell("Ok")
                     result |= RESULT_SUSPEND
 
-            elif (command == "RESUME" or command == "RESTORE") and \
-                 (self.suspend_mode != SUSPEND_INTERACTIVE and argument == None):
+            elif ((command == "RESUME" or command == "RESTORE") and
+                  (self.suspend_mode != SUSPEND_INTERACTIVE and
+                   argument == None)):
                 if self.last_suspend != None:
                     if not self.set_state(self.last_suspend):
                         self.exp_io.tell("Hmm, the suspended game information doesn't look valid. Sorry.")
@@ -808,8 +807,8 @@ class World:
                 else:
                     self.exp_io.tell("Hmm, there seems to be no suspended game information. Sorry.")
 
-            elif (command == "RESUME" or command == "RESTORE") and \
-                 self.suspend_mode == SUSPEND_INTERACTIVE:
+            elif ((command == "RESUME" or command == "RESTORE") and
+                  self.suspend_mode == SUSPEND_INTERACTIVE):
                 #self.exp_io.tell("Sorry, resume has not yet been implemented.")
                 if argument == None:
                     self.exp_io.tell("Please follow this command with the code you were given")
