@@ -25,7 +25,7 @@ class ExpIO
    public boolean silent = false;
 
    public static final int SCREEN_LINES = 64;
-   
+
    public ExpIO(Explore e, TextView out, EditText in)
    {
       exp = e;
@@ -47,7 +47,7 @@ class ExpIO
 
       drawScreen();
    }
-   
+
    void print(String s)
    {
       if (!silent)
@@ -55,7 +55,7 @@ class ExpIO
          if (s.indexOf("\\") != -1)
          {
             String out_str;
-            
+
             if (wrap)
             {
                out_str = s.replace("\\\\", "\n\n");
@@ -69,7 +69,7 @@ class ExpIO
             {
                out_str = s.replace("\\", "\n");
             }
-            
+
             doOutput(out_str, true);
          }
          else
@@ -83,7 +83,7 @@ class ExpIO
    {
       printRaw(s, true);
    }
-    
+
    void printRaw(String s, boolean new_line)
    {
       if (!silent)
@@ -91,12 +91,12 @@ class ExpIO
          doOutput(s, new_line);
       }
    }
-   
+
    private void doOutput(String s, boolean new_line)
    {
       String lines[] = s.split("\n");
       String old_cur_line_text = screen[cur_line];
-      
+
       for (String line : lines)
       {
          if (!old_cur_line_text.equals(""))
@@ -108,7 +108,7 @@ class ExpIO
          {
             screen[cur_line] = line;
          }
-         
+
          if (++cur_line > (SCREEN_LINES - 1))
          {
             cur_line = 0;
@@ -116,7 +116,7 @@ class ExpIO
 
          //drawScreen();
       }
-      
+
       if (new_line)
       {
          screen[cur_line] = "";
@@ -136,7 +136,7 @@ class ExpIO
    void drawScreen()
    {
       StringBuffer screen_buf = new StringBuffer(2048);
-      
+
       //try
       //{
       //   Thread.sleep(30);
@@ -144,7 +144,7 @@ class ExpIO
       //catch (InterruptedException x)
       //{
       //}
-      
+
       for (int i=cur_line-(SCREEN_LINES-1); i<=cur_line; i++)
       {
          screen_buf.append(screen[(i + SCREEN_LINES) % SCREEN_LINES]);
@@ -162,7 +162,7 @@ class ExpIO
    String getScreen()
    {
       StringBuffer screen_buf = new StringBuffer(2048);
-      
+
       for (int i=cur_line-(SCREEN_LINES-1); i<=cur_line; i++)
       {
          screen_buf.append(screen[(i + SCREEN_LINES) % SCREEN_LINES]);
@@ -181,7 +181,7 @@ class ExpIO
       //clearScreen();
       doOutput(screen, false);
    }
-   
+
    boolean saveSuspendedState(String filename, String state)
    {
       try
@@ -201,7 +201,7 @@ class ExpIO
             catch (IOException y)
             {
             }
-            
+
             return false;
          }
       }
@@ -212,11 +212,11 @@ class ExpIO
 
       return true;
    }
-   
+
    String loadSuspendedState(String filename)
    {
       byte buf[];
-      
+
       try
       {
          FileInputStream file = exp.openFileInput(filename);
@@ -241,7 +241,7 @@ class ExpIO
             catch (IOException y)
             {
             }
-            
+
             buf = new byte[0];
          }
       }

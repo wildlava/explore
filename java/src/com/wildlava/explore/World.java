@@ -15,7 +15,7 @@ class World
 {
    private ExpIO io;
    private String advname;
-   
+
    int version = 0;
    String title = "This adventure has no title!";
    int inventory_limit;
@@ -32,7 +32,7 @@ class World
    public static boolean use_fixed_objects = false;
    int suspend_version = 1;
    boolean suspend_interactive = false;
-   
+
    World(ExpIO i, String a)
    {
       io = i;
@@ -40,7 +40,7 @@ class World
          io.wrap = false;
 
       advname = a;
-      
+
       player = new Player(io, this);
 
       plural_items = new ArrayList<String>();
@@ -49,7 +49,7 @@ class World
       old_items = new HashMap<String, String>();
       old_versions = new HashMap<Integer, String>();
    }
-    
+
    public static final int RESULT_NORMAL = 0;
    public static final int RESULT_DESCRIBE = 2;
    public static final int RESULT_WIN = 4;
@@ -77,13 +77,13 @@ class World
                result |= takeAction(c, true, previous_result);
             }
          }
-            
+
          c = c.next;
       }
-        
+
       return result;
    }
-    
+
    int processCommand(String wish, boolean acknowledge)
    {
       int result = RESULT_NORMAL;
@@ -92,7 +92,7 @@ class World
       String command = null;
       String argument = null;
       String verbatim_argument = null;
-        
+
       //
       // Save the argument before case conversion in case someone needs it.
       //
@@ -101,7 +101,7 @@ class World
       {
          verbatim_argument = wish.substring(pos + 1);
       }
-        
+
       wish = wish.toUpperCase();
 
       Command custom = findCustom(wish, player.current_room);
@@ -267,7 +267,7 @@ class World
             {
                io.print("Welcome! In this game you will use commands to move around,\\manipulate objects or your environment, and do various things.\\To move, type a cardinal direction or up or down (first letter\\is fine: \"n\" for north, \"d\" for down, etc.). To see where you\\are again, type \"look\". When you find objects, you can pick\\them up (\"get bottle\"), drop them (\"drop gold\"), or do other\\things (\"eat food\", \"wave wand\", etc.). To see what you are\\carrying, type \"inventory\" (\"invent\" for short). To save your\\game for later, type \"suspend\". To resume it later, type\\\"resume\". To end the game, type \"quit\". The key is to use\\your imagination and just try things (\"fly\", \"open door\",\\\"push button\", etc.). Have fun, and good luck!");
             }
-            
+
             io.print("");
          }
          else if ((command.equals("QUIT") ||
@@ -278,7 +278,7 @@ class World
             {
                io.print("Ok");
             }
-                
+
             result |= RESULT_END_GAME;
          }
          else if (command.equals("GET") || command.equals("TAKE"))
@@ -432,15 +432,15 @@ class World
             }
          }
       }
-        
+
       return result;
    }
-    
+
    Command findCustom(String cmd, Room r)
    {
       Command global_candidate = null;
       Command candidate = null;
-        
+
       Command c = commands;
       while(c != null)
       {
@@ -471,10 +471,10 @@ class World
                }
             }
          }
-            
+
          c = c.next;
       }
-        
+
       if (global_candidate != null)
       {
          return global_candidate;
@@ -484,17 +484,17 @@ class World
          return candidate;
       }
    }
-    
+
    int takeAction(Command command)
    {
       return takeAction(command, false, RESULT_NORMAL);
    }
-   
+
    int takeAction(Command command, boolean auto, int previous_result)
    {
       int result = RESULT_NORMAL;
       boolean error = false;
-        
+
       if (command.action == null || command.action.startsWith("^"))
       {
          if (!auto)
@@ -505,13 +505,13 @@ class World
       else
       {
          ArrayList<String> messages = new ArrayList<String>();
-         
+
          String[] action_list = ExpUtil.parseToArray(command.action, ";");
          for (int i=0; i<action_list.length; ++i)
          {
             String action = null;
             String message = null;
-                
+
             int colon_pos = action_list[i].indexOf(":");
             if (colon_pos != -1)
             {
@@ -527,7 +527,7 @@ class World
             {
                action = null;
             }
-                
+
             if (action != null)
             {
                if (action.startsWith("/"))
@@ -761,12 +761,12 @@ class World
                   result |= RESULT_END_GAME;
                }
             }
-                
+
             if (error)
             {
                break;
             }
-                
+
             if (message != null)
             {
                messages.add(message);
@@ -785,7 +785,7 @@ class World
             }
          }
       }
-        
+
       /*
       if (error || (auto && result == RESULT_NORMAL))
       {
@@ -798,7 +798,7 @@ class World
       */
       return result;
    }
-    
+
    boolean load(BufferedReader file_stream)
    {
       String start_room = null;
@@ -806,7 +806,7 @@ class World
       Room new_room = null;
       Command new_command = null;
       String cur_room_name = null;
-      
+
       while (true)
       {
          String line;
@@ -819,12 +819,12 @@ class World
             io.print("Error while reading file!");
             return false;
          }
-            
+
          if (line == null)
             break;
-            
+
          line = line.trim();
-            
+
          if (!trs_look)
          {
             // Remove double spaces after punctuation
@@ -865,7 +865,7 @@ class World
             {
                first_room = new_room;
             }
-                
+
             cur_room_name = new_room.name;
 
             new_command = null;
@@ -894,7 +894,7 @@ class World
             commands = new_command;
 
             String cmd_str = line.substring(line.indexOf("=") + 1);
-                
+
             if (cmd_str.startsWith("+"))
             {
                new_command.condition = cmd_str.substring(1);
@@ -914,10 +914,10 @@ class World
                      new_command.condition =
                         new_command.condition.substring(1);
                   }
-                        
+
                   cmd_str = cmd_str.substring(0, pos);
                }
-                    
+
                new_command.commands = ExpUtil.parseToArray(cmd_str, ",");
             }
 
@@ -936,7 +936,7 @@ class World
                new_command = new Command();
                new_command.next = commands;
                commands = new_command;
-               
+
                if (cur_room_name != null)
                {
                   new_command.location = new String(cur_room_name);
@@ -1085,7 +1085,7 @@ class World
             player.current_room = first_room;
          }
       }
-        
+
       return true;
    }
 
@@ -1108,12 +1108,12 @@ class World
          buf.append(player.items.get(i));
          buf.append(",");
       }
-      
+
       if (buf.charAt(buf.length() - 1) == ',')
       {
          buf.setLength(buf.length() - 1);
       }
-        
+
       buf.append(";");
 
       //
@@ -1130,10 +1130,10 @@ class World
          {
             buf.append(".");
          }
-            
+
          command = command.next;
       }
-        
+
       buf.append(";");
 
       //
@@ -1151,33 +1151,33 @@ class World
          {
             buf.append(".");
          }
-            
+
          buf.append(":");
 
          buf.append(Room.saveWay(room.north_room));
-            
+
          buf.append(":");
-            
+
          buf.append(Room.saveWay(room.south_room));
-            
+
          buf.append(":");
-            
+
          buf.append(Room.saveWay(room.east_room));
-            
+
          buf.append(":");
-            
+
          buf.append(Room.saveWay(room.west_room));
-            
+
          buf.append(":");
-            
+
          buf.append(Room.saveWay(room.up_room));
-            
+
          buf.append(":");
-            
+
          buf.append(Room.saveWay(room.down_room));
-            
+
          buf.append(":");
-            
+
          if (buf.toString().endsWith(".:::::::"))
          {
             buf.setLength(buf.length() - 8);
@@ -1186,7 +1186,7 @@ class World
          {
             buf.setLength(buf.length() - 6);
          }
-            
+
          //
          // the items in the room
          //
@@ -1195,21 +1195,21 @@ class World
             buf.append(room.items.get(i));
             buf.append(",");
          }
-         
+
          if (buf.charAt(buf.length() - 1) == ',')
          {
             buf.setLength(buf.length() - 1);
          }
-         
+
          buf.append(";");
          room = room.next;
       }
-        
+
       if (buf.charAt(buf.length() - 1) == ';')
       {
          buf.setLength(buf.length() - 1);
       }
-        
+
       int checksum = 0;
       for (int i=0; i<buf.length(); ++i)
       {
@@ -1229,7 +1229,7 @@ class World
          return String.valueOf(suspend_version) + ":" + String.valueOf(version) + ":" + ExpUtil.encrypt(buf.toString());
       }
    }
-    
+
    boolean state(String s)
    {
       String state_str;
@@ -1239,7 +1239,7 @@ class World
       {
          return false;
       }
-      
+
       int colon_pos = s.indexOf(":");
       if (colon_pos == -1 || s.charAt(0) < '0' || s.charAt(0) > '9')
       {
@@ -1274,12 +1274,12 @@ class World
       {
          return false;
       }
-      
+
       if (state_str.length() < 2)
       {
          return false;
       }
-        
+
       int num_commands_delta = 0;
       if (old_versions.containsKey(saved_adventure_version))
       {
@@ -1292,7 +1292,7 @@ class World
             }
          }
       }
-      
+
       int checksum = 0;
       for (int i=2; i<state_str.length(); ++i)
       {
@@ -1301,7 +1301,7 @@ class World
 
       int checksum_high = ((checksum >> 6) & 0x3f) + 0x21;
       int checksum_low = (checksum & 0x3f) + 0x21;
-      
+
       // Fix a problem in which the '`' character gets converted to ' '
       // in the encryption/decryption process.
       if (checksum_high == 0x60)
@@ -1322,9 +1322,9 @@ class World
       {
          return false;
       }
-        
+
       String[] parts = ExpUtil.parseToArray(state_str.substring(2), ";");
-        
+
       int num_rooms = 0;
       Room room = rooms;
       while (room != null)
@@ -1337,7 +1337,7 @@ class World
       {
          return false;
       }
-        
+
       int num_commands = 0;
       Command command = commands;
       while (command != null)
@@ -1362,7 +1362,7 @@ class World
 
          return false;
       }
-        
+
       //
       // Recover the player's items.
       //
@@ -1383,7 +1383,7 @@ class World
             }
          }
       }
-        
+
       //
       // Recover the state of the actions.
       //
@@ -1404,11 +1404,11 @@ class World
                command.action = command.action.substring(1);
             }
          }
-            
+
          ++command_idx;
          command = command.next;
       }
-        
+
       //
       // Recover the room details.
       //
@@ -1471,7 +1471,7 @@ class World
                                            room.desc_ctrl.length() - 1);
             }
          }
-            
+
          //
          // now the possible directions
          //
@@ -1483,7 +1483,7 @@ class World
          {
             room.north_room = room_code[1];
          }
-            
+
          if (room_code[2].equals(""))
          {
             room.south_room = Room.originalWay(room.south_room);
@@ -1492,7 +1492,7 @@ class World
          {
             room.south_room = room_code[2];
          }
-            
+
          if (room_code[3].equals(""))
          {
             room.east_room = Room.originalWay(room.east_room);
@@ -1501,7 +1501,7 @@ class World
          {
             room.east_room = room_code[3];
          }
-            
+
          if (room_code[4].equals(""))
          {
             room.west_room = Room.originalWay(room.west_room);
@@ -1510,7 +1510,7 @@ class World
          {
             room.west_room = room_code[4];
          }
-            
+
          if (room_code[5].equals(""))
          {
             room.up_room = Room.originalWay(room.up_room);
@@ -1519,7 +1519,7 @@ class World
          {
             room.up_room = room_code[5];
          }
-            
+
          if (room_code[6].equals(""))
          {
             room.down_room = Room.originalWay(room.down_room);
@@ -1528,7 +1528,7 @@ class World
          {
             room.down_room = room_code[6];
          }
-            
+
          //
          // now the contents
          //
@@ -1562,14 +1562,14 @@ class World
       if (name != null)
       {
          Room r = rooms;
-            
+
          while (r != null)
          {
             if (r.name.equals(name))
             {
                return r;
             }
-                
+
             r = r.next;
          }
       }

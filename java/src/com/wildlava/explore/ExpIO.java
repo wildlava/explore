@@ -20,11 +20,11 @@ class ExpIO
 {
    public boolean wrap = false;
    public int max_line_length = 79;
-   
+
    void print(String s)
    {
       String out_str;
-      
+
 
       if (wrap)
       {
@@ -69,7 +69,7 @@ class ExpIO
    {
       printRaw(s, true);
    }
-    
+
    void printRaw(String s, boolean new_line)
    {
       try
@@ -79,9 +79,9 @@ class ExpIO
       catch (InterruptedException x)
       {
       }
-      
+
       System.out.print(s);
-      
+
       if (new_line)
       {
          System.out.print("\n");
@@ -93,9 +93,9 @@ class ExpIO
    synchronized String input()
    {
       String s;
-        
+
       BufferedReader stream = new BufferedReader(new InputStreamReader(System.in));
-      
+
       try
       {
          s = stream.readLine();
@@ -104,7 +104,7 @@ class ExpIO
       {
          s = "";
       }
-      
+
       if (s != null)
       {
          return s;
@@ -119,7 +119,7 @@ class ExpIO
    //{
    //   return false;
    //}
-   
+
    //byte[] loadSuspendedState(String filename)
    //{
    //   return null;
@@ -144,7 +144,7 @@ class ExpIO
             catch (IOException y)
             {
             }
-            
+
             return false;
          }
       }
@@ -155,11 +155,11 @@ class ExpIO
 
       return true;
    }
-   
+
    String loadSuspendedState(String filename)
    {
       byte buf[];
-      
+
       try
       {
          FileInputStream file = new FileInputStream(filename);
@@ -184,7 +184,7 @@ class ExpIO
             catch (IOException y)
             {
             }
-            
+
             buf = new byte[0];
          }
       }

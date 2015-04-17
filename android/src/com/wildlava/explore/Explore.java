@@ -44,7 +44,7 @@ public class Explore extends Activity
    public void onCreate(Bundle savedInstanceState)
    {
       super.onCreate(savedInstanceState);
-      
+
       LinearLayout layout = new LinearLayout(this);
       output_area = new TextView(this);
       input_area = new EditText(this);
@@ -53,7 +53,7 @@ public class Explore extends Activity
       cave_button = new Button(this);
       mine_button = new Button(this);
       castle_button = new Button(this);
-      
+
       //output_area.setWidth(320);
       //output_area.setHeight(320);
       //output_area.setHeight(480);
@@ -69,7 +69,7 @@ public class Explore extends Activity
       //output_area.setTypeface(Typeface.MONOSPACE);
       output_area.setTextSize((float) 12.0);
       //output_area.setTextSize((float) 9.0);
-      
+
       input_area.setLines(1);
       input_area.setWidth(150);
 
@@ -90,7 +90,7 @@ public class Explore extends Activity
                io.print(wish);
                play(wish);
                input_area.setText("");
-               
+
                return true;
             }
 
@@ -99,7 +99,7 @@ public class Explore extends Activity
       });
 
       button_layout = new LinearLayout(this);
-      
+
       cave_button.setText("Play Cave");
       cave_button.setOnClickListener(new View.OnClickListener()
       {
@@ -108,7 +108,7 @@ public class Explore extends Activity
             start("cave");
          }
       });
-      
+
       mine_button.setText("Play Mine");
       mine_button.setOnClickListener(new View.OnClickListener()
       {
@@ -117,7 +117,7 @@ public class Explore extends Activity
             start("mine");
          }
       });
-      
+
       castle_button.setText("Play Castle");
       castle_button.setOnClickListener(new View.OnClickListener()
       {
@@ -126,14 +126,14 @@ public class Explore extends Activity
             start("castle");
          }
       });
-      
+
       if (getResources().getConfiguration().orientation ==
           Configuration.ORIENTATION_PORTRAIT)
       {
          FrameLayout control_layout = new FrameLayout(this);
 
          layout.setOrientation(LinearLayout.VERTICAL);
-         
+
          control_layout.setMeasureAllChildren(true);
          button_layout.setOrientation(LinearLayout.HORIZONTAL);
          button_layout.addView(cave_button);
@@ -141,7 +141,7 @@ public class Explore extends Activity
          button_layout.addView(castle_button);
          control_layout.addView(input_area);
          control_layout.addView(button_layout);
-         
+
          //output_area.setBackgroundColor(0xffff0000);
          //control_layout.setBackgroundColor(0xff0000ff);
 
@@ -154,7 +154,7 @@ public class Explore extends Activity
       else
       {
          FrameLayout control_layout = new FrameLayout(this);
-         
+
          layout.setOrientation(LinearLayout.HORIZONTAL);
 
          control_layout.setMeasureAllChildren(true);
@@ -167,17 +167,17 @@ public class Explore extends Activity
 
          //output_area.setBackgroundColor(0xffff0000);
          //control_layout.setBackgroundColor(0xff0000ff);
-         
+
          layout.addView(output_area);
          layout.addView(control_layout);
 
          //output_area.setWidth(output_area.getWidth());
          //output_area.setHeight(output_layout.getHeight());
       }
-      
+
       //setContentView(R.layout.main);
       io = new ExpIO(this, output_area, input_area);
-      
+
       if (savedInstanceState != null)
       {
          advname = savedInstanceState.getString("AdvName");
@@ -197,15 +197,15 @@ public class Explore extends Activity
          //input_area.setFocusable(false);
          //input_area.setEnabled(false);
          //button_layout.setVisibility(View.VISIBLE);
-         
+
          io.clearScreen();
-         
+
          io.print("Please select an adventure.");
          io.print("");
          io.print("If you want to start over or choose a different");
          io.print("adventure while playing, type \"quit\".");
       }
-      
+
       setContentView(layout);
    }
 
@@ -221,10 +221,10 @@ public class Explore extends Activity
          savedInstanceState.putString("SuspendedState", world.state());
          savedInstanceState.putString("Screen", io.getScreen());
       }
-      
+
       super.onSaveInstanceState(savedInstanceState);
    }
-   
+
    public void start(String name)
    {
       button_layout.setVisibility(View.GONE);
@@ -232,7 +232,7 @@ public class Explore extends Activity
       //input_area.setEnabled(true);
       input_area.setVisibility(View.VISIBLE);
       input_area.requestFocus();
-      
+
       io.clearScreen();
 
       io.print("");
@@ -245,7 +245,7 @@ public class Explore extends Activity
       try
       {
          BufferedReader file = null;
-         
+
          if (advname.equals("cave"))
          {
             file = new BufferedReader(new InputStreamReader(getResources().openRawResource(R.raw.cave)));
@@ -258,21 +258,21 @@ public class Explore extends Activity
          {
             file = new BufferedReader(new InputStreamReader(getResources().openRawResource(R.raw.castle)));
          }
-         
+
          io.print("");
          io.print(advname + " is now being built...");
-         
+
          if (world.load(file))
          {
             try
             {
                file.close();
-            
+
                io.print("");
                io.print("");
                io.print(world.title);
                io.print("");
-               
+
                play(null);
             }
             catch (java.io.IOException x)
@@ -289,7 +289,7 @@ public class Explore extends Activity
             catch (java.io.IOException x)
             {
             }
-            
+
             io.print("Error while building adventure!");
          }
       }
@@ -298,15 +298,15 @@ public class Explore extends Activity
          io.print("Sorry, that adventure is not available.");
       }
    }
-   
+
    void play(String wish)
    {
       int result;
-      
+
       if (wish != null)
       {
          wish = ExpUtil.superTrim(wish);
-            
+
          if (!wish.equals(""))
          {
             result = world.processCommand(wish, true);
@@ -329,13 +329,13 @@ public class Explore extends Activity
             result = check_result;
          }
       }
-      
+
       if ((result & world.RESULT_DESCRIBE) != 0)
       {
          io.print("");
          io.print(world.player.current_room.description());
       }
-      
+
       //if ((result & world.RESULT_WIN) != 0 ||
       //    (result & world.RESULT_DIE) != 0)
       if ((result & world.RESULT_END_GAME) != 0)
@@ -358,7 +358,7 @@ public class Explore extends Activity
             io.print("");
             io.print("Game over.");
          }
-         
+
          io.print("");
 
          world = null;

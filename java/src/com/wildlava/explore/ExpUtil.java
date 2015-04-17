@@ -23,7 +23,7 @@ class ExpUtil
       {
          return null;
       }
-        
+
       //
       // First count the number of delimeters in the string.
       //
@@ -38,7 +38,7 @@ class ExpUtil
       // Allocate the array to hold the right number of items.
       //
       String[] s = new String[num_items];
-        
+
       //
       // Copy the items into the array.
       //
@@ -57,7 +57,7 @@ class ExpUtil
 
          start += pos + 1;
       }
-        
+
       return s;
    }
 
@@ -70,7 +70,7 @@ class ExpUtil
 
       String[] words = parseToArray(s, " ");
       String new_s = "";
-        
+
       for (int i=0; i<words.length; ++i)
       {
          if (!words[i].equals(""))
@@ -78,7 +78,7 @@ class ExpUtil
             new_s = new_s.concat(words[i].trim() + " ");
          }
       }
-        
+
       return new_s.trim();
    }
 
@@ -96,17 +96,17 @@ class ExpUtil
             buffer.append(iter.next());
          }
       }
-      
+
       return buffer.toString();
    }
-   
+
    static String aOrAn(String s)
    {
       if (s == null || s.length() < 1)
       {
          return "a";
       }
-        
+
       if (s.charAt(0) == 'a' ||
           s.charAt(0) == 'e' ||
           s.charAt(0) == 'i' ||
@@ -127,7 +127,7 @@ class ExpUtil
       {
          return null;
       }
-        
+
       StringBuffer result = new StringBuffer();
 
       int i = 0;
@@ -165,17 +165,17 @@ class ExpUtil
             }
          }
       }
-        
+
       return result.toString();
    }
-    
+
    static String runLengthDecode(String s)
    {
       if (s == null)
       {
          return null;
       }
-        
+
       StringBuffer result = new StringBuffer();
 
       int i = 0;
@@ -191,13 +191,13 @@ class ExpUtil
                   //
                   // error!
                   //
-                        
+
                   return null;
                }
                else if (pos == (i + 1))
                {
                   result.append('/');
-                        
+
                   i += 2;
                }
                else
@@ -216,7 +216,7 @@ class ExpUtil
                   {
                      return null;
                   }
-                        
+
                   i = pos + 1;
                }
             }
@@ -232,16 +232,16 @@ class ExpUtil
          else
          {
             result.append(s.charAt(i));
-                
+
             ++i;
          }
       }
-        
+
       return result.toString();
    }
-    
+
    private final static String key = "We were inspired by Steely Dan.";
-    
+
    static String encrypt(String s)
    {
       StringBuffer buf = new StringBuffer();
@@ -276,7 +276,7 @@ class ExpUtil
          c += 0x20;
 
          buf.append(c);
-            
+
          ++i;
       }
 

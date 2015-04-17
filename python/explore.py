@@ -87,7 +87,7 @@ class ItemContainer:
         self.fixed_objects = []
         self.items = []
         self.item_limit = None
-        
+
     def has_no_items(self):
         return len(self.items) == 0
 
@@ -108,7 +108,7 @@ class ItemContainer:
             same_item = self.world.same_items[item]
             if same_item in self.items:
                 return same_item
-            
+
         for test_item in self.items:
             word_list = test_item.split()
             if len(word_list) > 1:
@@ -525,7 +525,7 @@ class World:
     def take_action(self, command, auto=False, previous_result=RESULT_NORMAL):
         result = RESULT_NORMAL
         error = False
-        
+
         if len(command.actions) == 0 or len(command.actions[0]) == 0 or command.actions[0][0] == "^":
             if not auto:
                 self.exp_io.tell("Nothing happens.")
@@ -962,7 +962,7 @@ class World:
         # Cannot handle suspend versions lower than 1
         if saved_suspend_version < 1:
             return False
-      
+
         if len(state_str) < 2:
             return False
 

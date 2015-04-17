@@ -16,10 +16,10 @@ class Player extends ItemContainer
    Player(ExpIO i, World world)
    {
       super(world);
-      
+
       io = i;
    }
-   
+
    void getItem(String item, boolean acknowledge)
    {
       String full_item_room = current_room.expandItemName(item);
@@ -56,7 +56,7 @@ class Player extends ItemContainer
                String[] word_list = ExpUtil.parseToArray(item, " ");
                String item_part = word_list[word_list.length - 1];
                boolean found_fixed_object = true;
-               
+
                if (!current_room.hasFixedObject(item_part))
                {
                   if (word_list.length > 1)
@@ -91,7 +91,7 @@ class Player extends ItemContainer
       else
       {
          current_room.removeItem(full_item_room);
-            
+
          if (acknowledge)
          {
             io.print("Ok");
@@ -102,11 +102,11 @@ class Player extends ItemContainer
    void dropItem(String item, boolean acknowledge)
    {
       String full_item = expandItemName(item);
-        
+
       if (!removeItem(full_item))
       {
          String item_lower = item.toLowerCase();
-         
+
          if (World.trs_compat)
          {
             if (World.trs_look)

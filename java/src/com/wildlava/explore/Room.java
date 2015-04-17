@@ -22,14 +22,14 @@ class Room extends ItemContainer
    String west_room;
    String up_room;
    String down_room;
-    
+
    Room next;
 
    Room(World world)
    {
       super(world);
    }
-   
+
    String description()
    {
       ArrayList<String> desc_strings = new ArrayList<String>();
