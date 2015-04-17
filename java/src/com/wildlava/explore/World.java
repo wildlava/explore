@@ -329,7 +329,10 @@ class World
                }
                else
                {
-                  io.print("Ok");
+                  if (acknowledge)
+                  {
+                     io.print("Ok");
+                  }
                }
             }
             /*
