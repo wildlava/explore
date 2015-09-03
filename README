@@ -2,7 +2,7 @@ Explore
    - The Adventure Interpreter
 
 
-Running Explore
+Running explore
 ---------------
 Simply type "explore" (it will start the Java program). There are five
 main adventures, and if you want to try one of these, type the name of
@@ -80,8 +80,14 @@ the language. And years after that, I rewrote the whole thing in Python and
 later in Ruby.
 
 
-TODO
-----
+To do
+-----
+
+* Are there hard-wrapped strings (resume in python)? Fix?
+
+* Return error if saved_adventure_version > version
+
+* Fix (?) logic of comma-separated OLD VERSION case (does not add to delta)
 
 * Fix checksum code to keep bytes <= 0x3f (to avoid workaround for '`' to ' '
   workaround for "corner case where resume can fail" in 4.8.3 (note that we
@@ -92,7 +98,7 @@ TODO
 * Remove logic for now-unsupported suspend_version < 1
 
 
-Resolved Questions
+Resolved questions
 ------------------
 
 * Old BASIC Explore did a "You can't do that yet." if you try a custom
@@ -157,7 +163,7 @@ Java applet issues (no longer used for web-based game)
 * Can't cut/paste in applet in order to suspend/resume.
 
 
-C Issues (no longer maintained)
+C issues (no longer maintained)
 -------------------------------
 
 * Rework itemcontainer so it doesn't leave holes in list.
