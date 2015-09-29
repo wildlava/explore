@@ -1,6 +1,5 @@
 /* Explore file converter.
  * This converts old TRS-80 explore files to the new format.
- * (The CR/LF stuff must be converted first with trs_conv).
  */
 
 #include    <stdio.h>
@@ -327,38 +326,24 @@ fix_text(string, delim)
 read_line(file, string)
     FILE           *file;
     char            string[];
-
 {
-    char *ret;
-    int len;
+    int c;
+    int len = 0;
 
-    ret= fgets(string, 1023, file);
-    len= strlen(string);
-    if (len)
-    if (string[len-1] == '\n')
-        string[len-1]= '\0';
-
-    if (!ret)
-    return(EOF);
-    else
-    return(0);
-/*
-    int             pos;
-    char            c;
-
-    pos = 0;
-    while ((c = fgetc(file)) != '\n')
+    while ((c = fgetc(file)) != EOF && c != '\r')
     {
-        if (c == EOF)
-        {
-            string[0] = '\0';
-            return (EOF);
-        }
-        string[pos++] = c;
+        if (c == '\n')
+            c = '\\';
+
+        string[len++] = c;
     }
-    string[pos] = '\0';
-    return (0);
-*/
+
+    string[len] = '\0';
+
+    if (c == EOF)
+        return(EOF);
+    else
+        return(0);
 }
 
 
