@@ -3,13 +3,17 @@
  */
 
 #include    <stdio.h>
+#include    <stdlib.h>
 #include    <string.h>
 #define DEFINE_GLOBALS
 #include    "explore.h"
 
 #define ROOM(x, y, z) ((z) * size_x * size_y + (y) * size_x + (x))
 
-main(argc, argv)
+int read_line(FILE *, char *);
+void fix_text(char *, int);
+
+void main(argc, argv)
 int argc;
 char *argv[];
 {
@@ -284,11 +288,10 @@ char *argv[];
     num_global_commands = i;
 
     fclose(adventure_file);
-    return(0);
 }
 
 
-fix_text(string, delim)
+void fix_text(string, delim)
     char *string;
     int delim;
 {
@@ -323,7 +326,7 @@ fix_text(string, delim)
 }
 
 
-read_line(file, string)
+int read_line(file, string)
     FILE           *file;
     char            string[];
 {
@@ -347,6 +350,8 @@ read_line(file, string)
 }
 
 
+/*
+
 write_line(file, string)
     FILE           *file;
     char           *string;
@@ -369,9 +374,7 @@ read_til_cr(file)
     char dummy[1024];
 
     fgets(dummy, 1023, file);
-/*
-    while (fgetc(file) != '\n');
-*/
+    //while (fgetc(file) != '\n');
 }
 
 
@@ -380,3 +383,5 @@ write_cr(file)
 {
     fputc('\n', file);
 }
+
+*/

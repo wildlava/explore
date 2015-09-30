@@ -3,12 +3,14 @@
  */
 
 #include    <stdio.h>
+#include    <stdlib.h>
 #include    <string.h>
 #define DEFINE_GLOBALS
 #include    "explore.h"
 
+int read_line(FILE *, char *);
 
-main(argc, argv)
+void main(argc, argv)
     int argc;
     char *argv[];
 {
@@ -168,11 +170,10 @@ main(argc, argv)
     num_global_commands = i;
 
     fclose(adventure_file);
-    return(0);
 }
 
 
-read_line(file, string)
+int read_line(file, string)
     FILE           *file;
     char            string[];
 
@@ -210,6 +211,8 @@ read_line(file, string)
 }
 
 
+/*
+
 write_line(file, string)
     FILE           *file;
     char           *string;
@@ -232,9 +235,7 @@ read_til_cr(file)
     char dummy[1024];
 
     fgets(dummy, 1023, file);
-/*
-    while (fgetc(file) != '\n');
-*/
+    //while (fgetc(file) != '\n');
 }
 
 
@@ -243,3 +244,5 @@ write_cr(file)
 {
     fputc('\n', file);
 }
+
+*/

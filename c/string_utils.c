@@ -54,7 +54,7 @@ token_search(string, token, delim)
 }
 
 
-shftstr(string, shift)
+void shftstr(string, shift)
     char           *string;
     int             shift;
 {
