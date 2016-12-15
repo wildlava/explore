@@ -1,9 +1,8 @@
-Explore
-   - The Adventure Interpreter
+# Explore - The Adventure Interpreter #
 
 
-Running explore
----------------
+### Running explore ###
+
 Simply type "explore" (it will start the Java program). There are five
 main adventures, and if you want to try one of these, type the name of
 the adventure (cave, mine, castle, haunt, or porkys) when asked. Here is
@@ -49,8 +48,8 @@ It is located here:
     http://www.wildlava.com/explore/
 
 
-History
--------
+### History ###
+
 When I was 15 or so, my cousin, De, and I were into playing adventure games,
 like the mother of all text adventure games, "Adventure". We wanted to make
 our own, so we wrote a simple one, but it was hard-coded and was a pain
@@ -80,8 +79,7 @@ the language. And years after that, I rewrote the whole thing in Python and
 later in Ruby.
 
 
-To do
------
+### To do ###
 
 * Are there hard-wrapped strings (resume in python)? Fix?
 
@@ -98,8 +96,7 @@ To do
 * Remove logic for now-unsupported suspend_version < 1
 
 
-Resolved questions
-------------------
+### Resolved questions ###
 
 * Old BASIC Explore did a "You can't do that yet." if you try a custom
   command that's also a builtin without the required object. New
@@ -111,8 +108,7 @@ Resolved questions
   - New "fixed object" feature takes care of this.
 
 
-General bugs/questions
-----------------------
+### General bugs/questions ###
 
 * If you go to a non-existant room, you get "you can't go that way" - OK?
 
@@ -142,8 +138,7 @@ General bugs/questions
 * If commands typed too fast, they appear before prompt (Linux issue).
 
 
-Java issues
------------
+### Java issues ###
 
 * If there is minimal stuff in adventure file, NullPointerException thrown
   (may be fixed now).
@@ -152,8 +147,7 @@ Java issues
   (e.g. expandItemName returns a reference to a string in the list).
 
 
-Java applet issues (no longer used for web-based game)
-------------------------------------------------------
+### Java applet issues (no longer used for web-based game) ###
 
 * Is there a limit to the textArea length in explore?
   ...and do lockups when playing a long time and/or fast typing command<cr>
@@ -163,7 +157,6 @@ Java applet issues (no longer used for web-based game)
 * Can't cut/paste in applet in order to suspend/resume.
 
 
-C issues (no longer maintained)
--------------------------------
+### C issues (no longer maintained) ###
 
 * Rework itemcontainer so it doesn't leave holes in list.
