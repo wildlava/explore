@@ -17,11 +17,12 @@ import android.widget.TextView;
 import android.widget.EditText;
 import android.widget.Button;
 import android.view.View;
-import android.view.KeyEvent;
-import android.view.View.OnKeyListener;
 import android.view.View.OnClickListener;
 import android.view.Gravity;
+import android.view.KeyEvent;
 import android.view.inputmethod.InputMethodManager;
+import android.view.inputmethod.EditorInfo;
+import android.widget.TextView.OnEditorActionListener;
 import android.graphics.Typeface;
 import java.io.InputStreamReader;
 //import java.io.FileReader;
@@ -48,7 +49,6 @@ public class Explore extends Activity
       LinearLayout layout = new LinearLayout(this);
       output_area = new TextView(this);
       input_area = new EditText(this);
-      input_area.setVisibility(View.GONE);
 
       cave_button = new Button(this);
       mine_button = new Button(this);
@@ -70,28 +70,37 @@ public class Explore extends Activity
       output_area.setTextSize((float) 12.0);
       //output_area.setTextSize((float) 9.0);
 
-      input_area.setLines(1);
+      //input_area.setLines(1);
+      input_area.setSingleLine(true);
+      input_area.setImeOptions(EditorInfo.IME_ACTION_DONE);
       input_area.setWidth(150);
+      input_area.setVisibility(View.GONE);
 
-      input_area.setOnKeyListener(new View.OnKeyListener()
+      input_area.setOnEditorActionListener(new OnEditorActionListener()
       {
-         public boolean onKey(View v, int key, KeyEvent event)
+         @Override
+         public boolean onEditorAction(TextView v, int actionId, KeyEvent event)
          {
-            if (key == 66 && event.getAction() == KeyEvent.ACTION_DOWN)
+            if(actionId == EditorInfo.IME_ACTION_DONE)
             {
-               if (getResources().getConfiguration().orientation ==
-                   Configuration.ORIENTATION_LANDSCAPE)
-               {
-                  InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
-                  imm.hideSoftInputFromWindow(input_area.getWindowToken(), 0);
-               }
-
                String wish = input_area.getText().toString();
                io.print(wish);
                play(wish);
                input_area.setText("");
 
-               return true;
+               if (getResources().getConfiguration().orientation ==
+                   Configuration.ORIENTATION_LANDSCAPE)
+               {
+                  // Remove soft keyboard if in landscape mode,
+                  // since it covers up the game.
+                  return false;
+               }
+               else
+               {
+                  // Keep soft keyboard on the screen if in portrait mode,
+                  // since it makes for smoother interaction.
+                  return true;
+               }
             }
 
             return false;

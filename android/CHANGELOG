@@ -1,3 +1,7 @@
+Version 4.8.6.1:
+
+* Fix command input for recent Android versions
+
 Version 4.8.6:
 
 * Fixes to grammar logic
