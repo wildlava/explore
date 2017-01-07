@@ -57,9 +57,6 @@ class ExpIO
          {
             out_str = s.replace("\\\\", "\n\n");
             out_str = out_str.replace("\\ ", "\n ");
-            out_str = out_str.replace("!\\", "!  ");
-            out_str = out_str.replace("?\\", "?  ");
-            out_str = out_str.replace(".\\", ".  ");
             out_str = out_str.replace("\\", " ");
          }
          else
