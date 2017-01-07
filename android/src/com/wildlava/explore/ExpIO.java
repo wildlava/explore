@@ -22,7 +22,6 @@ class ExpIO
    private String[] screen;
    private int cur_line;
    public boolean wrap = true;
-   public boolean silent = false;
 
    public static final int SCREEN_LINES = 64;
 
@@ -50,32 +49,29 @@ class ExpIO
 
    void print(String s)
    {
-      if (!silent)
+      if (s.indexOf("\\") != -1)
       {
-         if (s.indexOf("\\") != -1)
+         String out_str;
+
+         if (wrap)
          {
-            String out_str;
-
-            if (wrap)
-            {
-               out_str = s.replace("\\\\", "\n\n");
-               out_str = out_str.replace("\\ ", "\n ");
-               out_str = out_str.replace("!\\", "!  ");
-               out_str = out_str.replace("?\\", "?  ");
-               out_str = out_str.replace(".\\", ".  ");
-               out_str = out_str.replace("\\", " ");
-            }
-            else
-            {
-               out_str = s.replace("\\", "\n");
-            }
-
-            doOutput(out_str, true);
+            out_str = s.replace("\\\\", "\n\n");
+            out_str = out_str.replace("\\ ", "\n ");
+            out_str = out_str.replace("!\\", "!  ");
+            out_str = out_str.replace("?\\", "?  ");
+            out_str = out_str.replace(".\\", ".  ");
+            out_str = out_str.replace("\\", " ");
          }
          else
          {
-            doOutput(s, true);
+            out_str = s.replace("\\", "\n");
          }
+
+         doOutput(out_str, true);
+      }
+      else
+      {
+         doOutput(s, true);
       }
    }
 
@@ -86,10 +82,7 @@ class ExpIO
 
    void printRaw(String s, boolean new_line)
    {
-      if (!silent)
-      {
-         doOutput(s, new_line);
-      }
+      doOutput(s, new_line);
    }
 
    private void doOutput(String s, boolean new_line)

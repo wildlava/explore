@@ -192,10 +192,9 @@ public class Explore extends Activity
          advname = savedInstanceState.getString("AdvName");
          if (advname != null)
          {
-            io.silent = true;
-            start(advname);
+            // Load the game silently and recover state
+            start(advname, true);
             world.state(savedInstanceState.getString("SuspendedState"));
-            io.silent = false;
             io.setScreen(savedInstanceState.getString("Screen"));
          }
       }
@@ -236,17 +235,25 @@ public class Explore extends Activity
 
    public void start(String name)
    {
+      start(name, false);
+   }
+
+   public void start(String name, boolean silent_load)
+   {
       button_layout.setVisibility(View.GONE);
       //input_area.setFocusable(true);
       //input_area.setEnabled(true);
       input_area.setVisibility(View.VISIBLE);
       input_area.requestFocus();
 
-      io.clearScreen();
+      if (!silent_load)
+      {
+         io.clearScreen();
 
-      io.print("");
-      io.print("");
-      io.print("*** EXPLORE ***  ver 4.8.6");
+         io.print("");
+         io.print("");
+         io.print("*** EXPLORE ***  ver 4.8.6");
+      }
 
       advname = name;
       world = new World(io, advname);
@@ -268,8 +275,11 @@ public class Explore extends Activity
             file = new BufferedReader(new InputStreamReader(getResources().openRawResource(R.raw.castle)));
          }
 
-         io.print("");
-         io.print(advname + " is now being built...");
+         if (!silent_load)
+         {
+            io.print("");
+            io.print(advname + " is now being built...");
+         }
 
          if (world.load(file))
          {
@@ -277,16 +287,22 @@ public class Explore extends Activity
             {
                file.close();
 
-               io.print("");
-               io.print("");
-               io.print(world.title);
-               io.print("");
+               if (!silent_load)
+               {
+                  io.print("");
+                  io.print("");
+                  io.print(world.title);
+                  io.print("");
 
-               play(null);
+                  play(null);
+               }
             }
             catch (java.io.IOException x)
             {
-               io.print("Error while building adventure!");
+               if (!silent_load)
+               {
+                  io.print("Error while building adventure!");
+               }
             }
          }
          else
@@ -299,12 +315,18 @@ public class Explore extends Activity
             {
             }
 
-            io.print("Error while building adventure!");
+            if (!silent_load)
+            {
+               io.print("Error while building adventure!");
+            }
          }
       }
       catch (NotFoundException x)
       {
-         io.print("Sorry, that adventure is not available.");
+         if (!silent_load)
+         {
+            io.print("Sorry, that adventure is not available.");
+         }
       }
    }
 
