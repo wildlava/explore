@@ -1215,14 +1215,7 @@ class World
       buf.insert(0, (char) (((checksum >> 6) & 0x3f) + 0x21));
 
       //io.print("Raw string: " + String.valueOf(suspend_version) + ":" + String.valueOf(version) + ":" + buf.toString());
-      if (suspend_version == 0)
-      {
-         return ExpUtil.encrypt(ExpUtil.runLengthEncode(buf.toString()));
-      }
-      else
-      {
-         return String.valueOf(suspend_version) + ":" + String.valueOf(version) + ":" + ExpUtil.encrypt(buf.toString());
-      }
+      return String.valueOf(suspend_version) + ":" + String.valueOf(version) + ":" + ExpUtil.encrypt(buf.toString());
    }
 
    boolean state(String s)
@@ -1238,14 +1231,7 @@ class World
       int colon_pos = s.indexOf(":");
       if (colon_pos == -1 || s.charAt(0) < '0' || s.charAt(0) > '9')
       {
-         saved_suspend_version = 0;
-         saved_adventure_version = -1;
-
-         state_str = ExpUtil.runLengthDecode(ExpUtil.decrypt(s));
-         if (state_str == null)
-         {
-            return false;
-         }
+         return false;
       }
       else
       {

@@ -892,10 +892,7 @@ class World:
 
         # and the command numbers having actions that have been "done"
         command_buf = []
-        if self.suspend_version == 0:
-            commands = self.commands
-        else:
-            commands = reversed(self.commands)
+        commands = reversed(self.commands)
 
         for command in commands:
             if len(command.actions) > 0 and len(command.actions[0]) > 0 and command.actions[0][0] == "^":
@@ -906,10 +903,7 @@ class World:
         buf.append(string.join(command_buf, ''))
 
         # now the room details that have changed
-        if self.suspend_version == 0:
-            room_list = sorted(self.room_list)
-        else:
-            room_list = reversed(self.room_list)
+        room_list = reversed(self.room_list)
 
         for room_name in room_list:
             room = self.rooms[room_name]
@@ -925,18 +919,15 @@ class World:
             # the items in the room
             room_data_buf.append(string.join(room.items, ','))
 
-            if self.suspend_version == 0:
-                buf.append(string.join(room_data_buf, ':'))
-            else:
-                # Compress things a little
-                room_data_string = string.join(room_data_buf, ':')
+            # Compress things a little
+            room_data_string = string.join(room_data_buf, ':')
 
-                if room_data_string[0:8] == '.:::::::':
-                    room_data_string = room_data_string[8:]
-                elif room_data_string[1:8] == ':::::::':
-                    room_data_string = room_data_string[0:2] + room_data_string[8:]
+            if room_data_string[0:8] == '.:::::::':
+                room_data_string = room_data_string[8:]
+            elif room_data_string[1:8] == ':::::::':
+                room_data_string = room_data_string[0:2] + room_data_string[8:]
 
-                buf.append(room_data_string)
+            buf.append(room_data_string)
 
         buf_string = string.join(buf, ';')
         checksum = 0
@@ -944,10 +935,7 @@ class World:
             checksum += ord(buf_string[i])
 
         #print "Raw string: " + chr(((checksum >> 6) & 0x3f) + 0x21) + chr((checksum & 0x3f) + 0x21) + buf_string
-        if self.suspend_version == 0:
-            return base64.b64encode(zlib.compress(chr(((checksum >> 6) & 0x3f) + 0x21) + chr((checksum & 0x3f) + 0x21) + buf_string))
-        else:
-            return str(self.suspend_version) + ":" + str(self.version) + ":" + self.encrypt(chr(((checksum >> 6) & 0x3f) + 0x21) + chr((checksum & 0x3f) + 0x21) + buf_string)
+        return str(self.suspend_version) + ":" + str(self.version) + ":" + self.encrypt(chr(((checksum >> 6) & 0x3f) + 0x21) + chr((checksum & 0x3f) + 0x21) + buf_string)
 
     def set_state(self, s):
         if not s:
@@ -955,13 +943,7 @@ class World:
 
         colon_pos = s.find(':')
         if colon_pos == -1 or s[0] < '0' or s[0] > '9':
-            saved_suspend_version = 0
-            saved_adventure_version = -1
-
-            try:
-                state_str = zlib.decompress(base64.b64decode(s))
-            except:
-                return False
+            return False
         else:
             try:
                 state_parts = s.split(':', 2)
@@ -1043,18 +1025,10 @@ class World:
         #    self.player.items = new_player_items
 
         # Recover the state of the actions.
-        if  saved_suspend_version == 0:
-            commands = self.commands
-            command_idx = 0
-        else:
-            commands = reversed(self.commands)
-            command_idx = -num_commands_delta
+        commands = reversed(self.commands)
+        command_idx = -num_commands_delta
 
         for command in commands:
-            # Only needed for the saved_suspend_version == 0 case
-            if command_idx >= num_saved_commands:
-                break
-
             if command_idx >= 0 and len(command.actions) > 0:
                 if parts[2][command_idx] == '^' and (len(command.actions[0]) == 0 or command.actions[0][0] != '^'):
                     command.actions[0] = "^" + command.actions[0]
@@ -1065,10 +1039,7 @@ class World:
 
         # Recover the room details.
         room_idx = 0
-        if saved_suspend_version == 0:
-            room_list = sorted(self.room_list)
-        else:
-            room_list = reversed(self.room_list)
+        room_list = reversed(self.room_list)
 
         for room_name in room_list:
             room = self.rooms[room_name]
