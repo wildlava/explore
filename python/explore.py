@@ -781,13 +781,17 @@ class World:
                 if argument != None:
                     self.player.get_item(argument, acknowledge)
                 else:
-                    self.exp_io.tell("Get what?")
+                    self.exp_io.tell(command[0] +
+                                     command[1:].lower() +
+                                     " what?")
 
             elif command == "DROP" or command == "THROW":
                 if argument != None:
                     self.player.drop_item(argument, acknowledge)
                 else:
-                    self.exp_io.tell("Drop what?")
+                    self.exp_io.tell(command[0] +
+                                     command[1:].lower() +
+                                     " what?")
 
             elif ((command == "INVENT" or command == "INVENTORY") and
                   argument == None):

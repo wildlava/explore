@@ -289,7 +289,9 @@ class World
             }
             else
             {
-               io.print("Get what?");
+               io.print(command.substring(0, 1) +
+                        command.substring(1).toLowerCase() +
+                        " what?");
             }
          }
          else if (command.equals("DROP") || command.equals("THROW"))
@@ -300,7 +302,9 @@ class World
             }
             else
             {
-               io.print("Drop what?");
+               io.print(command.substring(0, 1) +
+                        command.substring(1).toLowerCase() +
+                        " what?");
             }
          }
          else if ((command.equals("INVENT") || command.equals("INVENTORY")) &&
