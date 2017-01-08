@@ -217,10 +217,9 @@ public class Explore extends Activity
          //input_area.setEnabled(false);
          //button_layout.setVisibility(View.VISIBLE);
 
-         io.print("Please select an adventure.");
+         io.print("Please select an adventure to start.");
          io.print("");
-         io.print("If you want to start over or choose a different");
-         io.print("adventure while playing, type \"quit\".");
+         io.print("If you are new to Explore and would like some tips, enter the \"help\" command after starting a game.");
       }
 
       setContentView(layout);
