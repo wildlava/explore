@@ -802,8 +802,7 @@ class World:
                 #self.exp_io.tell("Sorry, suspend has not yet been implemented.")
                 if self.suspend_mode == SUSPEND_INTERACTIVE:
                     self.exp_io.tell("")
-                    self.exp_io.tell("OK, grab the following long line and save it away somewhere.")
-                    self.exp_io.tell("This will be the command you use to resume your game:")
+                    self.exp_io.tell("OK, grab the following long line and save it somewhere. This will be the command you use later to resume your game:")
                     self.exp_io.tell("")
                     self.exp_io.tell("resume " + self.get_state(), False)
                     self.exp_io.tell("")
@@ -827,8 +826,7 @@ class World:
                   self.suspend_mode == SUSPEND_INTERACTIVE):
                 #self.exp_io.tell("Sorry, resume has not yet been implemented.")
                 if argument == None:
-                    self.exp_io.tell("Please follow this command with the code you were given")
-                    self.exp_io.tell("when you suspended your game.")
+                    self.exp_io.tell("Please follow this command with the code you were given when you suspended your game.")
                 else:
                     if not self.set_state(verbatim_argument):
                         self.exp_io.tell("Hmm, that resume code just doesn't seem to make sense! Sorry.")

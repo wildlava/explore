@@ -318,8 +318,7 @@ class World
             if (suspend_interactive)
             {
                io.print("");
-               io.print("OK, grab the following long line and save it away somewhere.");
-               io.print("This will be the command you use to resume your game:");
+               io.print("OK, grab the following long line and save it away somewhere. This will be the command you use later to resume your game:");
                io.print("");
                io.printRaw("resume " + state());
                io.print("");
@@ -368,8 +367,7 @@ class World
          {
             if (argument == null)
             {
-               io.print("Please follow this command with the code you were given");
-               io.print("when you suspended your game.");
+               io.print("Please follow this command with the code you were given when you suspended your game.");
             }
             else
             {
