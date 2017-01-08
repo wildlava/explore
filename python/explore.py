@@ -13,6 +13,7 @@ import time
 import string
 import zlib
 import base64
+import re
 
 trs_compat = False
 use_fixed_objects = False
@@ -689,12 +690,12 @@ class World:
         argument = None
         verbatim_argument = ""
 
-        # Save the argument before case conversion in case someone needs it.
+        # Save the argument before processing in case someone needs it.
         pos = wish.find(" ")
         if pos != -1:
             verbatim_argument = wish[pos + 1:]
 
-        wish = wish.upper()
+        wish = re.sub('[^A-Z ]', '', wish.upper())
 
         custom = self.find_custom(wish, self.player.current_room)
 

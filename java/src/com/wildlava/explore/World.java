@@ -94,7 +94,7 @@ class World
       String verbatim_argument = null;
 
       //
-      // Save the argument before case conversion in case someone needs it.
+      // Save the argument before processing in case someone needs it.
       //
       int pos = wish.indexOf(" ");
       if (pos != -1)
@@ -102,7 +102,7 @@ class World
          verbatim_argument = wish.substring(pos + 1);
       }
 
-      wish = wish.toUpperCase();
+      wish = wish.toUpperCase().replaceAll("[^A-Z ]", "");
 
       Command custom = findCustom(wish, player.current_room);
 
