@@ -17,6 +17,7 @@ import re
 
 trs_compat = False
 use_fixed_objects = False
+max_line_length = 79;
 
 def a_or_an(s):
     s_lower = s.lower()
@@ -37,20 +38,30 @@ class ExpIO:
         if backslash_to_newline:
             s = s.replace('\\', '\n')
 
-        lines = s.split('\n')
+        out_lines = []
+        for line in s.split('\n'):
+            while len(line) > max_line_length:
+                last_space_pos = line.rfind(' ', 0, max_line_length + 1);
+                if last_space_pos == -1:
+                    break
+                else:
+                    out_lines.append(line[:last_space_pos])
+                    line = line[last_space_pos + 1:]
+
+            out_lines.append(line)
 
         if self.store_output:
-            self.output.extend(lines)
+            self.output.extend(out_lines)
         else:
-            for i in range(len(lines)):
+            for i in range(len(out_lines)):
                 if not self.no_delay:
                     time.sleep(.03)
-                print lines[i]
+                print out_lines[i]
 
-                #if i < (len(lines) - 1):
-                #    sys.stdout.write(lines[i] + '\n')
+                #if i < (len(out_lines) - 1):
+                #    sys.stdout.write(out_lines[i] + '\n')
                 #else:
-                #    sys.stdout.write(lines[i])
+                #    sys.stdout.write(out_lines[i])
 
                 #sys.stdout.flush()
 

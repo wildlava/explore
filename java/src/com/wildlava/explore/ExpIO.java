@@ -38,29 +38,21 @@ class ExpIO
 
       for (String line : out_str.split("\n"))
       {
-         if (wrap)
+         while (line.length() > max_line_length)
          {
-            while (line.length() > max_line_length)
+            int last_space_pos = line.lastIndexOf(' ', max_line_length);
+            if (last_space_pos == -1)
             {
-               int last_space_pos = line.lastIndexOf(' ', max_line_length);
-               if (last_space_pos == -1)
-               {
-                  printRaw(line, true);
-                  break;
-               }
-               else
-               {
-                  printRaw(line.substring(0, last_space_pos), true);
-                  line = line.substring(last_space_pos + 1, line.length());
-               }
+               break;
             }
+            else
+            {
+               printRaw(line.substring(0, last_space_pos), true);
+               line = line.substring(last_space_pos + 1);
+            }
+         }
 
-            printRaw(line, true);
-         }
-         else
-         {
-            printRaw(line, true);
-         }
+         printRaw(line, true);
       }
    }
 
