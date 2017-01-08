@@ -34,9 +34,8 @@ class ExpIO:
         self.store_output = False
         self.no_delay = False
 
-    def tell(self, s, backslash_to_newline=True):
-        if backslash_to_newline:
-            s = s.replace('\\', '\n')
+    def tell(self, s):
+        s = s.replace('\\', '\n')
 
         out_lines = []
         for line in s.split('\n'):
@@ -50,20 +49,16 @@ class ExpIO:
 
             out_lines.append(line)
 
+        for out_line in out_lines:
+            self.tell_raw(out_line)
+
+    def tell_raw(self, s):
         if self.store_output:
-            self.output.extend(out_lines)
+            self.output.append(s)
         else:
-            for i in range(len(out_lines)):
-                if not self.no_delay:
-                    time.sleep(.03)
-                print out_lines[i]
-
-                #if i < (len(out_lines) - 1):
-                #    sys.stdout.write(out_lines[i] + '\n')
-                #else:
-                #    sys.stdout.write(out_lines[i])
-
-                #sys.stdout.flush()
+            if not self.no_delay:
+                time.sleep(.03)
+            print s
 
     #def clear_output(self):
     #    if len(self.output) > 0:
@@ -804,7 +799,7 @@ class World:
                     self.exp_io.tell("")
                     self.exp_io.tell("OK, grab the following long line and save it somewhere. This will be the command you use later to resume your game:")
                     self.exp_io.tell("")
-                    self.exp_io.tell("resume " + self.get_state(), False)
+                    self.exp_io.tell_raw("resume " + self.get_state())
                     self.exp_io.tell("")
                 else:
                     if acknowledge:
