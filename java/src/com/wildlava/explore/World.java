@@ -325,8 +325,7 @@ class World
             }
             else
             {
-               if (!io.saveSuspendedState(advname + ".sus",
-                                          state()))
+               if (!io.saveSuspendedState(advname + ".sus", state()))
                {
                   io.print("Hmm, for some reason the game cannot be suspended. Sorry.");
                }
@@ -338,9 +337,6 @@ class World
                   }
                }
             }
-            /*
-              io.print("Sorry, suspend has not yet been implemented.");
-            */
          }
          else if ((command.equals("RESUME") || command.equals("RESTORE")) &&
                   (!suspend_interactive && argument == null))
@@ -380,9 +376,6 @@ class World
                   result |= (RESULT_DESCRIBE | RESULT_NO_CHECK);
                }
             }
-            /*
-              io.print("Sorry, resume has not yet been implemented.");
-            */                
          }
          else if (custom != null)
          {
