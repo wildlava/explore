@@ -194,8 +194,19 @@ public class Explore extends Activity
          {
             // Load the game silently and recover state
             start(advname, true);
-            world.state(savedInstanceState.getString("SuspendedState"));
-            io.setScreen(savedInstanceState.getString("Screen"));
+            if (world.state(savedInstanceState.getString("SuspendedState")))
+            {
+               io.setScreen(savedInstanceState.getString("Screen"));
+            }
+            else
+            {
+               // If state recovery fails, start over from the beginning
+               // (note that this should never happen unless there is a bug
+               // in suspend/resume). The user will see a warning about this.
+               io.print("");
+
+               world = null;
+            }
          }
       }
 
@@ -205,8 +216,6 @@ public class Explore extends Activity
          //input_area.setFocusable(false);
          //input_area.setEnabled(false);
          //button_layout.setVisibility(View.VISIBLE);
-
-         io.clearScreen();
 
          io.print("Please select an adventure.");
          io.print("");
