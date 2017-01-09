@@ -13,6 +13,4 @@ class Command
    String[] commands;
    String condition;
    String action;
-
-   Command next;
 }

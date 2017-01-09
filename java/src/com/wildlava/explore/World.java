@@ -8,6 +8,7 @@
 package com.wildlava.explore;
 
 import java.io.BufferedReader;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.ArrayList;
 
@@ -20,8 +21,9 @@ class World
    String title = "This adventure has no title!";
    int inventory_limit;
    Player player;
-   Room rooms;
-   Command commands;
+   HashMap<String, Room> rooms;
+   ArrayList<String> room_list;
+   ArrayList<Command> commands;
    ArrayList<String> plural_items;
    ArrayList<String> mass_items;
    HashMap<String, String> same_items;
@@ -43,9 +45,14 @@ class World
 
       player = new Player(io, this);
 
+      rooms = new HashMap<String, Room>();
+      room_list = new ArrayList<String>();
+      commands = new ArrayList<Command>();
+
       plural_items = new ArrayList<String>();
       mass_items = new ArrayList<String>();
       same_items = new HashMap<String, String>();
+
       old_items = new HashMap<String, String>();
       old_versions = new HashMap<Integer, String>();
    }
@@ -61,8 +68,7 @@ class World
    {
       int result = RESULT_NORMAL;
 
-      Command c = commands;
-      while(c != null)
+      for (Command c : commands)
       {
          if ((c.location == null ||
               c.location.equals(player.current_room.name)) &&
@@ -77,8 +83,6 @@ class World
                result |= takeAction(c, true, previous_result);
             }
          }
-
-         c = c.next;
       }
 
       return result;
@@ -415,7 +419,7 @@ class World
                }
             }
 
-            Room room = roomFromName(goto_room);
+            Room room = rooms.get(goto_room);
             if (room != null)
             {
                player.current_room = room;
@@ -436,8 +440,7 @@ class World
       Command global_candidate = null;
       Command candidate = null;
 
-      Command c = commands;
-      while(c != null)
+      for (Command c : commands)
       {
          if (c.commands != null)
          {
@@ -466,8 +469,6 @@ class World
                }
             }
          }
-
-         c = c.next;
       }
 
       if (global_candidate != null)
@@ -527,7 +528,7 @@ class World
             {
                if (action.startsWith("/"))
                {
-                  Room room = roomFromName(action.substring(1));
+                  Room room = rooms.get(action.substring(1));
                   if (room != null)
                   {
                      player.current_room = room;
@@ -615,7 +616,7 @@ class World
                      if (player.removeItem(item) ||
                          player.current_room.removeItem(item))
                      {
-                        Room room = roomFromName(room_name);
+                        Room room = rooms.get(room_name);
                         if (room != null)
                         {
                            room.addItem(item, true);
@@ -849,13 +850,10 @@ class World
          }
          else if (line.startsWith("ROOM="))
          {
-            //
-            // Add the new room to the beginning of the list.
-            //
             new_room = new Room(this);
             new_room.name = line.substring(line.indexOf("=") + 1);
-            new_room.next = rooms;
-            rooms = new_room;
+            rooms.put(new_room.name, new_room);
+            room_list.add(new_room.name);
             if (first_room == null)
             {
                first_room = new_room;
@@ -881,12 +879,8 @@ class World
          }
          else if (line.startsWith("COMMAND="))
          {
-            //
-            // Add the new command to the beginning of the list.
-            //
             new_command = new Command();
-            new_command.next = commands;
-            commands = new_command;
+            commands.add(new_command);
 
             String cmd_str = line.substring(line.indexOf("=") + 1);
 
@@ -929,8 +923,7 @@ class World
             if (new_command == null)
             {
                new_command = new Command();
-               new_command.next = commands;
-               commands = new_command;
+               commands.add(new_command);
 
                if (cur_room_name != null)
                {
@@ -1065,7 +1058,7 @@ class World
          }
       }
 
-      player.current_room = roomFromName(start_room);
+      player.current_room = rooms.get(start_room);
       if (player.current_room == null)
       {
          if (first_room == null)
@@ -1114,8 +1107,9 @@ class World
       //
       // and the command numbers having actions that have been "done"
       //
-      Command command = commands;
-      while (command != null)
+      ArrayList<Command> rev_commands = new ArrayList<Command>(commands);
+      Collections.reverse(rev_commands);
+      for (Command command : rev_commands)
       {
          if (command.action != null && command.action.startsWith("^"))
          {
@@ -1125,8 +1119,6 @@ class World
          {
             buf.append(".");
          }
-
-         command = command.next;
       }
 
       buf.append(";");
@@ -1134,9 +1126,12 @@ class World
       //
       // now the room details that have changed
       //
-      Room room = rooms;
-      while (room != null)
+      ArrayList<String> rev_room_list = new ArrayList<String>(room_list);
+      Collections.reverse(rev_room_list);
+      for (String room_name : rev_room_list)
       {
+         Room room = rooms.get(room_name);
+
          if (room.desc_ctrl != null &&
              room.desc_ctrl.endsWith("+"))
          {
@@ -1197,7 +1192,6 @@ class World
          }
 
          buf.append(";");
-         room = room.next;
       }
 
       if (buf.charAt(buf.length() - 1) == ';')
@@ -1306,28 +1300,12 @@ class World
 
       String[] parts = ExpUtil.parseToArray(state_str.substring(2), ";");
 
-      int num_rooms = 0;
-      Room room = rooms;
-      while (room != null)
-      {
-         ++num_rooms;
-         room = room.next;
-      }
-
-      if (num_rooms != parts.length - 3)
+      if (rooms.size() != parts.length - 3)
       {
          return false;
       }
 
-      int num_commands = 0;
-      Command command = commands;
-      while (command != null)
-      {
-         ++num_commands;
-         command = command.next;
-      }
-
-      if (num_commands != parts[2].length() + num_commands_delta)
+      if (commands.size() != parts[2].length() + num_commands_delta)
       {
          return false;
       }
@@ -1336,7 +1314,7 @@ class World
       // Recover the current room.
       //
       Room prev_room = player.current_room;
-      player.current_room = roomFromName(parts[0]);
+      player.current_room = rooms.get(parts[0]);
       if (player.current_room == null)
       {
          player.current_room = prev_room;
@@ -1369,8 +1347,9 @@ class World
       // Recover the state of the actions.
       //
       int command_idx = -num_commands_delta;
-      command = commands;
-      while (command != null)
+      ArrayList<Command> rev_commands = new ArrayList<Command>(commands);
+      Collections.reverse(rev_commands);
+      for (Command command : rev_commands)
       {
          if (command_idx >= 0 && command.action != null)
          {
@@ -1387,16 +1366,18 @@ class World
          }
 
          ++command_idx;
-         command = command.next;
       }
 
       //
       // Recover the room details.
       //
       int room_idx = 0;
-      room = rooms;
-      while (room != null)
+      ArrayList<String> rev_room_list = new ArrayList<String>(room_list);
+      Collections.reverse(rev_room_list);
+      for (String room_name : rev_room_list)
       {
+         Room room = rooms.get(room_name);
+
          String[] room_code = ExpUtil.parseToArray(parts[room_idx + 3], ":");
          if (room_code.length != 8)
          {
@@ -1532,29 +1513,8 @@ class World
          }
 
          ++room_idx;
-         room = room.next;
       }
 
       return true;
-   }
-
-   Room roomFromName(String name)
-   {
-      if (name != null)
-      {
-         Room r = rooms;
-
-         while (r != null)
-         {
-            if (r.name.equals(name))
-            {
-               return r;
-            }
-
-            r = r.next;
-         }
-      }
-
-      return null;
    }
 }

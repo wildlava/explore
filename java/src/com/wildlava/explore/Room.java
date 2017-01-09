@@ -23,8 +23,6 @@ class Room extends ItemContainer
    String up_room;
    String down_room;
 
-   Room next;
-
    Room(World world)
    {
       super(world);
