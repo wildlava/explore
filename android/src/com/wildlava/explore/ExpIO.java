@@ -84,7 +84,7 @@ class ExpIO
 
    private void doOutput(String s, boolean new_line)
    {
-      String lines[] = s.split("\n");
+      String lines[] = s.split("\n", -1);
       String old_cur_line_text = screen[cur_line];
 
       for (String line : lines)

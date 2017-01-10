@@ -36,7 +36,7 @@ class ExpIO
          out_str = s.replace("\\", "\n");
       }
 
-      for (String line : out_str.split("\n"))
+      for (String line : out_str.split("\n", -1))
       {
          while (line.length() > max_line_length)
          {
