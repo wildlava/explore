@@ -53,7 +53,7 @@ class Player extends ItemContainer
             }
             else
             {
-               String[] word_list = ExpUtil.parseToArray(item, " ");
+               String[] word_list = item.split(" ", -1);
                String item_part = word_list[word_list.length - 1];
                boolean found_fixed_object = true;
 

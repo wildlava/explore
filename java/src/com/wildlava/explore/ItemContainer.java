@@ -46,7 +46,7 @@ class ItemContainer
             return test_item;
          }
 
-         String[] word_list = ExpUtil.parseToArray(test_item, " ");
+         String[] word_list = test_item.split(" ", -1);
          if (word_list.length > 1)
          {
             if (word_list[0].equals(item) ||

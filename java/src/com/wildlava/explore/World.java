@@ -502,7 +502,7 @@ class World
       {
          ArrayList<String> messages = new ArrayList<String>();
 
-         String[] action_list = ExpUtil.parseToArray(command.action, ";");
+         String[] action_list = command.action.split(";", -1);
          for (int i=0; i<action_list.length; ++i)
          {
             String action = null;
@@ -907,7 +907,7 @@ class World
                   cmd_str = cmd_str.substring(0, pos);
                }
 
-               new_command.commands = ExpUtil.parseToArray(cmd_str, ",");
+               new_command.commands = cmd_str.split(",", -1);
             }
 
             if (cur_room_name != null)
@@ -966,7 +966,7 @@ class World
             if (new_room != null)
             {
                new_room.fixed_objects = new ArrayList<String>();
-               String[] objects = ExpUtil.parseToArray(line.substring(line.indexOf("=") + 1), ",");
+               String[] objects = line.substring(line.indexOf("=") + 1).split(",", -1);
                for (String item : objects)
                {
                   new_room.fixed_objects.add(item);
@@ -980,7 +980,7 @@ class World
             if (new_room != null)
             {
                new_room.items = new ArrayList<String>();
-               String[] contents = ExpUtil.parseToArray(line.substring(line.indexOf("=") + 1), ",");
+               String[] contents = line.substring(line.indexOf("=") + 1).split(",", -1);
                for (String item : contents)
                {
                   new_room.items.add(item);
@@ -1258,7 +1258,7 @@ class World
       int num_commands_delta = 0;
       if (old_versions.containsKey(saved_adventure_version))
       {
-         String[] version_changes = ExpUtil.parseToArray(old_versions.get(saved_adventure_version), ",");
+         String[] version_changes = old_versions.get(saved_adventure_version).split(",", -1);
          for (String version_change : version_changes)
          {
             if (version_change.startsWith("NUM_COMMANDS"))
@@ -1298,7 +1298,7 @@ class World
          return false;
       }
 
-      String[] parts = ExpUtil.parseToArray(state_str.substring(2), ";");
+      String[] parts = state_str.substring(2).split(";", -1);
 
       if (rooms.size() != parts.length - 3)
       {
@@ -1329,7 +1329,7 @@ class World
 
       if (!parts[1].equals(""))
       {
-         String[] saved_items = ExpUtil.parseToArray(parts[1], ",");
+         String[] saved_items = parts[1].split(",", -1);
          for (String item : saved_items)
          {
             if (old_items.containsKey(item))
@@ -1378,7 +1378,7 @@ class World
       {
          Room room = rooms.get(room_name);
 
-         String[] room_code = ExpUtil.parseToArray(parts[room_idx + 3], ":");
+         String[] room_code = parts[room_idx + 3].split(":", -1);
          if (room_code.length != 8)
          {
             String[] old = room_code;
@@ -1498,7 +1498,7 @@ class World
 
          if (!room_code[7].equals(""))
          {
-            String[] saved_items = ExpUtil.parseToArray(room_code[7], ",");
+            String[] saved_items = room_code[7].split(",", -1);
             for (String item : saved_items)
             {
                if (old_items.containsKey(item))

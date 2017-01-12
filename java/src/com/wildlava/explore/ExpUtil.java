@@ -13,54 +13,6 @@ import java.lang.StringBuilder;
 
 class ExpUtil
 {
-   static String[] parseToArray(String list, String delim)
-   {
-      int start;
-      int num_items = 1;
-      int pos;
-
-      if (list == null)
-      {
-         return null;
-      }
-
-      //
-      // First count the number of delimeters in the string.
-      //
-      start = 0;
-      while ((pos = list.substring(start).indexOf(delim)) != -1)
-      {
-         start += pos + 1;
-         ++num_items;
-      }
-
-      //
-      // Allocate the array to hold the right number of items.
-      //
-      String[] s = new String[num_items];
-
-      //
-      // Copy the items into the array.
-      //
-      start = 0;
-      for (int i=0; i<num_items; ++i)
-      {
-         pos = list.substring(start).indexOf(delim);
-         if (pos == -1)
-         {
-            s[i] = list.substring(start);
-         }
-         else
-         {
-            s[i] = list.substring(start, start + pos);
-         }
-
-         start += pos + 1;
-      }
-
-      return s;
-   }
-
    static String superTrim(String s)
    {
       if (s == null)
@@ -68,7 +20,7 @@ class ExpUtil
          return null;
       }
 
-      String[] words = parseToArray(s, " ");
+      String[] words = s.split(" ", -1);
       String new_s = "";
 
       for (int i=0; i<words.length; ++i)
