@@ -1,3 +1,13 @@
+Version 4.9:
+
+* Improve help text and inform user that help exists
+* Fix various text formatting problems
+* Improve handling of failed resume
+* Remove support for very old (broken) suspend format
+* Improve processing of user input
+* Fix responses to some commands
+* Refactor/modernize/clean up code
+
 Version 4.8.6.1:
 
 * Fix command input for recent Android versions

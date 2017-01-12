@@ -34,7 +34,7 @@ class Game
 
       io.print("");
       io.print("");
-      io.print("*** EXPLORE ***  ver 4.8.6");
+      io.print("*** EXPLORE ***  ver 4.9");
 
       io.print("");
 

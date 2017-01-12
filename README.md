@@ -81,19 +81,16 @@ later in Ruby.
 
 ### To do ###
 
-* Are there hard-wrapped strings (resume in python)? Fix?
-
 * Return error if saved_adventure_version > version
 
 * Fix (?) logic of comma-separated OLD VERSION case (does not add to delta)
 
-* Fix checksum code to keep bytes <= 0x3f (to avoid workaround for '`' to ' '
-  workaround for "corner case where resume can fail" in 4.8.3 (note that we
-  need to keep corner case fix for suspend versions before this fix).
-
 * Include adventure name in suspend string
 
-* Remove logic for now-unsupported suspend_version < 1
+* Re-examine unrecoverable resume case that currently prints a warning.
+  This should never happen unless there is a bug in suspend/resume.
+  Behavior in Android app has been improved if this (impossible?) case
+  actually happens, but removing this case completely would be preferable.
 
 
 ### Resolved questions ###
