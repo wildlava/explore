@@ -1,0 +1,7 @@
+#!/usr/bin/bash
+
+if [ -x "$(command -v python2)" ]; then
+    python2 $(dirname "$0")/run_explore.py
+else
+    python $(dirname "$0")/run_explore.py
+fi
