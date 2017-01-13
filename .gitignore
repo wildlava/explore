@@ -10,3 +10,5 @@
 /android/images/explore_icon_72x72.png
 /android/images/explore_icon_96x96.png
 *.class
+*.pyc
+__pycache__
