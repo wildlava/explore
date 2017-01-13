@@ -1,5 +1,3 @@
-#!/usr/bin/env python2
-
 #
 # Explore
 #    - The Adventure Interpreter
