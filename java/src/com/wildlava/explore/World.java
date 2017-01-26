@@ -502,7 +502,19 @@ class World
       {
          ArrayList<String> messages = new ArrayList<String>();
 
-         String[] action_list = command.action.split(";", -1);
+         String[] action_list;
+         boolean action_one_shot;
+         if (command.action.startsWith("."))
+         {
+            action_one_shot = true;
+            action_list = command.action.substring(1).split(";", -1);
+         }
+         else
+         {
+            action_one_shot = false;
+            action_list = command.action.split(";", -1);
+         }
+
          for (int i=0; i<action_list.length; ++i)
          {
             String action = null;
@@ -767,6 +779,11 @@ class World
             {
                messages.add(message);
             }
+         }
+
+         if (action_one_shot)
+         {
+            command.action = "^" + command.action;
          }
 
          if (!messages.isEmpty())

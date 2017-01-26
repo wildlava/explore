@@ -532,7 +532,12 @@ class World:
         else:
             messages = []
 
-            action_list = command.action.split(";")
+            if command.action[0] == ".":
+                action_one_shot = True
+                action_list = command.action[1:].split(";")
+            else:
+                action_one_shot = False
+                action_list = command.action.split(";")
 
             for action in action_list:
                 if action.find(":") != -1:
@@ -632,6 +637,9 @@ class World:
 
                 if message != None:
                     messages.append(message)
+
+            if action_one_shot:
+                command.action = "^" + command.action
 
             if len(messages) > 0:
                 if (result & RESULT_DESCRIBE) != 0 or (not trs_compat and auto and (previous_result & RESULT_DESCRIBE) != 0):
