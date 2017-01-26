@@ -993,9 +993,10 @@ class World
          else if (line.startsWith("ACTION="))
          {
             //
-            // If there is no current command, make one.
+            // If there is no current command, or if there is one,
+            // but it already has an action, make a new command.
             //
-            if (new_command == null)
+            if (new_command == null || new_command.action != null)
             {
                new_command = new Command();
                commands.add(new_command);
@@ -1006,14 +1007,7 @@ class World
                }
             }
 
-            if (new_command.action != null)
-            {
-               io.print("Build warning: extra action ignored!");
-            }
-            else
-            {
-               new_command.action = line.substring(line.indexOf("=") + 1);
-            }
+            new_command.action = line.substring(line.indexOf("=") + 1);
          }
          else if (line.startsWith("DESC="))
          {

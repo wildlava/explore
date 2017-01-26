@@ -440,18 +440,16 @@ class World:
                         new_command.commands = params.split(",")
 
             elif keyword == "ACTION":
-                # If there is no current command, make one.
-                if new_command == None:
+                # If there is no current command, or if there is one,
+                # but it already has an action, make a new command.
+                if new_command == None or new_command.action != None:
                     new_command = Command()
                     self.commands.append(new_command)
 
                     if cur_room_name != None:
                         new_command.location = cur_room_name[:]
 
-                if new_command.action != None:
-                    self.exp_io.tell("Build warning: extra action ignored!")
-                else:
-                    new_command.action = params[:]
+                new_command.action = params[:]
 
             elif keyword == "DESC":
                 if new_room != None:
