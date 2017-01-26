@@ -534,12 +534,18 @@ class World:
         else:
             messages = []
 
+            or_pos = command.action.find("|")
+            if or_pos != -1:
+                action_str = command.action[:or_pos]
+            else:
+                action_str = command.action
+
             if command.action[0] == ".":
                 action_one_shot = True
-                action_list = command.action[1:].split(";")
+                action_list = action_str[1:].split(";")
             else:
                 action_one_shot = False
-                action_list = command.action.split(";")
+                action_list = action_str.split(";")
 
             for action in action_list:
                 if action.find(":") != -1:
@@ -725,6 +731,7 @@ class World:
                 player_in_correct_room = True
 
         try_builtin = True
+        action_denied_directive = None
 
         if trs_compat:
             if custom != None and player_in_correct_room:
@@ -734,9 +741,21 @@ class World:
                 else:
                     self.exp_io.tell("You can't do that yet.")
         else:
-            if custom != None and player_in_correct_room and player_meets_condition:
-                try_builtin = False
-                result = self.take_action(custom)
+            if custom != None and player_in_correct_room:
+                if player_meets_condition:
+                    try_builtin = False
+                    result = self.take_action(custom)
+                else:
+                    if custom.action != None:
+                        or_pos = custom.action.find("|")
+                        if or_pos != -1:
+                            action_denied_directive = custom.action[or_pos + 1:]
+                            if action_denied_directive.startswith("|"):
+                                try_builtin = False
+                                if action_denied_directive.startswith("|:"):
+                                    self.exp_io.tell(action_denied_directive[2:])
+                                else:
+                                    self.exp_io.tell(action_denied_directive[1:])
 
         if try_builtin:
             if wish.find(" ") != -1:
@@ -840,7 +859,13 @@ class World:
                     if not player_in_correct_room:
                         self.exp_io.tell("You can't do that here.")
                     else:
-                        self.exp_io.tell("You can't do that yet.")
+                        if action_denied_directive != None:
+                            if action_denied_directive.startswith(":"):
+                                self.exp_io.tell(action_denied_directive[1:])
+                            else:
+                                self.exp_io.tell(action_denied_directive)
+                        else:
+                            self.exp_io.tell("You can't do that yet.")
             else:
                 self.exp_io.tell("I don't understand.")
 

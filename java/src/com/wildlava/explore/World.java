@@ -131,6 +131,7 @@ class World
       }
 
       boolean try_builtin = true;
+      String action_denied_directive = null;
 
       if (trs_compat)
       {
@@ -149,10 +150,37 @@ class World
       }
       else
       {
-         if (custom != null && player_in_correct_room && player_meets_condition)
+         if (custom != null && player_in_correct_room)
          {
-            try_builtin = false;
-            result = takeAction(custom);
+            if (player_meets_condition)
+            {
+               try_builtin = false;
+               result = takeAction(custom);
+            }
+            else
+            {
+               if (custom.action != null)
+               {
+                  int or_pos = custom.action.indexOf("|");
+                  if (or_pos != -1)
+                  {
+                     action_denied_directive =
+                        custom.action.substring(or_pos + 1);
+                     if (action_denied_directive.startsWith("|"))
+                     {
+                        try_builtin = false;
+                        if (action_denied_directive.startsWith("|:"))
+                        {
+                           io.print(action_denied_directive.substring(2));
+                        }
+                        else
+                        {
+                           io.print(action_denied_directive.substring(1));
+                        }
+                     }
+                  }
+               }
+            }
          }
       }
 
@@ -397,7 +425,21 @@ class World
                }
                else
                {
-                  io.print("You can't do that yet.");
+                  if (action_denied_directive != null)
+                  {
+                     if (action_denied_directive.startsWith(":"))
+                     {
+                        io.print(action_denied_directive.substring(1));
+                     }
+                     else
+                     {
+                        io.print(action_denied_directive);
+                     }
+                  }
+                  else
+                  {
+                     io.print("You can't do that yet.");
+                  }
                }
             }
          }
@@ -504,17 +546,28 @@ class World
       {
          ArrayList<String> messages = new ArrayList<String>();
 
+         String action_str;
+         int or_pos = command.action.indexOf("|");
+         if (or_pos != -1)
+         {
+            action_str = command.action.substring(0, or_pos);
+         }
+         else
+         {
+            action_str = command.action;
+         }
+
          String[] action_list;
          boolean action_one_shot;
          if (command.action.startsWith("."))
          {
             action_one_shot = true;
-            action_list = command.action.substring(1).split(";", -1);
+            action_list = action_str.substring(1).split(";", -1);
          }
          else
          {
             action_one_shot = false;
-            action_list = command.action.split(";", -1);
+            action_list = action_str.split(";", -1);
          }
 
          for (int i=0; i<action_list.length; ++i)
