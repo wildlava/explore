@@ -19,21 +19,23 @@ class World
 
    int version = 0;
    String title = "This adventure has no title!";
-   int inventory_limit;
    Player player;
    HashMap<String, Room> rooms;
    ArrayList<String> room_list;
    ArrayList<Command> commands;
+
    ArrayList<String> plural_items;
    ArrayList<String> mass_items;
+
    HashMap<String, String> same_items;
    HashMap<String, String> old_items;
    HashMap<Integer, String> old_versions;
+   int suspend_version = 2;
+   boolean suspend_interactive = false;
+
    public static boolean trs_compat = false;
    public static boolean trs_look = false;
    public static boolean use_fixed_objects = false;
-   int suspend_version = 1;
-   boolean suspend_interactive = false;
 
    World(ExpIO i, String a)
    {
@@ -51,8 +53,8 @@ class World
 
       plural_items = new ArrayList<String>();
       mass_items = new ArrayList<String>();
-      same_items = new HashMap<String, String>();
 
+      same_items = new HashMap<String, String>();
       old_items = new HashMap<String, String>();
       old_versions = new HashMap<Integer, String>();
    }
@@ -860,10 +862,7 @@ class World
          }
          else if (line.startsWith("INVENTORY_LIMIT="))
          {
-            inventory_limit =
-               Integer.valueOf(line.substring(line.indexOf("=") + 1)).
-               intValue();
-            player.setItemLimit(inventory_limit);
+            player.setItemLimit(Integer.valueOf(line.substring(line.indexOf("=") + 1)).intValue());
          }
          else if (line.startsWith("ROOM="))
          {

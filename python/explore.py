@@ -337,18 +337,20 @@ class World:
 
         self.version = 0
         self.title = "This adventure has no title!"
+        self.player = Player(exp_io, self)
         self.rooms = {}
         self.room_list = []
         self.commands = []
-        self.player = Player(exp_io, self)
-        self.suspend_mode = SUSPEND_INTERACTIVE
-        self.last_suspend = None
+
         self.plural_items = []
         self.mass_items = []
+
         self.same_items = {}
         self.old_items = {}
         self.old_versions = {}
         self.suspend_version = 1;
+        self.suspend_mode = SUSPEND_INTERACTIVE
+        self.last_suspend = None
 
     def load(self, filename):
         global use_fixed_objects

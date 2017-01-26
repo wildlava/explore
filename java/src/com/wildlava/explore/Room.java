@@ -141,7 +141,7 @@ class Room extends ItemContainer
       }
 
       return dir_room;
-   }                        
+   }
 
    static String makeWay(String dir_room, String new_room)
    {
