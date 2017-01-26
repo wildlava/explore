@@ -79,10 +79,7 @@ class Command:
         self.location = None
         self.commands = []
         self.condition = None
-        self.actions = []
-
-    def add_action(self, action):
-        self.actions.append(action)
+        self.action = None
 
 
 class ItemContainer:
@@ -446,12 +443,10 @@ class World:
                     if cur_room_name != None:
                         new_command.location = cur_room_name[:]
 
-                if len(new_command.actions) != 0:
+                if new_command.action != None:
                     self.exp_io.tell("Build warning: extra action ignored!")
                 else:
-                    for action in params.split(";"):
-                        new_command.add_action(action)
-                        #new_command.actions.append(action)
+                    new_command.action = params[:]
 
             elif keyword == "DESC":
                 if new_room != None:
@@ -531,13 +526,15 @@ class World:
         result = RESULT_NORMAL
         error = False
 
-        if len(command.actions) == 0 or len(command.actions[0]) == 0 or command.actions[0][0] == "^":
+        if command.action == None or command.action[0] == "^":
             if not auto:
                 self.exp_io.tell("Nothing happens.")
         else:
             messages = []
 
-            for action in command.actions:
+            action_list = command.action.split(";")
+
+            for action in action_list:
                 if action.find(":") != -1:
                     action, message = action.split(":", 1)
                 else:
@@ -583,10 +580,10 @@ class World:
                                 self.exp_io.tell("You are carrying too much to do that.")
                                 error = True
                             else:
-                                command.actions[0] = "^" + command.actions[0]
+                                command.action = "^" + command.action
                         else:
                             self.player.current_room.add_item(action[1:], True)
-                            command.actions[0] = "^" + command.actions[0]
+                            command.action = "^" + command.action
 
                     elif action[0] == "-":
                         if not self.player.remove_item(action[1:]):
@@ -613,7 +610,7 @@ class World:
                         else:
                             self.player.current_room.make_way(action[1], action[2:])
 
-                        command.actions[0] = "^" + command.actions[0]
+                        command.action = "^" + command.action
 
                     elif action[0] == "*":
                         if self.player.current_room.desc_ctrl != None:
@@ -888,7 +885,7 @@ class World:
         commands = reversed(self.commands)
 
         for command in commands:
-            if len(command.actions) > 0 and len(command.actions[0]) > 0 and command.actions[0][0] == "^":
+            if command.action != None and command.action[0] == "^":
                 command_buf.append("^")
             else:
                 command_buf.append(".")
@@ -1022,11 +1019,11 @@ class World:
         command_idx = -num_commands_delta
 
         for command in commands:
-            if command_idx >= 0 and len(command.actions) > 0:
-                if parts[2][command_idx] == '^' and (len(command.actions[0]) == 0 or command.actions[0][0] != '^'):
-                    command.actions[0] = "^" + command.actions[0]
-                elif parts[2][command_idx] != '^' and (len(command.actions[0]) > 0 and command.actions[0][0] == '^'):
-                    command.actions[0] = command.actions[0][1:]
+            if command_idx >= 0 and command.action != None:
+                if parts[2][command_idx] == '^' and command.action[0] != '^':
+                    command.action = "^" + command.action
+                elif parts[2][command_idx] != '^' and  command.action[0] == '^':
+                    command.action = command.action[1:]
 
             command_idx += 1
 
