@@ -682,6 +682,8 @@ class World:
                      self.player.has_item(c.condition))):
 
                     result |= self.take_action(c, True, previous_result)
+                    if (result & RESULT_END_GAME) != 0:
+                        break
 
         return result
 

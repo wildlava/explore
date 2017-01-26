@@ -85,6 +85,10 @@ class World
                  player.hasItem(c.condition)))
             {
                result |= takeAction(c, true, previous_result);
+               if ((result & RESULT_END_GAME) != 0)
+               {
+                  break;
+               }
             }
          }
       }
