@@ -23,6 +23,7 @@ class World
    HashMap<String, Room> rooms;
    ArrayList<String> room_list;
    ArrayList<Command> commands;
+   HashMap<String, String> item_descs;
 
    ArrayList<String> plural_items;
    ArrayList<String> mass_items;
@@ -50,6 +51,7 @@ class World
       rooms = new HashMap<String, Room>();
       room_list = new ArrayList<String>();
       commands = new ArrayList<Command>();
+      item_descs = new HashMap<String, String>();
 
       plural_items = new ArrayList<String>();
       mass_items = new ArrayList<String>();
@@ -1097,6 +1099,12 @@ class World
             {
                new_room.down_room = line.substring(line.indexOf("=") + 1);
             }
+         }
+         else if (line.startsWith("ITEM DESC "))
+         {
+            int colon_pos = line.indexOf(":");
+            item_descs.put(line.substring(10, colon_pos),
+                           line.substring(colon_pos + 1));
          }
          else if (line.startsWith("PLURAL ITEM "))
          {

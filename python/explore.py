@@ -228,7 +228,9 @@ class Room(ItemContainer):
             if trs_compat:
                 out_desc.append("There is " + a_or_an(item_lower) + " " + item_lower + " here.")
             else:
-                if item in self.world.plural_items:
+                if item in self.world.item_descs:
+                    out_desc.append(self.world.item_descs[item])
+                elif item in self.world.plural_items:
                     out_desc.append("There are some " + item_lower + " here.")
                 elif item in self.world.mass_items:
                     out_desc.append("There is some " + item_lower + " here.")
@@ -341,6 +343,7 @@ class World:
         self.rooms = {}
         self.room_list = []
         self.commands = []
+        self.item_descs = {}
 
         self.plural_items = []
         self.mass_items = []
@@ -494,6 +497,10 @@ class World:
             elif keyword == "DOWN":
                 if new_room != None:
                    new_room.init_neighbor("D", params[:])
+
+            elif line.startswith("ITEM DESC "):
+                item_name, item_desc = line[10:].split(":")
+                self.item_descs[item_name] = item_desc
 
             elif line.startswith("PLURAL ITEM "):
                 self.plural_items.append(line[12:])

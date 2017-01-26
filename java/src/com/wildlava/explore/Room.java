@@ -90,7 +90,11 @@ class Room extends ItemContainer
          }
          else
          {
-            if (world.plural_items.contains(item))
+            if (world.item_descs.containsKey(item))
+            {
+               desc_strings.add(world.item_descs.get(item));
+            }
+            else if (world.plural_items.contains(item))
             {
                desc_strings.add("There are some " + item_lower + " here.");
             }
