@@ -652,7 +652,8 @@ class World:
                     messages.append(message)
 
             if action_one_shot:
-                command.action = "^" + command.action
+                if command.action[0] != "^":
+                    command.action = "^" + command.action
 
             if len(messages) > 0:
                 if (result & RESULT_DESCRIBE) != 0 or (not trs_compat and auto and (previous_result & RESULT_DESCRIBE) != 0):

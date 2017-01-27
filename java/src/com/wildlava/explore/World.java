@@ -844,7 +844,10 @@ class World
 
          if (action_one_shot)
          {
-            command.action = "^" + command.action;
+            if (!command.action.startsWith("^"))
+            {
+               command.action = "^" + command.action;
+            }
          }
 
          if (!messages.isEmpty())
