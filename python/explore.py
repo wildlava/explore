@@ -375,6 +375,7 @@ class World:
             line = line.replace('!  ', '! ');
             line = line.replace('?  ', '? ');
             line = line.replace('.  ', '. ');
+            line = line.replace(':  ', ': ');
 
             if line.find("=") != -1:
                 keyword, params = line.split("=", 1)

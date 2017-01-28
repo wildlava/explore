@@ -982,6 +982,7 @@ class World
             line = line.replace("!  ", "! ");
             line = line.replace("?  ", "? ");
             line = line.replace(".  ", ". ");
+            line = line.replace(":  ", ": ");
          }
 
          if (line.startsWith("VERSION="))
