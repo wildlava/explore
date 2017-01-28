@@ -196,7 +196,7 @@ class Game
          if ((result & world.RESULT_WIN) != 0)
          {
             io.print("");
-            io.print("Congratulations, you have successfully completed this adventure!");
+            io.print("Nice job! You successfully completed this adventure!");
          }
          else if ((result & world.RESULT_DIE) != 0)
          {

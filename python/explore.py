@@ -1288,7 +1288,10 @@ def play(filename=None, input_script=None, no_delay=False):
         if (result & RESULT_END_GAME) != 0:
             if (result & RESULT_WIN) != 0:
                 exp_io.tell("")
-                exp_io.tell("Congratulations, you have successfully completed this adventure!")
+                exp_io.tell("Nice job! You successfully completed this adventure!")
+            elif (result & RESULT_DIE) != 0:
+                exp_io.tell("")
+                exp_io.tell("Game over.")
 
             exp_io.tell("")
             break
