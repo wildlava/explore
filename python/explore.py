@@ -77,7 +77,7 @@ class Command:
 
     def __init__(self):
         self.location = None
-        self.commands = []
+        self.commands = None
         self.condition = None
         self.action = None
 
@@ -343,6 +343,7 @@ class World:
         self.rooms = {}
         self.room_list = []
         self.commands = []
+        self.variables = {}
         self.item_descs = {}
 
         self.plural_items = []
@@ -420,24 +421,26 @@ class World:
                 new_command = Command()
                 self.commands.append(new_command)
 
-                if cur_room_name != None:
-                    new_command.location = cur_room_name[:]
-
-                if params[0] == "+":
-                    new_command.condition = params[1:]
-                elif params[0] == "-":
+                if (params[0] == "+" or
+                    params[0] == "-" or
+                    params[0] == "$"):
                     new_command.condition = params[:]
                 else:
                     pos = params.find(":")
                     if pos != -1:
-                        if params[pos + 1] == "+":
-                            new_command.condition = params[pos + 2:]
-                        else:
-                            new_command.condition = params[pos + 1:]
+                        new_command.condition = params[pos + 1:]
+
+                        if not (new_command.condition[0] == "+" or
+                                new_command.condition[0] == "-" or
+                                new_command.condition[0] == "$"):
+                            new_command.condition = "+" + new_command.condition
 
                         new_command.commands = params[:pos].split(",")
                     else:
                         new_command.commands = params.split(",")
+
+                if cur_room_name != None:
+                    new_command.location = cur_room_name[:]
 
             elif keyword == "ACTION":
                 # If there is no current command, or if there is one,
@@ -639,6 +642,13 @@ class World:
                                 if len(self.player.current_room.desc_ctrl) > 0 and self.player.current_room.desc_ctrl[-1] == "+":
                                     self.player.current_room.desc_ctrl = self.player.current_room.desc_ctrl[:-1]
 
+                    elif action[0] == "$":
+                        equals_pos = action.find("=")
+                        if equals_pos != -1:
+                            variable_name = action[1:equals_pos]
+                            value = action[equals_pos + 1:]
+
+                            self.variables[variable_name] = value
                     else:
                         self.exp_io.tell("")
                         self.exp_io.tell(action)
@@ -667,19 +677,66 @@ class World:
         #    return result
         return result
 
+    def eval_condition(self, c):
+        if c.condition == None:
+            return True
+
+        for condition in c.condition.split("&"):
+            if condition.startswith("$"):
+                op_pos = condition.find("==")
+                if op_pos != -1:
+                    variable_name = condition[1:op_pos]
+                    value = condition[op_pos + 2:]
+
+                    if variable_name in self.variables:
+                        if self.variables[variable_name] != value:
+                            return False
+                    else:
+                        return False
+                else:
+                    op_pos = condition.find("!=")
+                    if op_pos != -1:
+                        variable_name = condition[1:op_pos]
+                        value = condition[op_pos + 2:]
+
+                        if variable_name in self.variables:
+                            if self.variables[variable_name] == value:
+                                return False
+                    else:
+                        return False
+            else:
+                invert = False
+                if condition.startswith("-"):
+                    invert = True
+                elif not condition.startswith("+"):
+                    return False
+
+                condition = condition[1:]
+
+                player_or_room = False
+                if condition.startswith("*"):
+                    player_or_room = True
+                    condition = condition[1:]
+
+                has_item = (self.player.has_item(condition) or
+                            (player_or_room and
+                             self.player.current_room.has_item(condition)))
+
+                if invert and has_item:
+                    return False
+                elif not invert and not has_item:
+                    return False
+
+        return True
+
     def check_for_auto(self, previous_result):
         result = RESULT_NORMAL
 
         for c in self.commands:
             if ((c.location == None or
                  c.location == self.player.current_room.name) and
-                len(c.commands) == 0):
-                if (c.condition == None or
-                    (c.condition[0] == "-" and
-                     not self.player.has_item(c.condition[1:])) or
-                    (c.condition != "-" and
-                     self.player.has_item(c.condition))):
-
+                c.commands == None):
+                if self.eval_condition(c):
                     result |= self.take_action(c, True, previous_result)
                     if (result & RESULT_END_GAME) != 0:
                         break
@@ -691,16 +748,17 @@ class World:
         candidate = None
 
         for c in self.commands:
-            if cmd in c.commands:
-                # Give priority to commands that are specific to
-                # this room (if specified), otherwise remember it
-                # as a candidate.
-                if r == None or c.location == r.name:
-                    return c
-                elif c.location == None:
-                    global_candidate = c
-                else:
-                    candidate = c
+            if c.commands != None:
+                if cmd in c.commands:
+                    # Give priority to commands that are specific to
+                    # this room (if specified), otherwise remember it
+                    # as a candidate.
+                    if r == None or c.location == r.name:
+                        return c
+                    elif c.location == None:
+                        global_candidate = c
+                    else:
+                        candidate = c
 
         if global_candidate != None:
             return global_candidate
@@ -725,11 +783,7 @@ class World:
         custom = self.find_custom(wish, self.player.current_room)
 
         if custom != None:
-            if (custom.condition == None or
-                (custom.condition[0] == "-" and
-                 not self.player.has_item(custom.condition[1:])) or
-                (custom.condition != "-" and
-                 self.player.has_item(custom.condition))):
+            if self.eval_condition(custom):
 
                 player_meets_condition = True
 

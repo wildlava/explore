@@ -23,6 +23,7 @@ class World
    HashMap<String, Room> rooms;
    ArrayList<String> room_list;
    ArrayList<Command> commands;
+   HashMap<String, String> variables;
    HashMap<String, String> item_descs;
 
    ArrayList<String> plural_items;
@@ -51,6 +52,7 @@ class World
       rooms = new HashMap<String, Room>();
       room_list = new ArrayList<String>();
       commands = new ArrayList<Command>();
+      variables = new HashMap<String, String>();
       item_descs = new HashMap<String, String>();
 
       plural_items = new ArrayList<String>();
@@ -68,6 +70,96 @@ class World
    public static final int RESULT_END_GAME = 16;
    public static final int RESULT_NO_CHECK = 32;
 
+   boolean evalCondition(Command c)
+   {
+      if (c.condition == null)
+      {
+         return true;
+      }
+
+      for (String condition : c.condition.split("&", -1))
+      {
+         if (condition.startsWith("$"))
+         {
+            int op_pos = condition.indexOf("==");
+            if (op_pos != -1)
+            {
+               String variable_name = condition.substring(1, op_pos);
+               String value = condition.substring(op_pos + 2);
+
+               if (variables.containsKey(variable_name))
+               {
+                  if (!variables.get(variable_name).equals(value))
+                  {
+                     return false;
+                  }
+               }
+               else
+               {
+                  return false;
+               }
+            }
+            else
+            {
+               op_pos = condition.indexOf("!=");
+               if (op_pos != -1)
+               {
+                  String variable_name = condition.substring(1, op_pos);
+                  String value = condition.substring(op_pos + 2);
+
+                  if (variables.containsKey(variable_name))
+                  {
+                     if (variables.get(variable_name).equals(value))
+                     {
+                        return false;
+                     }
+                  }
+               }
+               else
+               {
+                  return false;
+               }
+            }
+         }
+         else
+         {
+            boolean invert = false;
+            if (condition.startsWith("-"))
+            {
+               invert = true;
+            }
+            else if (!condition.startsWith("+"))
+            {
+               return false;
+            }
+
+            condition = condition.substring(1);
+
+            boolean player_or_room = false;
+            if (condition.startsWith("*"))
+            {
+               player_or_room = true;
+               condition = condition.substring(1);
+            }
+
+            boolean has_item = (player.hasItem(condition) ||
+                                (player_or_room &&
+                                 player.current_room.hasItem(condition)));
+
+            if (invert && has_item)
+            {
+               return false;
+            }
+            else if (!invert && !has_item)
+            {
+               return false;
+            }
+         }
+      }
+
+      return true;
+   }
+
    int checkForAuto(int previous_result)
    {
       int result = RESULT_NORMAL;
@@ -78,11 +170,7 @@ class World
               c.location.equals(player.current_room.name)) &&
              c.commands == null)
          {
-            if (c.condition == null ||
-                (c.condition.startsWith("-") &&
-                 !player.hasItem(c.condition.substring(1))) ||
-                (!c.condition.startsWith("-") &&
-                 player.hasItem(c.condition)))
+            if (evalCondition(c))
             {
                result |= takeAction(c, true, previous_result);
                if ((result & RESULT_END_GAME) != 0)
@@ -120,11 +208,7 @@ class World
 
       if (custom != null)
       {
-         if (custom.condition == null ||
-             (custom.condition.startsWith("-") &&
-              !player.hasItem(custom.condition.substring(1))) ||
-             (!custom.condition.startsWith("-") &&
-              player.hasItem(custom.condition)))
+         if (evalCondition(custom))
          {
             player_meets_condition = true;
          }
@@ -822,6 +906,17 @@ class World
                      }
                   }
                }
+               else if (action.startsWith("$"))
+               {
+                  int equals_pos = action.indexOf("=");
+                  if (equals_pos != -1)
+                  {
+                     String variable_name = action.substring(1, equals_pos);
+                     String value = action.substring(equals_pos + 1);
+
+                     variables.put(variable_name, value);
+                  }
+               }
                else
                {
                   io.print("");
@@ -962,11 +1057,9 @@ class World
 
             String cmd_str = line.substring(line.indexOf("=") + 1);
 
-            if (cmd_str.startsWith("+"))
-            {
-               new_command.condition = cmd_str.substring(1);
-            }
-            else if (cmd_str.startsWith("-"))
+            if (cmd_str.startsWith("+") ||
+                cmd_str.startsWith("-") ||
+                cmd_str.startsWith("$"))
             {
                new_command.condition = cmd_str;
             }
@@ -976,16 +1069,20 @@ class World
                if (pos != -1)
                {
                   new_command.condition = cmd_str.substring(pos + 1);
-                  if (new_command.condition.startsWith("+"))
+
+                  if (!(new_command.condition.startsWith("+") ||
+                        new_command.condition.startsWith("-") ||
+                        new_command.condition.startsWith("$")))
                   {
-                     new_command.condition =
-                        new_command.condition.substring(1);
+                     new_command.condition = "+" + new_command.condition;
                   }
 
-                  cmd_str = cmd_str.substring(0, pos);
+                  new_command.commands = cmd_str.substring(0, pos).split(",", -1);
                }
-
-               new_command.commands = cmd_str.split(",", -1);
+               else
+               {
+                  new_command.commands = cmd_str.split(",", -1);
+               }
             }
 
             if (cur_room_name != null)
