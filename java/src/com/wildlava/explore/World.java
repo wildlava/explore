@@ -204,19 +204,44 @@ class World
 
       wish = wish.toUpperCase().replaceAll("[^A-Z ]", "");
 
-      Command custom = findCustom(wish, player.current_room);
-
-      if (custom != null)
+      Command custom = null;
+      for (Command c : commands)
       {
-         if (evalCondition(custom))
+         if (c.commands != null)
          {
-            player_meets_condition = true;
-         }
+            boolean match = false;
+            for (int i=0; i<c.commands.length; ++i)
+            {
+               if (c.commands[i].equals(wish))
+               {
+                  match = true;
+                  break;
+               }
+            }
 
-         if (custom.location == null ||
-             player.current_room.name.equals(custom.location))
-         {
-            player_in_correct_room = true;
+            if (match)
+            {
+               if (c.location == null ||
+                   player.current_room.name.equals(c.location))
+               {
+                  player_in_correct_room = true;
+                  custom = c;
+
+                  if (evalCondition(c))
+                  {
+                     player_meets_condition = true;
+                     break;
+                  }
+                  else if (!c.cont)
+                  {
+                     break;
+                  }
+               }
+               else if (!player_in_correct_room)
+               {
+                  custom = c;
+               }
+            }
          }
       }
 
@@ -567,52 +592,6 @@ class World
       }
 
       return result;
-   }
-
-   Command findCustom(String cmd, Room r)
-   {
-      Command global_candidate = null;
-      Command candidate = null;
-
-      for (Command c : commands)
-      {
-         if (c.commands != null)
-         {
-            for (int i=0; i<c.commands.length; ++i)
-            {
-               if (c.commands[i].equals(cmd))
-               {
-                  //
-                  // Give priority to commands that are specific to
-                  // this room (if specified), otherwise remember it
-                  // as a candidate.
-                  //
-                  if (r == null ||
-                      (c.location != null && c.location.equals(r.name)))
-                  {
-                     return c;
-                  }
-                  else if (c.location == null)
-                  {
-                     global_candidate = c;
-                  }
-                  else
-                  {
-                     candidate = c;
-                  }
-               }
-            }
-         }
-      }
-
-      if (global_candidate != null)
-      {
-         return global_candidate;
-      }
-      else
-      {
-         return candidate;
-      }
    }
 
    int takeAction(Command command)
@@ -1085,6 +1064,12 @@ class World
                }
             }
 
+            if (new_command.condition != null && new_command.condition.endsWith("+"))
+            {
+               new_command.condition = new_command.condition.replaceFirst(".$", "");
+               new_command.cont = true;
+            }
+
             if (cur_room_name != null)
             {
                new_command.location = new String(cur_room_name);
@@ -1233,6 +1218,27 @@ class World
          }
       }
 
+      // Sort commands so globals are last
+      ArrayList<Command> tmp_commands = commands;
+      commands = new ArrayList<Command>();
+
+      for (Command c : tmp_commands)
+      {
+         if (c.location != null)
+         {
+            commands.add(c);
+         }
+      }
+
+      for (Command c : tmp_commands)
+      {
+         if (c.location == null)
+         {
+            commands.add(c);
+         }
+      }
+
+      // Set up the starting room
       player.current_room = rooms.get(start_room);
       if (player.current_room == null)
       {

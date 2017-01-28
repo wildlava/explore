@@ -80,6 +80,7 @@ class Command:
         self.commands = None
         self.condition = None
         self.action = None
+        self.cont = False
 
 
 class ItemContainer:
@@ -439,6 +440,10 @@ class World:
                     else:
                         new_command.commands = params.split(",")
 
+                if (new_command.condition != None and new_command.condition.endswith("+")):
+                    new_command.condition = new_command.condition[:-1]
+                    new_command.cont = True
+
                 if cur_room_name != None:
                     new_command.location = cur_room_name[:]
 
@@ -521,6 +526,19 @@ class World:
                 old_version, old_version_changes = line[12:].split(" ", 1)
                 self.old_versions[int(old_version)] = old_version_changes
 
+        # Sort commands so globals are last
+        tmp_commands = self.commands;
+        self.commands = []
+
+        for c in tmp_commands:
+            if c.location != None:
+                self.commands.append(c);
+
+        for c in tmp_commands:
+            if c.location == None:
+                self.commands.append(c);
+
+        # Set up the starting room
         if self.rooms.has_key(start_room):
             self.player.current_room = self.rooms[start_room]
         elif first_room != None:
@@ -743,28 +761,6 @@ class World:
 
         return result
 
-    def find_custom(self, cmd, r):
-        global_candidate = None
-        candidate = None
-
-        for c in self.commands:
-            if c.commands != None:
-                if cmd in c.commands:
-                    # Give priority to commands that are specific to
-                    # this room (if specified), otherwise remember it
-                    # as a candidate.
-                    if r == None or c.location == r.name:
-                        return c
-                    elif c.location == None:
-                        global_candidate = c
-                    else:
-                        candidate = c
-
-        if global_candidate != None:
-            return global_candidate
-        else:
-            return candidate
-
     def process_command(self, wish, acknowledge):
         result = RESULT_NORMAL
         player_meets_condition = False
@@ -780,17 +776,22 @@ class World:
 
         wish = re.sub('[^A-Z ]', '', wish.upper())
 
-        custom = self.find_custom(wish, self.player.current_room)
+        custom = None
+        for c in self.commands:
+            if c.commands != None:
+                if wish in c.commands:
+                    if (c.location == None or
+                        self.player.current_room.name == c.location):
+                        player_in_correct_room = True
+                        custom = c
 
-        if custom != None:
-            if self.eval_condition(custom):
-
-                player_meets_condition = True
-
-            if (custom.location == None or
-                self.player.current_room.name == custom.location):
-
-                player_in_correct_room = True
+                        if self.eval_condition(c):
+                            player_meets_condition = True
+                            break
+                        elif not c.cont:
+                            break
+                    elif not player_in_correct_room:
+                        custom = c
 
         try_builtin = True
         action_denied_directive = None
