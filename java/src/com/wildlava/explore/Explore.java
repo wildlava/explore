@@ -9,14 +9,32 @@ package com.wildlava.explore;
 
 import java.io.FileReader;
 import java.io.BufferedReader;
-import java.io.FileNotFoundException;
+import java.util.ArrayList;
+import java.util.Iterator;
 
 public class Explore
 {
    public static void main(String args[])
    {
       Game game = new Game();
-      game.start();
+      String advname = null;
+      String input_script = null;
+      boolean no_delay = false;
+
+      for (String arg : args)
+      {
+         if (arg.startsWith("--script="))
+         {
+            input_script = arg.substring(9);
+            no_delay = true;
+         }
+         else
+         {
+            advname = arg;
+         }
+      }
+
+      game.start(advname, input_script, no_delay);
    }
 }
 
@@ -25,37 +43,73 @@ class Game
    private ExpIO io;
    private World world;
 
-   void start()
+   void start(String advname, String input_script, boolean no_delay)
    {
-      BufferedReader file = null;
-      String advname;
-
       io = new ExpIO();
+      world = new World(io, advname);
+
+      io.no_delay = no_delay;
+
+      ArrayList<String> input_script_commands = null;
+      Iterator<String> input_script_iter = null;
+      if (input_script != null)
+      {
+         try
+         {
+            BufferedReader file = new BufferedReader(new FileReader(input_script));
+
+            try
+            {
+               input_script_commands = new ArrayList<String>();
+               while(true)
+               {
+                  String line = file.readLine();
+                  if (line == null)
+                     break;
+
+                  input_script_commands.add(line.trim());
+               }
+
+               file.close();
+
+               input_script_iter = input_script_commands.iterator();
+            }
+            catch (java.io.IOException x)
+            {
+               io.print("Error while reading script file!");
+               return;
+            }
+         }
+         catch (java.io.FileNotFoundException x)
+         {
+            io.print("Script file not found");
+            return;
+         }
+      }
 
       io.print("");
       io.print("");
       io.print("*** EXPLORE ***  ver 4.9");
 
-      io.print("");
+      if (advname == null)
+      {
+         io.print("");
+         io.printRaw("Name of adventure: ", false);
+         advname = io.input();
 
-      io.printRaw("Name of adventure: ", false);
-      advname = io.input();
+         advname = advname.trim().toLowerCase();
+      }
 
-      advname = advname.trim().toLowerCase();
-
-      world = new World(io, advname);
-
-      String filename = advname + ".exp";
       try
       {
-         file = new BufferedReader(new FileReader(advname + ".exp"));
+         BufferedReader file = new BufferedReader(new FileReader(advname + ".exp"));
 
          io.print("");
          io.print(advname + " is now being built...");
 
-         if (world.load(file))
+         try
          {
-            try
+            if (world.load(file))
             {
                file.close();
 
@@ -68,28 +122,31 @@ class Game
                game_on = play(null);
                while (game_on)
                {
-                  game_on = play(io.input());
+                  if (input_script != null && input_script_iter.hasNext())
+                  {
+                     String command = input_script_iter.next();
+                     io.printRaw(command);
+                     game_on = play(command);
+                  }
+                  else
+                  {
+                     game_on = play(io.input());
+                  }
                }
             }
-            catch (java.io.IOException x)
+            else
             {
+               file.close();
+
                io.print("Error while building adventure!");
             }
          }
-         else
+         catch (java.io.IOException x)
          {
-            try
-            {
-               file.close();
-            }
-            catch (java.io.IOException x)
-            {
-            }
-
             io.print("Error while building adventure!");
          }
       }
-      catch (FileNotFoundException x)
+      catch (java.io.FileNotFoundException x)
       {
          io.print("Sorry, that adventure is not available.");
       }

@@ -20,6 +20,7 @@ class ExpIO
 {
    public boolean wrap = false;
    public int max_line_length = 79;
+   public boolean no_delay = false;
 
    void print(String s)
    {
@@ -63,12 +64,15 @@ class ExpIO
 
    void printRaw(String s, boolean new_line)
    {
-      try
+      if (!no_delay)
       {
-         Thread.sleep(30);
-      }
-      catch (InterruptedException x)
-      {
+         try
+         {
+            Thread.sleep(30);
+         }
+         catch (InterruptedException x)
+         {
+         }
       }
 
       System.out.print(s);

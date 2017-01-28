@@ -1205,11 +1205,19 @@ class World:
         return True
 
 
-def play(filename=None, no_delay=False):
+def play(filename=None, input_script=None, no_delay=False):
     exp_io = ExpIO()
     world = World(exp_io)
 
     exp_io.no_delay = no_delay
+
+    if input_script != None:
+        input_script_fp = open(input_script, "r")
+        input_script_commands = []
+        for line in input_script_fp:
+            input_script_commands.append(line.strip())
+        input_script_fp.close()
+        input_script_iter = iter(input_script_commands)
 
     exp_io.tell("")
     exp_io.tell("")
@@ -1247,36 +1255,43 @@ def play(filename=None, no_delay=False):
     exp_io.tell(world.title)
     exp_io.tell("")
 
-    result = RESULT_DESCRIBE
+    game_started = False
 
     while True:
+        if game_started:
+            if input_script != None:
+                try:
+                    wish = input_script_iter.next()
+                    exp_io.tell_raw(":" + wish)
+                except StopIteration:
+                    wish = raw_input(":")
+            else:
+                wish = raw_input(":")
+            wish = string.join(string.split(wish))
+            if wish != "":
+                result = world.process_command(wish, True)
+            else:
+                result = RESULT_NORMAL
+        else:
+            game_started = True
+            result = RESULT_DESCRIBE
+
         if (result & RESULT_NO_CHECK) == 0:
             check_result = world.check_for_auto(result)
             if check_result != RESULT_NORMAL:
                 result = check_result
 
-                if (result & RESULT_END_GAME) != 0:
-                    break
-                else:
-                    continue
-
         if (result & RESULT_DESCRIBE) != 0:
             exp_io.tell("")
             exp_io.tell(world.player.current_room.description())
 
-        wish = raw_input(":")
-        wish = string.join(string.split(wish))
-        if wish != "":
-            result = world.process_command(wish, True)
-            if (result & RESULT_END_GAME) != 0:
-                if (result & RESULT_WIN) != 0:
-                    exp_io.tell("")
-                    exp_io.tell("Congratulations, you have successfully completed this adventure!")
-                break
-        else:
-            result = RESULT_NORMAL
+        if (result & RESULT_END_GAME) != 0:
+            if (result & RESULT_WIN) != 0:
+                exp_io.tell("")
+                exp_io.tell("Congratulations, you have successfully completed this adventure!")
 
-    exp_io.tell("")
+            exp_io.tell("")
+            break
 
 
 def play_once(filename, command=None, resume=None, last_suspend=None, return_output=True, quiet=False, show_title=True, show_title_only=False):
@@ -1367,11 +1382,17 @@ command = None
 resume = None
 last_suspend = None
 no_delay = False
+input_script = None
 
-for arg_num in range(len(sys.argv)):
+skip_next = False
+for arg_num in range(1, len(sys.argv)):
+    if skip_next:
+        skip_next = False
+        continue
     if sys.argv[arg_num] == "-f":
         if len(sys.argv) > (arg_num + 1) and (len(sys.argv[arg_num + 1]) == 0 or sys.argv[arg_num + 1][0] != '-'):
             filename = sys.argv[arg_num + 1]
+            skip_next = True
         else:
             print >> sys.stderr, "Error: Missing adventure filename"
             sys.exit(1)
@@ -1380,24 +1401,32 @@ for arg_num in range(len(sys.argv)):
     elif sys.argv[arg_num] == "-c":
         if len(sys.argv) > (arg_num + 1) and (len(sys.argv[arg_num + 1]) == 0 or sys.argv[arg_num + 1][0] != '-'):
             command = sys.argv[arg_num + 1]
+            skip_next = True
     elif sys.argv[arg_num] == "-r":
         if len(sys.argv) > (arg_num + 1) and (len(sys.argv[arg_num + 1]) == 0 or sys.argv[arg_num + 1][0] != '-'):
             resume = sys.argv[arg_num + 1]
+            skip_next = True
     elif sys.argv[arg_num] == "-s":
         if len(sys.argv) > (arg_num + 1) and (len(sys.argv[arg_num + 1]) == 0 or sys.argv[arg_num + 1][0] != '-'):
             last_suspend = sys.argv[arg_num + 1]
+            skip_next = True
     elif sys.argv[arg_num] == "--one-shot":
         one_shot = True
     elif sys.argv[arg_num] == "--no-delay":
         no_delay = True
     elif sys.argv[arg_num] == "--trs-compat":
         trs_compat = True
+    elif sys.argv[arg_num].startswith("--script="):
+        input_script = sys.argv[arg_num][9:]
+        no_delay = True
 #    elif sys.argv[arg_num] == "--no-title":
 #        show_title = False
 #    elif sys.argv[arg_num] == "--title-only":
 #        show_title_only = True
+    else:
+        filename = sys.argv[arg_num] + ".exp"
 
 if one_shot or (command != None) or (resume != None) or (last_suspend != None):
     play_once(filename, command, resume, last_suspend, False)
 else:
-    play(filename, no_delay)
+    play(filename, input_script, no_delay)

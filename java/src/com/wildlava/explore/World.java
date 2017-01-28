@@ -950,7 +950,7 @@ class World
       return result;
    }
 
-   boolean load(BufferedReader file_stream)
+   boolean load(BufferedReader file_stream) throws java.io.IOException
    {
       String start_room = null;
       Room first_room = null;
@@ -960,17 +960,7 @@ class World
 
       while (true)
       {
-         String line;
-         try
-         {
-            line = file_stream.readLine();
-         }
-         catch (java.io.IOException e)
-         {
-            io.print("Error while reading file!");
-            return false;
-         }
-
+         String line = file_stream.readLine();
          if (line == null)
             break;
 

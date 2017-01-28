@@ -27,7 +27,6 @@ import android.graphics.Typeface;
 import java.io.InputStreamReader;
 //import java.io.FileReader;
 import java.io.BufferedReader;
-import android.content.res.Resources.NotFoundException;
 
 public class Explore extends Activity
 {
@@ -289,9 +288,9 @@ public class Explore extends Activity
             io.print(advname + " is now being built...");
          }
 
-         if (world.load(file))
+         try
          {
-            try
+            if (world.load(file))
             {
                file.close();
 
@@ -305,31 +304,25 @@ public class Explore extends Activity
                   play(null);
                }
             }
-            catch (java.io.IOException x)
+            else
             {
+               file.close();
+
                if (!silent_load)
                {
                   io.print("Error while building adventure!");
                }
             }
          }
-         else
+         catch (java.io.IOException x)
          {
-            try
-            {
-               file.close();
-            }
-            catch (java.io.IOException x)
-            {
-            }
-
             if (!silent_load)
             {
                io.print("Error while building adventure!");
             }
          }
       }
-      catch (NotFoundException x)
+      catch (android.content.res.Resources.NotFoundException x)
       {
          if (!silent_load)
          {
