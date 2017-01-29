@@ -1277,11 +1277,24 @@ class World
       buf.append(";");
 
       //
-      // and the command numbers having actions that have been "done"
+      // and the variables that are set
       //
-      ArrayList<Command> rev_commands = new ArrayList<Command>(commands);
-      Collections.reverse(rev_commands);
-      for (Command command : rev_commands)
+      for (String variable : variables.keySet())
+      {
+         buf.append(variable + "=" + variables.get(variable) + ",");
+      }
+
+      if (buf.charAt(buf.length() - 1) == ',')
+      {
+         buf.setLength(buf.length() - 1);
+      }
+
+      buf.append(";");
+
+      //
+      // and the state of the actions
+      //
+      for (Command command : commands)
       {
          if (command.action != null && command.action.startsWith("^"))
          {
@@ -1298,9 +1311,7 @@ class World
       //
       // now the room details that have changed
       //
-      ArrayList<String> rev_room_list = new ArrayList<String>(room_list);
-      Collections.reverse(rev_room_list);
-      for (String room_name : rev_room_list)
+      for (String room_name : room_list)
       {
          Room room = rooms.get(room_name);
 
@@ -1377,10 +1388,11 @@ class World
          checksum += (int) buf.charAt(i);
       }
 
-      buf.insert(0, (char) ((checksum & 0x3f) + 0x21));
-      buf.insert(0, (char) (((checksum >> 6) & 0x3f) + 0x21));
+      buf.insert(0, Integer.toHexString(0x10000 | (checksum & 0xffff)).substring(1));
 
-      //io.print("Raw string: " + String.valueOf(suspend_version) + ":" + String.valueOf(version) + ":" + buf.toString());
+      //io.printRaw("Raw string: " + String.valueOf(suspend_version) + ":" + String.valueOf(version) + ":" + buf.toString());
+      //io.printRaw("Encoded string: " + String.valueOf(suspend_version) + ":" + String.valueOf(version) + ":" + ExpUtil.encrypt(buf.toString()));
+      //io.printRaw("Decoded string: " + ExpUtil.decrypt(ExpUtil.encrypt(buf.toString())));
       return String.valueOf(suspend_version) + ":" + String.valueOf(version) + ":" + ExpUtil.encrypt(buf.toString());
    }
 
@@ -1388,6 +1400,8 @@ class World
    {
       String state_str;
       int saved_suspend_version, saved_adventure_version;
+      int checksum_high;
+      int checksum_low;
 
       if (s == null)
       {
@@ -1399,22 +1413,25 @@ class World
       {
          return false;
       }
-      else
+
+      saved_suspend_version = Integer.parseInt(s.substring(0, colon_pos));
+
+      int next_colon_pos = s.indexOf(":", colon_pos + 1);
+      if (next_colon_pos == -1)
       {
-         saved_suspend_version = Integer.parseInt(s.substring(0, colon_pos));
-
-         int next_colon_pos = s.indexOf(":", colon_pos + 1);
-         if (next_colon_pos == -1)
-         {
-            return false;
-         }
-
-         saved_adventure_version = Integer.parseInt(s.substring(colon_pos + 1, next_colon_pos));
-         state_str = ExpUtil.decrypt(s.substring(next_colon_pos + 1));
+         return false;
       }
 
-      //io.print("Suspend Version = " + String.valueOf(saved_suspend_version));
-      //io.print("Adventure Version = " + String.valueOf(saved_adventure_version));
+      saved_adventure_version = Integer.parseInt(s.substring(colon_pos + 1, next_colon_pos));
+
+      if (saved_suspend_version < 2)
+      {
+         state_str = ExpUtil.oldDecrypt(s.substring(next_colon_pos + 1));
+      }
+      else
+      {
+         state_str = ExpUtil.decrypt(s.substring(next_colon_pos + 1));
+      }
 
       // Cannot handle suspend versions lower than 1
       if (saved_suspend_version < 1)
@@ -1422,12 +1439,30 @@ class World
          return false;
       }
 
-      if (state_str.length() < 2)
+      // Cannot work with saved adventure versions higher than
+      // version of adventure loaded.
+      if (saved_adventure_version > version)
       {
          return false;
       }
 
-      int num_commands_delta = 0;
+      if (saved_suspend_version < 2)
+      {
+         if (state_str.length() < 2)
+         {
+            return false;
+         }
+      }
+      else
+      {
+         if (state_str.length() < 4)
+         {
+            return false;
+         }
+      }
+
+      int num_commands_total_delta = 0;
+      HashMap<Integer, Integer> num_commands_deltas = new HashMap<Integer, Integer>();
       if (old_versions.containsKey(saved_adventure_version))
       {
          String[] version_changes = old_versions.get(saved_adventure_version).split(",", -1);
@@ -1435,58 +1470,110 @@ class World
          {
             if (version_change.startsWith("NUM_COMMANDS"))
             {
-               num_commands_delta = Integer.parseInt(version_change.substring(12));
+               String num_commands_arg = version_change.substring(12);
+               int delta, position;
+
+               int at_pos = num_commands_arg.indexOf("@");
+               if (at_pos != -1)
+               {
+                  delta = Integer.parseInt(num_commands_arg.substring(0, at_pos));
+                  position = Integer.parseInt(num_commands_arg.substring(at_pos + 1));
+                  num_commands_deltas.put(position, delta);
+               }
+               else
+               {
+                  delta = Integer.parseInt(num_commands_arg);
+               }
+
+               num_commands_total_delta += delta;
+            }
+            else if (version_change.equals("INCOMPATIBLE"))
+            {
+               return false;
             }
          }
       }
 
       int checksum = 0;
-      for (int i=2; i<state_str.length(); ++i)
+      String[] parts;
+
+      if (saved_suspend_version < 2)
       {
-         checksum += (int) state_str.charAt(i);
+         for (int i=2; i<state_str.length(); ++i)
+         {
+            checksum += (int) state_str.charAt(i);
+         }
+
+         checksum_high = ((checksum >> 6) & 0x3f) + 0x21;
+         checksum_low = (checksum & 0x3f) + 0x21;
+
+         // Fix a problem in which the '`' character gets converted to ' '
+         // in the encryption/decryption process.
+         if (checksum_high == 0x60)
+         {
+            checksum_high = 0x20;
+         }
+
+         if (checksum_low == 0x60)
+         {
+            checksum_low = 0x20;
+         }
+
+         StringBuffer checksum_str = new StringBuffer();
+         checksum_str.append((char) checksum_high);
+         checksum_str.append((char) checksum_low);
+
+         if (!checksum_str.toString().equals(state_str.substring(0, 2)))
+         {
+            return false;
+         }
+
+         parts = state_str.substring(2).split(";", -1);
+
+         if (rooms.size() != parts.length - 3)
+         {
+            return false;
+         }
+
+         if (commands.size() != parts[2].length() + num_commands_total_delta)
+         {
+            return false;
+         }
+      }
+      else
+      {
+         for (int i=4; i<state_str.length(); ++i)
+         {
+            checksum += (int) state_str.charAt(i);
+         }
+
+         String checksum_str = Integer.toHexString(0x10000 | (checksum & 0xffff)).substring(1);
+
+         if (!checksum_str.equals(state_str.substring(0, 4)))
+         {
+            return false;
+         }
+
+         parts = state_str.substring(4).split(";", -1);
+
+         if (rooms.size() != parts.length - 4)
+         {
+            return false;
+         }
+
+         if (commands.size() != parts[3].length() + num_commands_total_delta)
+         {
+            return false;
+         }
       }
 
-      int checksum_high = ((checksum >> 6) & 0x3f) + 0x21;
-      int checksum_low = (checksum & 0x3f) + 0x21;
-
-      // Fix a problem in which the '`' character gets converted to ' '
-      // in the encryption/decryption process.
-      if (checksum_high == 0x60)
-      {
-         checksum_high = 0x20;
-      }
-
-      if (checksum_low == 0x60)
-      {
-         checksum_low = 0x20;
-      }
-
-      StringBuffer checksum_str = new StringBuffer();
-      checksum_str.append((char) checksum_high);
-      checksum_str.append((char) checksum_low);
-
-      if (!checksum_str.toString().equals(state_str.substring(0, 2)))
-      {
-         return false;
-      }
-
-      String[] parts = state_str.substring(2).split(";", -1);
-
-      if (rooms.size() != parts.length - 3)
-      {
-         return false;
-      }
-
-      if (commands.size() != parts[2].length() + num_commands_delta)
-      {
-         return false;
-      }
+      int part_num = 0;
 
       //
-      // Recover the current room.
+      // Recover the current room
       //
       Room prev_room = player.current_room;
-      player.current_room = rooms.get(parts[0]);
+      player.current_room = rooms.get(parts[part_num]);
       if (player.current_room == null)
       {
          player.current_room = prev_room;
@@ -1494,14 +1581,16 @@ class World
          return false;
       }
 
+      part_num += 1;
+
       //
-      // Recover the player's items.
+      // Recover the player's items
       //
       player.items = new ArrayList<String>();
 
-      if (!parts[1].equals(""))
+      if (!parts[part_num].equals(""))
       {
-         String[] saved_items = parts[1].split(",", -1);
+         String[] saved_items = parts[part_num].split(",", -1);
          for (String item : saved_items)
          {
             if (old_items.containsKey(item))
@@ -1515,42 +1604,127 @@ class World
          }
       }
 
+      part_num += 1;
+
       //
-      // Recover the state of the actions.
+      // Recover the variables
       //
-      int command_idx = -num_commands_delta;
-      ArrayList<Command> rev_commands = new ArrayList<Command>(commands);
-      Collections.reverse(rev_commands);
-      for (Command command : rev_commands)
+      variables = new HashMap<String, String>();
+
+      if (saved_suspend_version >= 2)
       {
-         if (command_idx >= 0 && command.action != null)
+         if (!parts[part_num].equals(""))
          {
-            if (parts[2].charAt(command_idx) == '^' &&
+            String[] saved_variables = parts[part_num].split(",", -1);
+            for (String variable : saved_variables)
+            {
+               int equals_pos = variable.indexOf("=");
+               if (equals_pos != -1)
+               {
+                  variables.put(variable.substring(0, equals_pos),
+                                variable.substring(equals_pos + 1));
+               }
+            }
+         }
+
+         part_num += 1;
+      }
+
+      //
+      // Recover the state of the actions
+      //
+      int num_commands = commands.size();
+      int num_saved_commands = parts[part_num].length();
+      int command_idx;
+      if (saved_suspend_version < 2)
+      {
+         command_idx = num_commands - num_commands_total_delta - 1;
+      }
+      else
+      {
+         command_idx = 0;
+      }
+
+      for (int i=0; i<num_commands; i++)
+      {
+         Command command = commands.get(i);
+
+         if (num_commands_deltas.containsKey(i))
+         {
+            int delta = num_commands_deltas.get(i);
+            if (delta > 0)
+            {
+               i += delta - 1;
+               continue;
+            }
+            else
+            {
+               if (saved_suspend_version < 2)
+               {
+                  command_idx += delta;
+               }
+               else
+               {
+                  command_idx -= delta;
+               }
+            }
+         }
+
+         if (command_idx < 0 || command_idx >= num_saved_commands)
+         {
+            io.print("Warning! Error in decoding suspended game.");
+            io.print("         The state of your game is inconsistent.");
+            io.print("         Please start game over and report this");
+            io.print("         problem to the developer.");
+            return false;
+         }
+
+         if (command.action != null)
+         {
+            if (parts[part_num].charAt(command_idx) == '^' &&
                 !command.action.startsWith("^"))
             {
                command.action = "^" + command.action;
             }
-            else if (parts[2].charAt(command_idx) != '^' &&
+            else if (parts[part_num].charAt(command_idx) != '^' &&
                      command.action.startsWith("^"))
             {
                command.action = command.action.substring(1);
             }
          }
 
-         ++command_idx;
+         if (saved_suspend_version < 2)
+         {
+            command_idx--;
+         }
+         else
+         {
+            command_idx++;
+         }
       }
 
+      part_num += 1;
+
       //
-      // Recover the room details.
+      // Recover the room details
       //
       int room_idx = 0;
-      ArrayList<String> rev_room_list = new ArrayList<String>(room_list);
-      Collections.reverse(rev_room_list);
-      for (String room_name : rev_room_list)
+      ArrayList<String> ordered_room_list;
+      if (saved_suspend_version < 2)
+      {
+         ordered_room_list = new ArrayList<String>(room_list);
+         Collections.reverse(ordered_room_list);
+      }
+      else
+      {
+         ordered_room_list = room_list;
+      }
+
+      for (String room_name : ordered_room_list)
       {
          Room room = rooms.get(room_name);
 
-         String[] room_code = parts[room_idx + 3].split(":", -1);
+         String[] room_code = parts[room_idx + part_num].split(":", -1);
          if (room_code.length != 8)
          {
             String[] old = room_code;

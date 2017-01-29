@@ -15,6 +15,7 @@ import java.io.FileOutputStream;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.util.Base64;
 
 class ExpIO
 {
@@ -189,5 +190,17 @@ class ExpIO
       }
 
       return (new String(buf)).trim();
+   }
+
+   static String encodeBase64(byte[] bytes)
+   {
+      Base64.Encoder encoder = Base64.getEncoder().withoutPadding();
+      return encoder.encodeToString(bytes);
+   }
+
+   static byte[] decodeBase64(String s)
+   {
+      Base64.Decoder decoder = Base64.getDecoder();
+      return decoder.decode(s);
    }
 }

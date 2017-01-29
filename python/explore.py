@@ -353,7 +353,7 @@ class World:
         self.same_items = {}
         self.old_items = {}
         self.old_versions = {}
-        self.suspend_version = 1;
+        self.suspend_version = 2
         self.suspend_mode = SUSPEND_INTERACTIVE
         self.last_suspend = None
 
@@ -946,19 +946,30 @@ class World:
     key = "We were inspired by Steely Dan."
 
     def encrypt(self, in_str):
+        comp_bytes = zlib.compress(in_str)
+
         out_str = ""
-        for i, character in enumerate(in_str):
-            c = ord(character)
-            c -= 0x20
-            c &= 0x3f
-            c ^= ord(self.key[i % len(self.key)]) & 0x3f
-            c += 0x3b
+        key_len = len(self.key)
+        for i, character in enumerate(comp_bytes):
+            out_str += chr(ord(character) ^ ord(self.key[i % key_len]))
 
-            out_str = chr(c) + out_str
-
-        return out_str
+        return base64.b64encode(out_str).strip("=")
 
     def decrypt(self, in_str):
+        comp_bytes = base64.b64decode(in_str +
+                                      ((4 - len(in_str) % 4) & 0x3) * '=')
+
+        out_str = ""
+        key_len = len(self.key)
+        for i, character in enumerate(comp_bytes):
+            out_str += chr(ord(character) ^ ord(self.key[i % key_len]))
+
+        try:
+            return zlib.decompress(out_str)
+        except zlib.error:
+            return "Decompress failed"
+
+    def old_decrypt(self, in_str):
         out_str = ""
         for i in range(len(in_str)):
             c = ord(in_str[-(i + 1)])
@@ -979,11 +990,13 @@ class World:
         # what we're carrying
         buf.append(string.join(self.player.items, ','))
 
-        # and the command numbers having actions that have been "done"
-        command_buf = []
-        commands = reversed(self.commands)
+        # and the variables that are set
+        buf.append(','.join([variable + "=" + self.variables[variable] for variable in self.variables]))
 
-        for command in commands:
+        # and the state of the actions
+        command_buf = []
+
+        for command in self.commands:
             if command.action != None and command.action[0] == "^":
                 command_buf.append("^")
             else:
@@ -992,9 +1005,7 @@ class World:
         buf.append(string.join(command_buf, ''))
 
         # now the room details that have changed
-        room_list = reversed(self.room_list)
-
-        for room_name in room_list:
+        for room_name in self.room_list:
             room = self.rooms[room_name]
 
             if room.desc_ctrl != None and len(room.desc_ctrl) > 0 and room.desc_ctrl[-1] == "+":
@@ -1023,8 +1034,9 @@ class World:
         for i in range(len(buf_string)):
             checksum += ord(buf_string[i])
 
-        #print "Raw string: " + chr(((checksum >> 6) & 0x3f) + 0x21) + chr((checksum & 0x3f) + 0x21) + buf_string
-        return str(self.suspend_version) + ":" + str(self.version) + ":" + self.encrypt(chr(((checksum >> 6) & 0x3f) + 0x21) + chr((checksum & 0x3f) + 0x21) + buf_string)
+        buf_string = ("%04x" % (checksum & 0xffff)) + buf_string
+        #print "Raw string: " + str(self.suspend_version) + ":" + str(self.version) + ":" + buf_string
+        return str(self.suspend_version) + ":" + str(self.version) + ":" + self.encrypt(buf_string)
 
     def set_state(self, s):
         if not s:
@@ -1033,106 +1045,186 @@ class World:
         colon_pos = s.find(':')
         if colon_pos == -1 or s[0] < '0' or s[0] > '9':
             return False
-        else:
-            try:
-                state_parts = s.split(':', 2)
-                saved_suspend_version = int(state_parts[0])
-                saved_adventure_version = int(state_parts[1])
-                state_str = state_parts[2]
-            except ValueError:
-                return False
 
+        try:
+            state_parts = s.split(':', 2)
+            saved_suspend_version = int(state_parts[0])
+            saved_adventure_version = int(state_parts[1])
+            state_str = state_parts[2]
+        except ValueError:
+            return False
+
+        if saved_suspend_version < 2:
+            state_str = self.old_decrypt(state_str)
+        else:
             state_str = self.decrypt(state_str)
 
         # Cannot handle suspend versions lower than 1
         if saved_suspend_version < 1:
             return False
 
-        if len(state_str) < 2:
+        # Cannot work with saved adventure versions higher than
+        # version of adventure loaded.
+        if saved_adventure_version > self.version:
             return False
 
-        #print 'sus_ver =', saved_suspend_version
-        #print 'adv_ver =', saved_adventure_version
-        #print state_str
+        if saved_suspend_version < 2:
+            if len(state_str) < 2:
+                return False
+        else:
+            if len(state_str) < 4:
+                return False
 
-        num_commands_delta = 0
+        num_commands_total_delta = 0
+        num_commands_deltas = {}
         if saved_adventure_version in self.old_versions:
             version_changes = self.old_versions[saved_adventure_version].split(',')
             for version_change in version_changes:
-                #print version_change
                 if version_change.startswith('NUM_COMMANDS'):
-                    num_commands_delta = int(version_change[12:])
+                    num_commands_arg = version_change[12:]
+                    at_pos = num_commands_arg.find("@")
+                    if at_pos != 1:
+                        delta = int(num_commands_arg[:at_pos])
+                        position = int(num_commands_arg[at_pos + 1:])
+                        num_commands_deltas[position] = delta
+                    else:
+                        delta = int(version_change[12:])
+
+                    num_commands_total_delta += delta
+
+                elif version_change == 'INCOMPATIBLE':
+                    return False
 
         checksum = 0
-        for i in range(2, len(state_str)):
-            checksum += ord(state_str[i])
+        if saved_suspend_version < 2:
+            for i in range(2, len(state_str)):
+                checksum += ord(state_str[i])
 
-        # When making checksum string, fix a problem in which
-        # the '`' character gets converted to ' ' in the
-        # encryption/decryption process.
-        checksum_str = (chr(((checksum >> 6) & 0x3f) + 0x21) + chr((checksum & 0x3f) + 0x21)).replace('`', ' ')
+            # Fix a problem in which the '`' character gets converted to ' '
+            # in the encryption/decryption process.
+            checksum_str = (chr(((checksum >> 6) & 0x3f) + 0x21) + chr((checksum & 0x3f) + 0x21)).replace('`', ' ')
 
-        if checksum_str != state_str[:2]:
-            return False
+            if checksum_str != state_str[:2]:
+                return False
 
-        parts = state_str[2:].split(';')
+            parts = state_str[2:].split(';')
 
-        if len(self.rooms) != len(parts) - 3:
-            return False
+            if len(self.rooms) != len(parts) - 3:
+                return False
 
-        num_saved_commands = len(parts[2])
-        #print 'num_saved_commands =', num_saved_commands
-        #print 'num_commands_delta =', num_commands_delta
-        if len(self.commands) != num_saved_commands + num_commands_delta:
-            return False
+            if len(self.commands) != len(parts[2]) + num_commands_total_delta:
+                return False
+        else:
+            for i in range(4, len(state_str)):
+                checksum += ord(state_str[i])
 
-        # Recover the current room.
+            checksum_str = ("%04x" % (checksum & 0xffff))
+
+            if checksum_str != state_str[:4]:
+                return False
+
+            parts = state_str[4:].split(';')
+
+            if len(self.rooms) != len(parts) - 4:
+                return False
+
+            if len(self.commands) != len(parts[3]) + num_commands_total_delta:
+                return False
+
+        part_num = 0
+
+        # Recover the current room
         prev_room = self.player.current_room
         try:
-            self.player.current_room = self.rooms[parts[0]]
+            self.player.current_room = self.rooms[parts[part_num]]
         except KeyError:
             # If the room name is invalid, recover the previous location and
             # return error status.
             self.player.current_room = prev_room
             return False
 
-        # Recover the player's items.
-        if parts[1] == "":
+        part_num += 1
+
+        # Recover the player's items
+        if parts[part_num] == "":
             self.player.items = []
         else:
-            self.player.items = parts[1].split(',')
+            self.player.items = parts[part_num].split(',')
             for i, player_item in enumerate(self.player.items):
                 if player_item in self.old_items:
                     self.player.items[i] = self.old_items[player_item]
 
-        # If the player now has more than he can carry, which should never
-        # happen, recover the previous location and return error status.
-        #if len(new_player_items) > self.player.item_limit:
-        #    self.player.current_room = prev_room
-        #    return False
-        #else:
-        #    self.player.items = new_player_items
+        part_num += 1
 
-        # Recover the state of the actions.
-        commands = reversed(self.commands)
-        command_idx = -num_commands_delta
+        # Recover the variables
+        variables = {};
 
-        for command in commands:
-            if command_idx >= 0 and command.action != None:
-                if parts[2][command_idx] == '^' and command.action[0] != '^':
+        if saved_suspend_version >= 2:
+            if parts[part_num] != "":
+                saved_variables = parts[part_num].split(",");
+                for variable in saved_variables:
+                    equals_pos = variable.find("=");
+                    if equals_pos != -1:
+                        variables[variable[:equals_pos]] = variable[equals_pos + 1:]
+
+            part_num += 1;
+
+        # Recover the state of the actions
+        num_commands = len(self.commands)
+        num_saved_commands = len(parts[part_num])
+        if saved_suspend_version < 2:
+            command_idx = num_commands - num_commands_total_delta - 1
+        else:
+            command_idx = 0
+
+        i = 0
+        while i < num_commands:
+            command = self.commands[i]
+            if i in num_commands_deltas:
+                delta = num_commands_deltas[i]
+                if delta > 0:
+                    i += delta - 1
+                    i += 1
+                    continue
+                else:
+                    if saved_suspend_version < 2:
+                        command_idx += delta
+                    else:
+                        command_idx -= delta
+
+            if command_idx < 0 or command_idx >= num_saved_commands:
+                exp_io.tell("Warning! Error in decoding suspended game.")
+                exp_io.tell("         The state of your game is inconsistent.")
+                exp_io.tell("         Please start game over and report this")
+                exp_io.tell("         problem to the developer.")
+                return False
+
+            if command.action != None:
+                if parts[part_num][command_idx] == '^' and command.action[0] != '^':
                     command.action = "^" + command.action
-                elif parts[2][command_idx] != '^' and  command.action[0] == '^':
+                elif parts[part_num][command_idx] != '^' and command.action[0] == '^':
                     command.action = command.action[1:]
 
-            command_idx += 1
+            if saved_suspend_version < 2:
+                command_idx -= 1
+            else:
+                command_idx += 1
 
-        # Recover the room details.
+            i += 1
+
+        part_num += 1
+
+        # Recover the room details
         room_idx = 0
-        room_list = reversed(self.room_list)
+        if saved_suspend_version < 2:
+            ordered_room_list = reversed(self.room_list)
+        else:
+            ordered_room_list = self.room_list
 
-        for room_name in room_list:
+        for room_name in ordered_room_list:
             room = self.rooms[room_name]
-            room_code = parts[room_idx + 3].split(':')
+
+            room_code = parts[room_idx + part_num].split(':')
             if len(room_code) != 8:
                 old = room_code
                 room_code = []

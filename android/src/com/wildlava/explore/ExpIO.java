@@ -13,6 +13,7 @@ import java.io.FileOutputStream;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import android.util.Base64;
 
 class ExpIO
 {
@@ -241,5 +242,15 @@ class ExpIO
       }
 
       return (new String(buf)).trim();
+   }
+
+   static String encodeBase64(byte[] bytes)
+   {
+      return Base64.encodeToString(bytes, Base64.NO_WRAP | Base64.NO_PADDING);
+   }
+
+   static byte[] decodeBase64(String s)
+   {
+      return Base64.decode(s, Base64.NO_WRAP | Base64.NO_PADDING);
    }
 }

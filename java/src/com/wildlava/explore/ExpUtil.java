@@ -9,7 +9,12 @@ package com.wildlava.explore;
 
 import java.util.AbstractCollection;
 import java.util.Iterator;
-import java.lang.StringBuilder;
+import java.util.zip.InflaterInputStream;
+import java.util.zip.DeflaterOutputStream;
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
 
 class ExpUtil
 {
@@ -77,24 +82,64 @@ class ExpUtil
 
    static String encrypt(String s)
    {
-      StringBuffer buf = new StringBuffer();
+      byte[] key_bytes = key.getBytes();
+      int key_len = key_bytes.length;
 
-      for (int i=0; i<s.length(); ++i)
+      ByteArrayOutputStream stream = new ByteArrayOutputStream();
+      try
       {
-         char c = s.charAt(i);
-
-         c -= 0x20;
-         c &= 0x3f;
-         c ^= key.charAt(i % key.length()) & 0x3f;
-         c += 0x3b;
-
-         buf.insert(0, c);
+         DeflaterOutputStream deflater = new DeflaterOutputStream(stream);
+         deflater.write(s.getBytes());
+         deflater.close();
+      }
+      catch (java.io.IOException e) {
+         return "Failed";
       }
 
-      return buf.toString();
+      byte[] bytes = stream.toByteArray();
+
+      for (int i=0; i<bytes.length; i++)
+      {
+         bytes[i] ^= (byte) (key_bytes[i % key_len]);
+      }
+
+      return ExpIO.encodeBase64(bytes);
    }
 
    static String decrypt(String s)
+   {
+      byte[] key_bytes = key.getBytes();
+      int key_len = key_bytes.length;
+
+      byte[] bytes = ExpIO.decodeBase64(s);
+
+      for (int i=0; i<bytes.length; i++)
+      {
+         bytes[i] ^= (byte) (key_bytes[i % key_len]);
+      }
+
+      String decompressed_string = "";
+      String decompressed_line;
+      ByteArrayInputStream stream = new ByteArrayInputStream(bytes);
+      try
+      {
+         InflaterInputStream inflater = new InflaterInputStream(stream);
+         InputStreamReader reader = new InputStreamReader(inflater);
+         BufferedReader in = new BufferedReader(reader);
+
+         while ((decompressed_line = in.readLine()) != null)
+         {
+            decompressed_string += decompressed_line;
+         }
+      }
+      catch (java.io.IOException e) {
+         return "Decompress failed";
+      }
+
+      return decompressed_string;
+   }
+
+   static String oldDecrypt(String s)
    {
       StringBuffer buf = new StringBuffer();
 
