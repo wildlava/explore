@@ -259,7 +259,7 @@ public class Explore extends Activity
 
          io.print("");
          io.print("");
-         io.print("*** EXPLORE ***  ver 4.9");
+         io.print("*** EXPLORE ***  ver 4.10");
       }
 
       advname = name;

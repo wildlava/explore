@@ -1313,7 +1313,7 @@ def play(filename=None, input_script=None, no_delay=False):
 
     exp_io.tell("")
     exp_io.tell("")
-    exp_io.tell("*** EXPLORE ***  ver 4.9")
+    exp_io.tell("*** EXPLORE ***  ver 4.10")
 
     if filename == None:
         exp_io.tell("")
@@ -1410,7 +1410,7 @@ def play_once(filename, command=None, resume=None, last_suspend=None, return_out
     if not quiet:
         exp_io.tell("")
         exp_io.tell("")
-        exp_io.tell("*** EXPLORE ***  ver 4.9")
+        exp_io.tell("*** EXPLORE ***  ver 4.10")
 
     advname = os.path.basename(filename)
     if advname.find(".") != -1:

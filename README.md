@@ -81,16 +81,16 @@ later in Ruby.
 
 ### To do ###
 
-* Return error if saved_adventure_version > version
+* Include adventure name in suspend string (?)
 
-* Fix (?) logic of comma-separated OLD VERSION case (does not add to delta)
-
-* Include adventure name in suspend string
-
-* Re-examine unrecoverable resume case that currently prints a warning.
-  This should never happen unless there is a bug in suspend/resume.
+* Re-examine unrecoverable resume cases that currently print a warning.
+  These should never happen unless there is a bug in suspend/resume
+  (or there is an error in the adventure files with "OLD VERSION").
   Behavior in Android app has been improved if this (impossible?) case
   actually happens, but removing this case completely would be preferable.
+
+* Handle change in fixed objects when alternate room descriptions or
+  custom item descriptions are used.
 
 
 ### Resolved questions ###
@@ -102,7 +102,8 @@ later in Ruby.
   Python, Java, and Ruby versions now have a variable called "trs_compat"
   that controls this.
 
-  - New "fixed object" feature takes care of this.
+  - New "fixed object" feature takes care of the oil case to a degree.
+    - And new "action denied directive" feature does an even better job.
 
 
 ### General bugs/questions ###
@@ -143,6 +144,10 @@ later in Ruby.
 * Check string passing or referencing for potential issues
   (e.g. expandItemName returns a reference to a string in the list).
 
+* Some cases exist where a delimeter is expected for proper syntax,
+  and not providing it could cause an exception (e.g. ITEM DESC,
+  SAME ITEM, etc.).
+
 
 ### Java applet issues (no longer used for web-based game) ###
 
@@ -152,6 +157,13 @@ later in Ruby.
   Also, it gets really slow when this gets too large!
 
 * Can't cut/paste in applet in order to suspend/resume.
+
+
+### Python issues ###
+
+* Some cases exist where checking first character in empty string,
+  if improper syntax used, could cause an exception (e.g. if string[0] == "+")
+  rather than using ".startswith()".
 
 
 ### C issues (no longer maintained) ###

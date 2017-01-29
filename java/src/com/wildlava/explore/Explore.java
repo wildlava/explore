@@ -89,7 +89,7 @@ class Game
 
       io.print("");
       io.print("");
-      io.print("*** EXPLORE ***  ver 4.9");
+      io.print("*** EXPLORE ***  ver 4.10");
 
       if (advname == null)
       {
