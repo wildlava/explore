@@ -1,3 +1,4 @@
+VERSION=1
 TITLE=Welcome to Medieval Castle!\This adventure was created by Joe Peterson and De Crandell.
 START_ROOM=1,4,0
 INVENTORY_LIMIT=7
@@ -131,10 +132,12 @@ WEST=2,4,0
 
 ROOM=0,0,1
 DESC=This is a very damp section of the dungeon.  You can hear water\dripping somewhere.  Spanish moss is hanging from the ceiling,\and there is a large pool of oil in the center of the room.\You can see some torture equipment off to the south.
-FIXED_OBJECTS=DUNGEON,WATER,MOSS,CEILING,POOL,OIL,ROOM,EQUIPMENT
+FIXED_OBJECTS=DUNGEON,WATER,MOSS,CEILING,POOL,ROOM,EQUIPMENT
 SOUTH=0,1,1
-COMMAND=FILL FLASK,GET OIL:FLASK
-ACTION=%FLASK,FLASK OF OIL:The flask is now full of oil.
+COMMAND=GET OIL,TAKE OIL:FLASK
+ACTION=%FLASK,FLASK OF OIL:The flask is now full of oil.||:You have no empty vessel that will hold the oil.
+COMMAND=FILL FLASK:FLASK
+ACTION=%FLASK,FLASK OF OIL:The flask is now full of oil.|:You do not have an empty flask.
 
 ROOM=1,0,1
 DESC=At this end of the dungeon there are old rusty ladder rungs\bolted to the stone wall.  The rungs go up through a tubular\hole in the ceiling.  You can see a skeleton off to the south.
@@ -236,3 +239,5 @@ ACTION=Arrrrrggghhhh!!  You fall to the floor...dead.
 GLOBAL
 COMMAND=DRINK OIL,DRINK FLASK:FLASK OF OIL
 ACTION=%FLASK OF OIL,FLASK;+PUDDLE OF VOMIT:You throw up on the floor!
+
+OLD VERSION 0 NUM_COMMANDS+1@11
