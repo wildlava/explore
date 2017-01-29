@@ -1,221 +1,318 @@
-TITLE=Welcome to Haunted House!\This adventure was reproduced from Radio Shack's Haunted House\by Joe Peterson.
+VERSION=1
+TITLE=Haunted House!!\(based on Radio Shack's "Haunted House" adventure game)
 START_ROOM=6,0,0
 INVENTORY_LIMIT=8
 
 ROOM=3,0,0
-DESC=You are at the blue bedroom.
-ALT_DESC=There's a panel on the east wall.
+DESC=You are at the blue bedroom. There's a panel on the east wall.
+FIXED_OBJECTS=BEDROOM,PANEL,WALL
+NORTH=3,0,0
 SOUTH=3,1,0
+EAST=3,0,0
+WEST=3,0,0
 COMMAND=PANEL,OPEN PANEL,MOVE PANEL,PUSH PANEL,PULL PANEL
 ACTION=/4,0,0
 
 ROOM=4,0,0
 DESC=You are at the secret passage.
+FIXED_OBJECTS=PASSAGE
 CONTENTS=ROPE
+NORTH=4,0,0
+SOUTH=4,0,0
 EAST=5,0,0
 WEST=3,0,0
 
 ROOM=5,0,0
-DESC=You are at the green bedroom.
-ALT_DESC=There's a panel on the west wall.
+DESC=You are at the green bedroom. There's a panel on the west wall.
+FIXED_OBJECTS=BEDROOM,PANEL,WALL
+NORTH=5,0,0
 SOUTH=5,1,0
+EAST=5,0,0
+WEST=5,0,0
 COMMAND=PANEL,OPEN PANEL,MOVE PANEL,PUSH PANEL,PULL PANEL
 ACTION=/4,0,0
 
 ROOM=6,0,0
-DESC=You are at the outside of the house.
-CONTENTS=CRUMPLED PIECE OF PAPER
-COMMAND=PLUGH
+DESC=You are at the outside of the house.\The front door is closed.
+FIXED_OBJECTS=HOUSE,DOOR
+CONTENTS=CRUMPLED PAPER
+NORTH=6,0,0
+SOUTH=6,0,0
+EAST=6,0,0
+WEST=6,0,0
+COMMAND=OPEN DOOR,OPEN
+ACTION=:The door can't be opened.
+COMMAND=PLUGH,SAY PLUGH
 ACTION=/6,1,0:You materialize inside the door.
 
 ROOM=3,1,0
-DESC=You are at the west end of the hall.
-ALT_DESC=A locked door bars the way south.
+DESC=You are at the west end of the hall.\A locked door bars the way south.
+FIXED_OBJECTS=HALL,DOOR
 NORTH=3,0,0
-EAST=4,1,0
-COMMAND=S,SOUTH:KEY
-ACTION=/3,2,0
-
-ROOM=4,1,0
-DESC=-
-ACTION=/5,1,0
+EAST=5,1,0
+WEST=3,1,0
+COMMAND=S,SOUTH,OPEN DOOR,OPEN:+KEY
+ACTION=/3,2,0||:You'll need a key to get through that door.
 
 ROOM=5,1,0
 DESC=You are at the east end of the hall.
+FIXED_OBJECTS=HALL
 NORTH=5,0,0
+SOUTH=5,1,0
 EAST=6,1,0
-COMMAND=W,WEST
-ACTION=/3,1,0
+WEST=3,1,0
 
 ROOM=6,1,0
 DESC=You are at the foyer.
+FIXED_OBJECTS=FOYER
+NORTH=6,1,0
 SOUTH=6,2,0
 EAST=7,1,0
 WEST=5,1,0
 
 ROOM=7,1,0
 DESC=You are at the living room.
-CONTENTS=KNIFE,MYSTERIOUS SCROLL
+FIXED_OBJECTS=ROOM
+CONTENTS=KNIFE,SCROLL
+NORTH=7,1,0
+SOUTH=7,1,0
 EAST=8,1,0
 WEST=6,1,0
-COMMAND=-CRUMPLED PIECE OF PAPER
-ACTION=Suddenly, the knife whooshes off the floor and\cuts your throat!  You are dead.
+COMMAND=GET KNIFE,TAKE KNIFE:-CRUMPLED PAPER
+ACTION=:The knife floats out of your reach.
+COMMAND=N,NORTH,S,SOUTH,CLIMB,LOOK,DROP PAPER,THROW PAPER,DROP SCROLL,THROW SCROLL,DROP ROPE,THROW ROPE,PLUGH,SAY PLUGH,INVENT,INVENTORY:-KNIFE
+ACTION=Suddenly the knife whooshes down and slits your throat! You are dead.
 
 ROOM=8,1,0
 DESC=You are at the dining room.
+FIXED_OBJECTS=ROOM
+NORTH=8,1,0
 SOUTH=8,2,0
+EAST=8,1,0
 WEST=7,1,0
 
 ROOM=3,2,0
-DESC=You are at the master bedroom.
-ALT_DESC=A wall of raging fire blocks the way east.
+DESC=You are at the master bedroom.\A wall of raging fire blocks the way east.
+FIXED_OBJECTS=BEDROOM,FIRE
 NORTH=3,1,0
+SOUTH=3,2,0
+WEST=3,2,0
 COMMAND=E,EAST
 ACTION=:Are you just going to walk right through that raging fire?
+COMMAND=NO
+ACTION=:A wise decision.
+COMMAND=YES
+ACTION=/4,2,0
 
 ROOM=4,2,0
-DESC=You are at the library.\There is a hole in the ceiling.
-ALT_DESC=A rope is stretching from the ground to the hole in the\ceiling.
+DESC=You are at the library. There is a hole in the ceiling.
+ALT_DESC=A rope is stretching from the ground to the hole in the ceiling.
 DESC_CONTROL=R,RC
+FIXED_OBJECTS=LIBRARY,HOLE,GROUND,CEILING
+NORTH=4,2,0
+SOUTH=4,2,0
+EAST=4,2,0
 WEST=3,2,0
-COMMAND=DROP ROPE,THROW ROPE:ROPE
-ACTION=[U4,2,1;-ROPE;*+:Instantly, the rope unwinds and levitates to the hole in the\ceiling!
+COMMAND=DROP ROPE,THROW ROPE:+ROPE
+ACTION=[U4,2,1;-ROPE;*+:Instantly the rope unwinds and levitates to the hole in the ceiling!
+COMMAND=CLIMB ROPE,CLIMB UP,CLIMB
+ACTION==U
 
 ROOM=6,2,0
 DESC=You are at the den.
+FIXED_OBJECTS=DEN
 NORTH=6,1,0
-COMMAND=E,EAST
-ACTION=/8,2,0
+SOUTH=6,2,0
+EAST=8,2,0
+WEST=6,2,0
 
 ROOM=8,2,0
 DESC=You are at the kitchen.
-CONTENTS=BUCKET OF WATER
+FIXED_OBJECTS=KITCHEN
+CONTENTS=WATER BUCKET
 NORTH=8,1,0
 SOUTH=8,3,0
-COMMAND=W,WEST
-ACTION=/6,2,0
+EAST=8,2,0
+WEST=6,2,0
 
 ROOM=9,2,0
-DESC=You are at the servant's quarters.
-ALT_DESC=There is a cabinet on the wall.
+DESC=You are at the servants quarters.\There is a cabinet on the wall.
+FIXED_OBJECTS=QUARTERS,CABINET,WALL
+NORTH=9,2,0
 SOUTH=9,3,0
+EAST=9,2,0
+WEST=9,2,0
 COMMAND=OPEN CABINET,OPEN
 ACTION=+KEY:There is a key in it.
 
 ROOM=8,3,0
-DESC=A suit of armour here flees when it spots your knife.\You are at the breakfast room.
+DESC=You are at the breakfast room.
+FIXED_OBJECTS=ROOM
 NORTH=8,2,0
+SOUTH=8,3,0
 EAST=9,3,0
+WEST=8,3,0
+COMMAND=+KNIFE
+ACTION=.:A suit of armour here flees when it spots your knife.
 COMMAND=-KNIFE
-ACTION=/8,2,0:You are at the breakfast room.\An animated suit of armour throws you out.
+ACTION=/8,2,0:You are at the breakfast room. An animated suit of armour throws you out.
 
 ROOM=9,3,0
-DESC=You are at the servant's quarters.
-ALT_DESC=There is a cabinet on the wall.
+DESC=You are at the servants quarters.\There is a cabinet on the wall.
+FIXED_OBJECTS=QUARTERS,CABINET,WALL
 NORTH=9,2,0
+SOUTH=9,3,0
+EAST=9,3,0
 WEST=8,3,0
 COMMAND=OPEN CABINET,OPEN
 ACTION=:It's empty.
 
 ROOM=1,1,1
-DESC=You are in a dimly lit room.
-CONTENTS=GHOST
+DESC=You are in a dimly lit room.\There is a ghost here.
+FIXED_OBJECTS=ROOM,GHOST
+NORTH=1,1,1
 SOUTH=1,2,1
 EAST=2,1,1
+WEST=1,1,1
+COMMAND=KILL GHOST,ATTACK GHOST,STAB GHOST
+ACTION=:There's not one here.
 
 ROOM=2,1,1
-DESC=You are in a dimly lit room.
-CONTENTS=GHOST
+DESC=You are in a dimly lit room.\There is a ghost here.
+FIXED_OBJECTS=ROOM,GHOST
+NORTH=2,1,1
 SOUTH=2,2,1
+EAST=3,2,1
 WEST=1,1,1
-COMMAND=+MAGIC SWORD
-ACTION=/2,2,1:The ghost will not let you pass!
-
-ROOM=0,2,1
-DESC=-
-ACTION=You fell through a trap door to your death!
+COMMAND=KILL GHOST,ATTACK GHOST,STAB GHOST
+ACTION=:There's not one here.
 
 ROOM=1,2,1
 DESC=You are in a dimly lit room.
-CONTENTS=RUSTY OLD SIGN
+FIXED_OBJECTS=ROOM
+CONTENTS=RUSTY SIGN
 NORTH=1,1,1
-SOUTH=1,3,1
-WEST=0,2,1
-COMMAND=E,EAST
-ACTION=!You walk through a door and find yourself on a balcony.\You climb down a tree and escape to safety!  Congratulations!\You made it!
+SOUTH=BALCONY
+EAST=BALCONY
+WEST=BALCONY
+
+ROOM=BALCONY
+DESC=-
+COMMAND=$has_read_rusty_sign==true&-RUSTY SIGN
+ACTION=!You walk through a door and find yourself on a balcony. You climb down a tree and escape to safety! Congratulations! You made it!
+ACTION=You fall through a trap door to your death!
 
 ROOM=2,2,1
-DESC=You are in a dimly lit room.
-CONTENTS=GHOST
+DESC=You are in a dimly lit room.\There is a ghost here.
+FIXED_OBJECTS=ROOM,GHOST
 NORTH=2,1,1
+SOUTH=2,2,1
 EAST=3,2,1
-COMMAND=KILL GHOST,ATTACK GHOST,STAB GHOST:MAGIC SWORD
-ACTION=:The ghost is immune to your attack!
+WEST=2,2,1
+COMMAND=N,NORTH,S,SOUTH,W,WEST:+*MAGIC SWORD
+ACTION=:The ghost will not let you pass!
+COMMAND=KILL GHOST,ATTACK GHOST,STAB GHOST:+MAGIC SWORD
+ACTION=:The ghost is immune to your attack!|:You can't kill a ghost with your bare hands.
 
 ROOM=3,2,1
-DESC=You are in a dimly lit room.
-CONTENTS=GHOST
+DESC=You are in a dimly lit room.\There is a ghost here.
+ALT_DESC=You are in a dimly lit room.\The body of a dead ghost is on the floor.
+DESC_CONTROL=R,C
+FIXED_OBJECTS=ROOM,GHOST,FLOOR
+NORTH=3,2,1
+SOUTH=3,2,1
 EAST=4,2,1
 WEST=2,2,1
-COMMAND=KILL GHOST,ATTACK GHOST,STAB GHOST:MAGIC SWORD
-ACTION=%GHOST,BODY OF A DEAD GHOST:Your magic sword enables you to kill the ghost!
+COMMAND=N,NORTH,S,SOUTH,W,WEST:$ghost3!=dead
+ACTION=:The ghost will not let you pass!
+COMMAND=KILL GHOST,ATTACK GHOST,STAB GHOST:$ghost3==dead+
+ACTION=:The poor thing's already dead.
+COMMAND=KILL GHOST,ATTACK GHOST,STAB GHOST:+MAGIC SWORD
+ACTION=$ghost3=dead;*+:Your magic sword enables you to kill the ghost!|:You can't kill a ghost with your bare hands.
 
 ROOM=4,2,1
-DESC=You are in a dimly lit room.
-ALT_DESC=There is a hole in the floor.
+DESC=You are in a dimly lit room. There is a hole in the floor.
+FIXED_OBJECTS=ROOM,HOLE,FLOOR
 CONTENTS=MAGIC SWORD
+NORTH=4,2,1
 SOUTH=4,3,1
 EAST=5,2,1
 WEST=3,2,1
+ACTION=.:You reach the second floor.
 COMMAND=CLIMB DOWN,CLIMB,D,DOWN
-ACTION=You just fell through the hole and broke your neck.\You are dead.
+ACTION=You fall through the hole and break your neck. You are dead.
 
 ROOM=5,2,1
-DESC=You are in a dimly lit room.
-CONTENTS=GHOST
+DESC=You are in a dimly lit room.\There is a ghost here.
+ALT_DESC=You are in a dimly lit room.\The body of a dead ghost is on the floor.
+DESC_CONTROL=R,C
+FIXED_OBJECTS=ROOM,GHOST,FLOOR
+NORTH=5,2,1
+SOUTH=5,2,1
+EAST=5,2,1
 WEST=4,2,1
-COMMAND=KILL GHOST,ATTACK GHOST,STAB GHOST:MAGIC SWORD
-ACTION=%GHOST,BODY OF A DEAD GHOST:Your magic sword enables you to kill the ghost!
-
-ROOM=1,3,1
-DESC=-
-ACTION=You fell through a trap door to your death!
+COMMAND=N,NORTH,S,SOUTH,E,EAST:$ghost1!=dead
+ACTION=:The ghost will not let you pass!
+COMMAND=KILL GHOST,ATTACK GHOST,STAB GHOST:$ghost1==dead+
+ACTION=:The poor thing's already dead.
+COMMAND=KILL GHOST,ATTACK GHOST,STAB GHOST:+MAGIC SWORD
+ACTION=$ghost1=dead;*+:Your magic sword enables you to kill the ghost!|:You can't kill a ghost with your bare hands.
 
 ROOM=4,3,1
-DESC=You are in a dimly lit room.
-CONTENTS=GHOST
+DESC=You are in a dimly lit room.\There is a ghost here.
+ALT_DESC=You are in a dimly lit room.\The body of a dead ghost is on the floor.
+DESC_CONTROL=R,C
+FIXED_OBJECTS=ROOM,GHOST,FLOOR
 NORTH=4,2,1
-COMMAND=KILL GHOST,ATTACK GHOST,STAB GHOST:MAGIC SWORD
-ACTION=%GHOST,BODY OF A DEAD GHOST:Your magic sword enables you to kill the ghost!
+SOUTH=4,3,1
+EAST=4,3,1
+WEST=4,3,1
+COMMAND=S,SOUTH,E,EAST,W,WEST:$ghost2!=dead
+ACTION=:The ghost will not let you pass!
+COMMAND=KILL GHOST,ATTACK GHOST,STAB GHOST:$ghost2==dead+
+ACTION=:The poor thing's already dead.
+COMMAND=KILL GHOST,ATTACK GHOST,STAB GHOST:+MAGIC SWORD
+ACTION=$ghost2=dead;*+:Your magic sword enables you to kill the ghost!|:You can't kill a ghost with your bare hands.
 
 GLOBAL
-COMMAND=READ PAPER:CRUMPLED PIECE OF PAPER
+COMMAND=READ PAPER:+CRUMPLED PAPER
 ACTION=:It says, "Magic word - PLUGH."
 
 GLOBAL
-COMMAND=READ SCROLL:MYSTERIOUS SCROLL
+COMMAND=READ SCROLL:+SCROLL
 ACTION=:It says, "There is escape from the second floor!"
 
 GLOBAL
-COMMAND=DRINK WATER:BUCKET OF WATER
+COMMAND=DRINK WATER:+WATER BUCKET
 ACTION=You feel sick.  In fact, you just died.  It was poison!
 
 GLOBAL
-COMMAND=READ SIGN:RUSTY OLD SIGN
-ACTION=:It says, "There are three exits from this room,\          but only one is true..."
-
-LOCAL=4,2,0
-COMMAND=CLIMB ROPE,CLIMB
-ACTION==U
-
-LOCAL=3,2,0
-COMMAND=YES
-ACTION=/4,2,0
-
-LOCAL=3,2,0
-COMMAND=NO
-ACTION=:A wise decision.
+COMMAND=READ SIGN:+RUSTY SIGN
+ACTION=$has_read_rusty_sign=true:The sign says,\     "There are three exits from this room. Only one is true...\      You must know, but not be burdened by, this clue!"
 
 GLOBAL
-COMMAND=THROW WATER,POUR WATER:BUCKET OF WATER
-ACTION=:The ground is wet.  The bucket magically refills!
+COMMAND=THROW WATER,POUR WATER:+WATER BUCKET
+ACTION=:The ground is wet. The bucket magically refills!
+
+GLOBAL
+COMMAND=PLUGH,SAY PLUGH
+ACTION=:Sorry, only one PLUGH per customer.
+
+GLOBAL
+COMMAND=READ SWORD:+MAGIC SWORD
+ACTION=:An inscription reads, "Ghost Killer."
+
+GLOBAL
+COMMAND=YES,NO
+ACTION=:No.
+
+ITEM DESC CRUMPLED PAPER:There is a crumpled piece of paper on the ground.
+ITEM DESC KNIFE:A knife is levitating in the middle of the room.
+ITEM DESC SCROLL:There is a mysterious scroll on the ground.
+ITEM DESC WATER BUCKET:A bucket of water is on the floor.
+ITEM DESC KEY:A key is here.
+ITEM DESC ROPE:A rope is nearby.
+ITEM DESC MAGIC SWORD:There is a magic sword on the floor.
+ITEM DESC RUSTY SIGN:There is a rusty old sign laying on the ground.
+
+OLD VERSION 0 INCOMPATIBLE
