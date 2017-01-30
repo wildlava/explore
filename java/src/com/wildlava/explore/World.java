@@ -70,6 +70,8 @@ class World
    public static final int RESULT_END_GAME = 16;
    public static final int RESULT_NO_CHECK = 32;
 
+   public static final String[] DIRECTIONS = {"N", "S", "E", "W", "U", "D"};
+
    boolean evalCondition(Command c)
    {
       if (c.condition == null)
@@ -350,46 +352,21 @@ class World
 
             result |= RESULT_DESCRIBE;
          }
-         else if ((command.equals("N") ||
-                   command.equals("NORTH")) &&
+         else if ((command.equals("NORTH") ||
+                   command.equals("N") ||
+                   command.equals("SOUTH") ||
+                   command.equals("S") ||
+                   command.equals("EAST") ||
+                   command.equals("E") ||
+                   command.equals("WEST") ||
+                   command.equals("W") ||
+                   command.equals("UP") ||
+                   command.equals("U") ||
+                   command.equals("DOWN") ||
+                   command.equals("D")) &&
                   argument == null)
          {
-            goto_room = player.current_room.north_room;
-            wants_to_walk = true;
-         }
-         else if ((command.equals("S") ||
-                   command.equals("SOUTH")) &&
-                  argument == null)
-         {
-            goto_room = player.current_room.south_room;
-            wants_to_walk = true;
-         }
-         else if ((command.equals("E") ||
-                   command.equals("EAST")) &&
-                  argument == null)
-         {
-            goto_room = player.current_room.east_room;
-            wants_to_walk = true;
-         }
-         else if ((command.equals("W") ||
-                   command.equals("WEST")) &&
-                  argument == null)
-         {
-            goto_room = player.current_room.west_room;
-            wants_to_walk = true;
-         }
-         else if ((command.equals("U") ||
-                   command.equals("UP")) &&
-                  argument == null)
-         {
-            goto_room = player.current_room.up_room;
-            wants_to_walk = true;
-         }
-         else if ((command.equals("D") ||
-                   command.equals("DOWN")) &&
-                  argument == null)
-         {
-            goto_room = player.current_room.down_room;
+            goto_room = player.current_room.neighbor(command.substring(0, 1));
             wants_to_walk = true;
          }
          else if (command.equals("HELP"))
@@ -773,86 +750,17 @@ class World
                {
                   if (action.substring(1).startsWith("$"))
                   {
-                     if (action.substring(2).startsWith("N"))
+                     if (action.length() >= 3)
                      {
-                        player.current_room.north_room =
-                           Room.blockWay(player.current_room.
-                                         north_room);
-                     }
-                     else if (action.substring(2).startsWith("S"))
-                     {
-                        player.current_room.south_room =
-                           Room.blockWay(player.current_room.
-                                         south_room);
-                     }
-                     else if (action.substring(2).startsWith("E"))
-                     {
-                        player.current_room.east_room =
-                           Room.blockWay(player.current_room.
-                                         east_room);
-                     }
-                     else if (action.substring(2).startsWith("W"))
-                     {
-                        player.current_room.west_room =
-                           Room.blockWay(player.current_room.
-                                         west_room);
-                     }
-                     else if (action.substring(2).startsWith("U"))
-                     {
-                        player.current_room.up_room =
-                           Room.blockWay(player.current_room.
-                                         up_room);
-                     }
-                     else if (action.substring(2).startsWith("D"))
-                     {
-                        player.current_room.down_room =
-                           Room.blockWay(player.current_room.
-                                         down_room);
+                        player.current_room.blockWay(action.substring(2, 3));
                      }
                   }
                   else
                   {
-                     if (action.substring(1).startsWith("N"))
+                     if (action.length() >= 2)
                      {
-                        player.current_room.north_room =
-                           Room.makeWay(player.current_room.
-                                        north_room,
-                                        action.substring(2));
-                     }
-                     else if (action.substring(1).startsWith("S"))
-                     {
-                        player.current_room.south_room =
-                           Room.makeWay(player.current_room.
-                                        south_room,
-                                        action.substring(2));
-                     }
-                     else if (action.substring(1).startsWith("E"))
-                     {
-                        player.current_room.east_room =
-                           Room.makeWay(player.current_room.
-                                        east_room,
-                                        action.substring(2));
-                     }
-                     else if (action.substring(1).startsWith("W"))
-                     {
-                        player.current_room.west_room =
-                           Room.makeWay(player.current_room.
-                                        west_room,
-                                        action.substring(2));
-                     }
-                     else if (action.substring(1).startsWith("U"))
-                     {
-                        player.current_room.up_room =
-                           Room.makeWay(player.current_room.
-                                        up_room,
-                                        action.substring(2));
-                     }
-                     else if (action.substring(1).startsWith("D"))
-                     {
-                        player.current_room.down_room =
-                           Room.makeWay(player.current_room.
-                                        down_room,
-                                        action.substring(2));
+                        player.current_room.makeWay(action.substring(1, 2),
+                                                    action.substring(2));
                      }
                   }
 
@@ -1136,42 +1044,48 @@ class World
          {
             if (new_room != null)
             {
-               new_room.north_room = line.substring(line.indexOf("=") + 1);
+               new_room.initNeighbor("N",
+                                      line.substring(line.indexOf("=") + 1));
             }
          }
          else if (line.startsWith("SOUTH="))
          {
             if (new_room != null)
             {
-               new_room.south_room = line.substring(line.indexOf("=") + 1);
+               new_room.initNeighbor("S",
+                                      line.substring(line.indexOf("=") + 1));
             }
          }
          else if (line.startsWith("EAST="))
          {
             if (new_room != null)
             {
-               new_room.east_room = line.substring(line.indexOf("=") + 1);
+               new_room.initNeighbor("E",
+                                      line.substring(line.indexOf("=") + 1));
             }
          }
          else if (line.startsWith("WEST="))
          {
             if (new_room != null)
             {
-               new_room.west_room = line.substring(line.indexOf("=") + 1);
+               new_room.initNeighbor("W",
+                                      line.substring(line.indexOf("=") + 1));
             }
          }
          else if (line.startsWith("UP="))
          {
             if (new_room != null)
             {
-               new_room.up_room = line.substring(line.indexOf("=") + 1);
+               new_room.initNeighbor("U",
+                                      line.substring(line.indexOf("=") + 1));
             }
          }
          else if (line.startsWith("DOWN="))
          {
             if (new_room != null)
             {
-               new_room.down_room = line.substring(line.indexOf("=") + 1);
+               new_room.initNeighbor("D",
+                                      line.substring(line.indexOf("=") + 1));
             }
          }
          else if (line.startsWith("ITEM DESC "))
@@ -1327,29 +1241,11 @@ class World
 
          buf.append(":");
 
-         buf.append(Room.saveWay(room.north_room));
-
-         buf.append(":");
-
-         buf.append(Room.saveWay(room.south_room));
-
-         buf.append(":");
-
-         buf.append(Room.saveWay(room.east_room));
-
-         buf.append(":");
-
-         buf.append(Room.saveWay(room.west_room));
-
-         buf.append(":");
-
-         buf.append(Room.saveWay(room.up_room));
-
-         buf.append(":");
-
-         buf.append(Room.saveWay(room.down_room));
-
-         buf.append(":");
+         for (int i=0; i<6; i++)
+         {
+            buf.append(room.neighborSaveString(DIRECTIONS[i]));
+            buf.append(":");
+         }
 
          if (buf.toString().endsWith(".:::::::"))
          {
@@ -1647,8 +1543,6 @@ class World
 
       for (int i=0; i<num_commands; i++)
       {
-         Command command = commands.get(i);
-
          if (num_commands_deltas.containsKey(i))
          {
             int delta = num_commands_deltas.get(i);
@@ -1670,26 +1564,22 @@ class World
             }
          }
 
-         if (command_idx < 0 || command_idx >= num_saved_commands)
+         if (command_idx >= 0 && command_idx < num_saved_commands)
          {
-            io.print("Warning! Error in decoding suspended game.");
-            io.print("         The state of your game is inconsistent.");
-            io.print("         Please start game over and report this");
-            io.print("         problem to the developer.");
-            return false;
-         }
+            Command command = commands.get(i);
 
-         if (command.action != null)
-         {
-            if (parts[part_num].charAt(command_idx) == '^' &&
-                !command.action.startsWith("^"))
+            if (command.action != null)
             {
-               command.action = "^" + command.action;
-            }
-            else if (parts[part_num].charAt(command_idx) != '^' &&
-                     command.action.startsWith("^"))
-            {
-               command.action = command.action.substring(1);
+               if (parts[part_num].charAt(command_idx) == '^' &&
+                   !command.action.startsWith("^"))
+               {
+                  command.action = "^" + command.action;
+               }
+               else if (parts[part_num].charAt(command_idx) != '^' &&
+                        command.action.startsWith("^"))
+               {
+                  command.action = command.action.substring(1);
+               }
             }
          }
 
@@ -1783,58 +1673,39 @@ class World
          //
          // now the possible directions
          //
-         if (room_code[1].equals(""))
+         for (int i=1; i<7; i++)
          {
-            room.north_room = Room.originalWay(room.north_room);
-         }
-         else
-         {
-            room.north_room = room_code[1];
-         }
+            if (saved_suspend_version <= 2)
+            {
+               // Remove "^orig_room" from the end of the string if it
+               // appears after "curr_room". This is for compatibility
+               // with old save formats that either tack this on or not.
+               //
+               // Note that the java version used to depend on "^orig_room".
+               if (room_code[i].length() > 0 && room_code[i].substring(0, 1) != "^")
+               {
+                  int pos = room_code[i].indexOf("^");
+                  if (pos != -1)
+                  {
+                     room_code[i] = room_code[i].substring(0, pos);
+                  }
+               }
+            }
 
-         if (room_code[2].equals(""))
-         {
-            room.south_room = Room.originalWay(room.south_room);
-         }
-         else
-         {
-            room.south_room = room_code[2];
-         }
+            String dir = DIRECTIONS[i - 1];
 
-         if (room_code[3].equals(""))
-         {
-            room.east_room = Room.originalWay(room.east_room);
-         }
-         else
-         {
-            room.east_room = room_code[3];
-         }
-
-         if (room_code[4].equals(""))
-         {
-            room.west_room = Room.originalWay(room.west_room);
-         }
-         else
-         {
-            room.west_room = room_code[4];
-         }
-
-         if (room_code[5].equals(""))
-         {
-            room.up_room = Room.originalWay(room.up_room);
-         }
-         else
-         {
-            room.up_room = room_code[5];
-         }
-
-         if (room_code[6].equals(""))
-         {
-            room.down_room = Room.originalWay(room.down_room);
-         }
-         else
-         {
-            room.down_room = room_code[6];
+            if (room_code[i].equals(""))
+            {
+               room.revertNeighbor(dir);
+            }
+            else if (room_code[i].substring(0, 1) == "^")
+            {
+               room.blockWay(dir);
+            }
+            else
+            {
+               room.makeWay(dir, room_code[i]);
+            }
          }
 
          //

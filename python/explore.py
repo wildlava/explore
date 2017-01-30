@@ -189,20 +189,15 @@ class Room(ItemContainer):
         except ValueError:
             return ""
 
-        # Go back to the old save format where original room is kept
-        # after the '^' (as in 'hole^room3').
-        if self.neighbors[i] != self.original_neighbors[i]:
-            neighbor = self.neighbors[i]
-            if neighbor == None:
-                neighbor = ""
+        neighbor = self.neighbors[i]
 
-            original_neighbor = self.original_neighbors[i]
-            if original_neighbor == None:
-                original_neighbor = ""
-
-            return neighbor + "^" + original_neighbor
-        else:
+        if neighbor == self.original_neighbors[i]:
             return ""
+
+        if neighbor == None:
+            return "^"
+        else:
+            return neighbor
 
     def description(self):
         ctrl = "RC"
@@ -1182,7 +1177,6 @@ class World:
 
         i = 0
         while i < num_commands:
-            command = self.commands[i]
             if i in num_commands_deltas:
                 delta = num_commands_deltas[i]
                 if delta > 0:
@@ -1195,18 +1189,14 @@ class World:
                     else:
                         command_idx -= delta
 
-            if command_idx < 0 or command_idx >= num_saved_commands:
-                exp_io.tell("Warning! Error in decoding suspended game.")
-                exp_io.tell("         The state of your game is inconsistent.")
-                exp_io.tell("         Please start game over and report this")
-                exp_io.tell("         problem to the developer.")
-                return False
+            if command_idx >= 0 and command_idx < num_saved_commands:
+                command = self.commands[i]
 
-            if command.action != None:
-                if parts[part_num][command_idx] == '^' and command.action[0] != '^':
-                    command.action = "^" + command.action
-                elif parts[part_num][command_idx] != '^' and command.action[0] == '^':
-                    command.action = command.action[1:]
+                if command.action != None:
+                    if parts[part_num][command_idx] == '^' and command.action[0] != '^':
+                        command.action = "^" + command.action
+                    elif parts[part_num][command_idx] != '^' and command.action[0] == '^':
+                        command.action = command.action[1:]
 
             if saved_suspend_version < 2:
                 command_idx -= 1
@@ -1266,16 +1256,16 @@ class World:
 
             # now the possible directions
             for i in range(1, 7):
-                # Remove "^orig_room" from the end of the string if it appears
-                # appears after a "curr_room". This retains compatibility with
-                # various save formats that either tack this on or not.
-                #
-                # Note that we currently do tack this information on, since
-                # the java version needs it.
-                if len(room_code[i]) > 0 and room_code[i][0] != "^":
-                    pos = room_code[i].find("^")
-                    if pos != -1:
-                        room_code[i] = room_code[i][:pos]
+                if saved_suspend_version <= 2:
+                    # Remove "^orig_room" from the end of the string if it
+                    # appears after "curr_room". This is for compatibility
+                    # with old save formats that either tack this on or not.
+                    #
+                    # Note that the java version used to depend on "^orig_room".
+                    if len(room_code[i]) > 0 and room_code[i][0] != "^":
+                        pos = room_code[i].find("^")
+                        if pos != -1:
+                            room_code[i] = room_code[i][:pos]
 
                 dir = DIRECTIONS[i - 1]
 

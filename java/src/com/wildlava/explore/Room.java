@@ -8,6 +8,7 @@
 package com.wildlava.explore;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 class Room extends ItemContainer
 {
@@ -16,16 +17,15 @@ class Room extends ItemContainer
    String desc_alt;
    String desc_ctrl;
    ArrayList<String> fixed_objects;
-   String north_room;
-   String south_room;
-   String east_room;
-   String west_room;
-   String up_room;
-   String down_room;
+   HashMap<String, String> neighbors;
+   HashMap<String, String> original_neighbors;
 
    Room(World world)
    {
       super(world);
+
+      neighbors = new HashMap<String, String>();
+      original_neighbors = new HashMap<String, String>();
    }
 
    String description()
@@ -125,64 +125,82 @@ class Room extends ItemContainer
       }
    }
 
-   static String blockWay(String dir_room)
+   String neighbor(String direction)
    {
-      if (dir_room != null)
+      return neighbors.get(direction);
+   }
+
+   void initNeighbor(String direction, String room)
+   {
+      if (room == null)
       {
-         int pos = dir_room.indexOf("^");
-         if (pos != -1)
-         {
-            dir_room = dir_room.substring(pos);
-         }
-         else
-         {
-            dir_room = "^" + dir_room;
-         }
+         neighbors.remove(direction);
+         original_neighbors.remove(direction);
       }
       else
       {
-         dir_room = "^";
+         neighbors.put(direction, room);
+         original_neighbors.put(direction, room);
       }
-
-      return dir_room;
    }
 
-   static String makeWay(String dir_room, String new_room)
+   void setNeighbor(String direction, String room)
    {
-      return new_room + blockWay(dir_room);
-   }
-
-   static String originalWay(String dir_room)
-   {
-      if (dir_room != null)
+      if (room == null)
       {
-         int pos = dir_room.indexOf("^");
-         if (pos != -1)
-         {
-            String orig_way = dir_room.substring(pos + 1);
-            if (orig_way.equals(""))
-            {
-               return null;
-            }
-            else
-            {
-               return orig_way;
-            }
-         }
-      }
-
-      return dir_room;
-   }
-
-   static String saveWay(String dir_room)
-   {
-      if (dir_room != null && dir_room.indexOf("^") != -1)
-      {
-         return dir_room;
+         neighbors.remove(direction);
       }
       else
+      {
+         neighbors.put(direction, room);
+      }
+   }
+
+   void revertNeighbor(String direction)
+   {
+      String original_neighbor = original_neighbors.get(direction);
+      if (original_neighbor == null)
+      {
+         neighbors.remove(direction);
+      }
+      else
+      {
+         neighbors.put(direction, original_neighbor);
+      }
+   }
+
+   void blockWay(String direction)
+   {
+      setNeighbor(direction, null);
+   }
+
+   void makeWay(String direction, String new_room)
+   {
+      setNeighbor(direction, new_room);
+   }
+
+   String neighborSaveString(String direction)
+   {
+      String neighbor = neighbors.get(direction);
+      String original_neighbor = original_neighbors.get(direction);
+
+      if (neighbor == null && original_neighbor == null)
       {
          return "";
+      }
+
+      if (neighbor != null && neighbor.equals(original_neighbor))
+      {
+         return "";
+      }
+
+      if (neighbor == null)
+      {
+         return "^";
+      }
+      else
+      {
+         return neighbor;
       }
    }
 }
