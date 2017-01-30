@@ -7,6 +7,8 @@ WEST=W_HALL
 EAST=E_HALL
 COMMAND=OPEN DOOR
 ACTION=[NFRONT_HALL:The door opens to the north.
+COMMAND=CLOSE DOOR,SHUT DOOR
+ACTION=[$N:The door is now shut.
 
 ROOM=FRONT_HALL
 DESC=You are in the front hall.  There is a picture of the space shuttle\on the wall.  The kitchen is to the east, and the powder room is to the west.\The place opens up to the north.
@@ -25,9 +27,23 @@ CONTENTS=ROLL OF TOILET PAPER
 EAST=FRONT_HALL
 
 ROOM=LIVING
-DESC=Above you is a rotating ceiling fan.  This is a spacious room.\Some stairs lead up.
+DESC=Above you is a rotating ceiling fan. This is a spacious room. Some stairs lead up. A little stream with a tree beside it lies through the glass doors to the north.
+CONTENTS=ROPE
+NORTH=STREAM
 SOUTH=FRONT_HALL
 UP=BEDROOM
+COMMAND=THROW ROPE:+ROPE
+ACTION=-ROPE;[NTREE:Your rope will now let you get to the treetop.
+COMMAND=PULL ROPE
+ACTION=[$N;+$ROPE:You now have the rope free of the tree.
+ROOM=STREAM
+DESC=You are down by a little stream.
+SOUTH=LIVING
+
+ROOM=TREE
+DESC=You are at the top of a tree.
+DOWN=STREAM
+SOUTH=LIVING
 
 ROOM=BEDROOM
 DESC=A magnificant brass bed lies before you.  To one side is a dresser with\a marble top, and to the other side is a nightstand.  Stairs lead down.
