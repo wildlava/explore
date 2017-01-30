@@ -956,8 +956,11 @@ class World:
         return base64.b64encode(out_str).strip("=")
 
     def decrypt(self, in_str):
-        comp_bytes = base64.b64decode(in_str +
-                                      ((4 - len(in_str) % 4) & 0x3) * '=')
+        try:
+            comp_bytes = base64.b64decode(in_str +
+                                          ((4 - len(in_str) % 4) & 0x3) * '=')
+        except TypeError:
+            return "Decrypt failed"
 
         out_str = ""
         key_len = len(self.key)
@@ -967,7 +970,7 @@ class World:
         try:
             return zlib.decompress(out_str)
         except zlib.error:
-            return "Decompress failed"
+            return "Decrypt failed"
 
     def old_decrypt(self, in_str):
         out_str = ""

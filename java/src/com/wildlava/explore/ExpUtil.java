@@ -93,7 +93,7 @@ class ExpUtil
          deflater.close();
       }
       catch (java.io.IOException e) {
-         return "Failed";
+         return "Encrypt failed";
       }
 
       byte[] bytes = stream.toByteArray();
@@ -111,7 +111,16 @@ class ExpUtil
       byte[] key_bytes = key.getBytes();
       int key_len = key_bytes.length;
 
-      byte[] bytes = ExpIO.decodeBase64(s);
+      byte[] bytes;
+
+      try
+      {
+         bytes = ExpIO.decodeBase64(s);
+      }
+      catch (java.lang.IllegalArgumentException e)
+      {
+         return "Decrypt failed";
+      }
 
       for (int i=0; i<bytes.length; i++)
       {
@@ -132,8 +141,9 @@ class ExpUtil
             decompressed_string += decompressed_line;
          }
       }
-      catch (java.io.IOException e) {
-         return "Decompress failed";
+      catch (java.io.IOException e)
+      {
+         return "Decrypt failed";
       }
 
       return decompressed_string;
