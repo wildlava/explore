@@ -1155,7 +1155,7 @@ class World:
         part_num += 1
 
         # Recover the variables
-        variables = {};
+        self.variables = {};
 
         if saved_suspend_version >= 2:
             if parts[part_num] != "":
@@ -1163,7 +1163,7 @@ class World:
                 for variable in saved_variables:
                     equals_pos = variable.find("=");
                     if equals_pos != -1:
-                        variables[variable[:equals_pos]] = variable[equals_pos + 1:]
+                        self.variables[variable[:equals_pos]] = variable[equals_pos + 1:]
 
             part_num += 1;
 
