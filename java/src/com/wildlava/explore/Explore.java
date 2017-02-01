@@ -20,6 +20,7 @@ public class Explore
       String advname = null;
       String input_script = null;
       boolean no_delay = false;
+      boolean list_commands = false;
 
       for (String arg : args)
       {
@@ -28,13 +29,18 @@ public class Explore
             input_script = arg.substring(9);
             no_delay = true;
          }
+         else if (arg.equals("--list-commands"))
+         {
+            list_commands = true;
+            no_delay = true;
+         }
          else
          {
             advname = arg;
          }
       }
 
-      game.start(advname, input_script, no_delay);
+      game.start(advname, input_script, no_delay, list_commands);
    }
 }
 
@@ -43,12 +49,16 @@ class Game
    private ExpIO io;
    private World world;
 
-   void start(String advname, String input_script, boolean no_delay)
+   void start(String advname,
+              String input_script,
+              boolean no_delay,
+              boolean list_commands)
    {
       io = new ExpIO();
       world = new World(io, advname);
 
       io.no_delay = no_delay;
+      world.list_commands_on_load = list_commands;
 
       ArrayList<String> input_script_commands = null;
       Iterator<String> input_script_iter = null;

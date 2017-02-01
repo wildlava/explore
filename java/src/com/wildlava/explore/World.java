@@ -38,6 +38,7 @@ class World
    public static boolean trs_compat = false;
    public static boolean trs_look = false;
    public static boolean use_fixed_objects = false;
+   public static boolean list_commands_on_load = false;
 
    World(ExpIO i, String a)
    {
@@ -1143,6 +1144,54 @@ class World
          }
       }
 
+      // List all commands if "--list-commands" option given
+      if (list_commands_on_load)
+      {
+         int num_commands = commands.size();
+         int command_idx;
+
+         io.print("");
+
+         for (int i=0; i<num_commands; i++)
+         {
+            StringBuffer buf = new StringBuffer();
+
+            Command c = commands.get(i);
+
+            buf.append(i);
+
+            if (c.location == null)
+            {
+               buf.append(" [GLOBAL]");
+            }
+
+            buf.append(": ");
+
+            if (c.commands != null)
+            {
+               for (String command : c.commands)
+               {
+                  buf.append(command + ",");
+               }
+
+               if (buf.charAt(buf.length() - 1) == ',')
+               {
+                  buf.setLength(buf.length() - 1);
+               }
+            }
+            else
+            {
+               buf.append("[AUTO]");
+            }
+
+            if (c.condition != null) {
+               buf.append(" | " + c.condition);
+            }
+
+            io.print(buf.toString());
+         }
+      }
+
       // Set up the starting room
       player.current_room = rooms.get(start_room);
       if (player.current_room == null)
@@ -1548,6 +1597,7 @@ class World
             int delta = num_commands_deltas.get(i);
             if (delta > 0)
             {
+               //io.print("Skipping: " + commands.get(i).commands[0]);
                i += delta - 1;
                continue;
             }
@@ -1582,6 +1632,10 @@ class World
                }
             }
          }
+         //else
+         //{
+         //   io.print("Extra: " + commands.get(i).commands[0]);
+         //}
 
          if (saved_suspend_version < 2)
          {
