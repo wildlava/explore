@@ -65,25 +65,28 @@ class ExpIO
 
    void printRaw(String s, boolean new_line)
    {
-      if (!no_delay)
-      {
-         try
-         {
-            Thread.sleep(30);
-         }
-         catch (InterruptedException x)
-         {
-         }
-      }
-
       System.out.print(s);
 
       if (new_line)
       {
          System.out.print("\n");
-      }
+         System.out.flush();
 
-      System.out.flush();
+         if (!no_delay)
+         {
+            try
+            {
+               Thread.sleep(30);
+            }
+            catch (InterruptedException x)
+            {
+            }
+         }
+      }
+      else
+      {
+         System.out.flush();
+      }
    }
 
    synchronized String input()

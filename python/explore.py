@@ -54,9 +54,9 @@ class ExpIO:
         if self.store_output:
             self.output.append(s)
         else:
+            print s
             if not self.no_delay:
                 time.sleep(.03)
-            print s
 
     #def clear_output(self):
     #    if len(self.output) > 0:
