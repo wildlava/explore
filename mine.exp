@@ -123,7 +123,7 @@ ROOM=1,2,1
 DESC=You have entered a small room with a low ceiling.  Cobwebs\hang from the walls in every direction.  To the south is a wall\of crumbled rock.
 FIXED_OBJECTS=ROOM,CEILING,COBWEB,COBWEBS,WALL,WALLS,ROCK
 CONTENTS=CONTAINER OF FOOD
-COMMAND=PICK ROCK,HIT ROCK,CHOP ROCK,DIG ROCK:PICK
+COMMAND=DIG,DIG ROCK,PICK ROCK,HIT ROCK,CHOP ROCK:PICK
 ACTION=/1,3,1:You dig through the rock and emerge on the other side.\The wall behind you crumbles!
 
 ROOM=2,2,1
@@ -154,7 +154,7 @@ DESC=You are in an east/west passage.  There was once a passage\going north, but
 FIXED_OBJECTS=PASSAGE,ROCK
 EAST=2,3,1
 WEST=0,3,1
-COMMAND=PICK ROCK,CHOP ROCK,HIT ROCK,DIG ROCK:PICK
+COMMAND=DIG,DIG ROCK,PICK ROCK,HIT ROCK,CHOP ROCK:PICK
 ACTION=/1,2,1:You break through the rock and fall into the next room.\The wall caves in behind you!
 
 ROOM=2,3,1
