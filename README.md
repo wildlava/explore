@@ -90,7 +90,9 @@ later in Ruby.
   actually happens, but removing this case completely would be preferable.
 
 * Handle change in fixed objects when alternate room descriptions or
-  custom item descriptions are used.
+  custom item descriptions are used. An example is the ruby in quartz
+  in "castle": the quartz slab should be a fixed object initially.
+  Other examples are in "haunt".
 
 
 ### Resolved questions ###
