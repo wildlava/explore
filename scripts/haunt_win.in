@@ -1,0 +1,41 @@
+get paper
+plugh
+e
+get knife
+e
+s
+s
+e
+n
+open cabinet
+get key
+s
+w
+n
+w
+n
+w
+w
+n
+panel
+get rope
+w
+s
+s
+yes
+drop rope
+u
+get sword
+w
+kill ghost
+w
+e
+drop sword
+w
+n
+w
+s
+get sign
+read sign
+drop sign
+s

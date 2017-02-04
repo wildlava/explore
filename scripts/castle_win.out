@@ -1,0 +1,662 @@
+Script started on Sat 04 Feb 2017 09:04:01 AM MST
+]0;joe@nova:~/explore[33mnova-joe[36m [~/explore] (5004)[0m explore castle
+
+
+*** EXPLORE ***  ver 4.10
+
+castle is now being built...
+
+
+Welcome to Medieval Castle!
+This adventure was created by Joe Peterson and De Crandell.
+
+
+You are standing at the edge of a cliff. Far off in the
+distance you see a large castle surrounded by a moat and
+engulfed in an ominous fog. About a mile below you is a
+winding river. There is a dirt path to the north.
+:n
+
+You are at the base of a tree. There seems to be something
+caught in the top. A dirt path goes south.
+:u
+
+You are standing on a branch near the top of the tree.
+There is a hang glider here.
+:get glider
+Ok
+:d
+
+You are at the base of the tree. A dirt path goes south.
+:s
+
+You are standing at the edge of a cliff. Far off in the
+distance you see a large castle surrounded by a moat and
+engulfed in an ominous fog. About a mile below you is a
+winding river. There is a dirt path to the north.
+:fly
+
+You fly off the cliff and soar through the air a mile off the
+ground. You land safely on a patch of soft grass.
+
+You are on a grassy knoll south of a huge castle. Between you
+and the castle is a moat full of crocodiles. There is a tree
+at the edge of the moat. A path goes east.
+:e
+
+Here the path becomes overgrown and is hard to see. It goes
+north and west.
+:n
+
+You have entered a wood cutter's cabin. There are many tools
+lying about. At one end is a bed, and at the other is a window
+and a large table. There is a door to the south.
+There is an axe here.
+:get axe
+Ok
+:s
+
+Here the path becomes overgrown and is hard to see. It goes
+north and west.
+:w
+
+You are on a grassy knoll south of a huge castle. Between you
+and the castle is a moat full of crocodiles. There is a tree
+at the edge of the moat. A path goes east.
+:chop tree
+The tree falls and forms a bridge across the moat.
+:look
+
+You are on a grassy knoll south of a huge castle. Between you
+and the castle is a moat full of crocodiles. A tree now spans
+the moat creating a bridge. A path goes east.
+:n
+
+You are directly outside the castle. There is a large archway
+to the north, which serves as the main entrance. To the south
+is the bridge and the moat.
+There is a scroll here.
+:get scroll
+Ok
+:read scroll
+It says,
+     "PHLURF" is the key to this adventure.
+:phlurf
+Oops! Your magic is not too accurate.
+You will have to find the key for yourself!
+:s
+
+You are on a grassy knoll south of a huge castle. Between you
+and the castle is a moat full of crocodiles. A tree now spans
+the moat creating a bridge. A path goes east.
+There is a gold key here.
+:get key
+Ok
+:n
+
+You are directly outside the castle. There is a large archway
+to the north, which serves as the main entrance. To the south
+is the bridge and the moat.
+:n
+
+You are in the main hall of the castle. You are greeted by a
+majestic red carpet, which extends through a low archway to the
+north. Sunlight reflected off the waters of the moat can be
+seen through a large archway to the south. You can see an
+immense room to the east. A spiral staircase twists up out of
+sight.
+:w
+You can't go that way.
+:n
+
+You are in a low north/south hallway between two arches. There
+is a small statue resting on a pedestal on the right side of
+the hall. The statue is missing one of its ruby eyes!
+:n
+
+This is a magnificent room with a ceiling twenty feet high. At
+one end sits a beautiful throne made of solid gold. The red
+carpet ends at the foot of the throne. There is a doorway to
+the west. To the south is a low archway.
+The steel bar door to the west is so rusty it won't budge.
+:w
+You can't go that way.
+:n
+You can't go that way.
+:e
+You can't go that way.
+:s
+
+You are in a low north/south hallway between two arches. There
+is a small statue resting on a pedestal on the right side of
+the hall. The statue is missing one of its ruby eyes!
+:w
+You can't go that way.
+:s
+
+You are in the main hall of the castle. You are greeted by a
+majestic red carpet, which extends through a low archway to the
+north. Sunlight reflected off the waters of the moat can be
+seen through a large archway to the south. You can see an
+immense room to the east. A spiral staircase twists up out of
+sight.
+:u
+
+You are at the top of a spiral staircase. There is a dark room
+to the west.
+:w
+
+The walls of this room are covered with black velvet, which
+gives it an eerie appearance. The mood is only broken by a
+beam of sunlight coming from the west. There is a dark passage
+to the south and a flight of stairs to the east.
+:w
+
+You are standing in front of an open window looking out over
+the river valley. The room exits to the east.
+:e
+
+The walls of this room are covered with black velvet, which
+gives it an eerie appearance. The mood is only broken by a
+beam of sunlight coming from the west. There is a dark passage
+to the south and a flight of stairs to the east.
+:s
+
+You are in the wizard's quarters. There is a strange looking
+pointed hat on a night stand beside an unmade bed. There is a
+curtain to the west, and the room exits to the north.
+There is a chest here.
+:open chest
+A wizard's staff falls out onto the floor!
+Suddenly a voice says,
+     "This can free anything from the tightest of situations."
+:look
+
+You are in the wizard's quarters. There is a strange looking
+pointed hat on a night stand beside an unmade bed. There is a
+curtain to the west, and the room exits to the north.
+There is an open chest here.
+There is a wizard's staff here.
+:get staff
+Ok
+:w
+
+This must be the wizard's laboratory, for there are many
+bottles filled with strange colored liquids and powders.
+There is a small tunnel to the south and a curtain to the east.
+There is a flask here.
+There is a bottle of liquid here.
+:get flask
+Ok
+:get bottle
+Ok
+:s
+
+You are in the weapons room. There are all kinds of swords,
+daggers, shields, and crossbows resting against the walls.
+There is a grate in the floor, but the latch is on the other
+side. A tunnel goes north.
+:open grate
+You can't do that here.
+:n
+
+This must be the wizard's laboratory, for there are many
+bottles filled with strange colored liquids and powders.
+There is a small tunnel to the south and a curtain to the east.
+:s
+
+You are in the weapons room. There are all kinds of swords,
+daggers, shields, and crossbows resting against the walls.
+There is a grate in the floor, but the latch is on the other
+side. A tunnel goes north.
+:d
+You can't go that way.
+:n
+
+This must be the wizard's laboratory, for there are many
+bottles filled with strange colored liquids and powders.
+There is a small tunnel to the south and a curtain to the east.
+:e
+
+You are in the wizard's quarters. There is a strange looking
+pointed hat on a night stand beside an unmade bed. There is a
+curtain to the west, and the room exits to the north.
+There is an open chest here.
+:n
+
+The walls of this room are covered with black velvet, which
+gives it an eerie appearance. The mood is only broken by a
+beam of sunlight coming from the west. There is a dark passage
+to the south and a flight of stairs to the east.
+:e
+
+You are at the top of a spiral staircase. There is a dark room
+to the west.
+:d
+
+You are in the main hall of the castle. You are greeted by a
+majestic red carpet, which extends through a low archway to the
+north. Sunlight reflected off the waters of the moat can be
+seen through a large archway to the south. You can see an
+immense room to the east. A spiral staircase twists up out of
+sight.
+:e
+
+You have walked into a lavishly decorated cathedral. There are
+huge windows on the east and south walls and colorful banners
+hanging from the ceiling. An aisle leads north to the altar,
+and the main exit is to the west.
+:n
+
+You are standing on the altar of the cathedral. There is a low
+platform in front of you with an imbedded gold ring about the
+size of a crown. High above you is a hole in the ceiling about
+as large as the altar. There is a curtain to the north and an
+aisle leading south.
+:n
+
+You are in the Priest's chamber. There are many sacred objects
+and prayer books here. There is a curtain to the south.
+Imbedded in a quartz slab is a sparkling ruby!
+:invent
+
+You are currently holding the following:
+
+- hang glider
+- axe
+- scroll
+- gold key
+- wizard's staff
+- flask
+- bottle of liquid
+
+:wave staff
+The quartz disappears and the ruby falls to the ground.
+:get ruby
+Your hands are full - you can't carry any more.
+:drop glider
+Ok
+:s
+
+You are standing on the altar of the cathedral. There is a low
+platform in front of you with an imbedded gold ring about the
+size of a crown. High above you is a hole in the ceiling about
+as large as the altar. There is a curtain to the north and an
+aisle leading south.
+:n
+
+You are in the Priest's chamber. There are many sacred objects
+and prayer books here. There is a curtain to the south.
+There is a ruby here.
+There is a hang glider here.
+:get ruby
+Ok
+:s
+
+You are standing on the altar of the cathedral. There is a low
+platform in front of you with an imbedded gold ring about the
+size of a crown. High above you is a hole in the ceiling about
+as large as the altar. There is a curtain to the north and an
+aisle leading south.
+:s
+
+You have walked into a lavishly decorated cathedral. There are
+huge windows on the east and south walls and colorful banners
+hanging from the ceiling. An aisle leads north to the altar,
+and the main exit is to the west.
+:w
+
+You are in the main hall of the castle. You are greeted by a
+majestic red carpet, which extends through a low archway to the
+north. Sunlight reflected off the waters of the moat can be
+seen through a large archway to the south. You can see an
+immense room to the east. A spiral staircase twists up out of
+sight.
+:n
+
+You are in a low north/south hallway between two arches. There
+is a small statue resting on a pedestal on the right side of
+the hall. The statue is missing one of its ruby eyes!
+:replace eye
+
+You feel the floor give way beneath your feet as you fall down
+into a dark and gloomy dungeon. The ruby bounces off your head
+and lands on the floor beside you.
+
+You are in a dark and gloomy dungeon. A horrifying skeleton
+is chained to the wall and is looking down at you with haunting
+eyes. There is a hole in the ceiling to the north and some
+kind of equipment to the west.
+There is a ruby here.
+:get ruby
+Ok
+:w
+
+This seems to be a torture chamber. You are surrounded by many
+medieval devices used for the darkest of purposes. There is a
+rack, a pinwheel, cages, whips, and chains, just to name a few.
+You can see a skeleton off to the east and can hear water
+dripping to the north.
+:s
+You can't go that way.
+:n
+
+This is a very damp section of the dungeon. You can hear water
+dripping somewhere. Spanish moss is hanging from the ceiling,
+and there is a large pool of oil in the center of the room.
+You can see some torture equipment off to the south.
+:e
+You can't go that way.
+:drop flask
+Ok
+:get oil
+You have no empty vessel that will hold the oil.
+:fill flask
+You do not have an empty flask.
+:get flask
+Ok
+:get oil
+The flask is now full of oil.
+:invent
+
+You are currently holding the following:
+
+- axe
+- scroll
+- gold key
+- wizard's staff
+- bottle of liquid
+- ruby
+- flask of oil
+
+:e
+You can't go that way.
+:s
+
+This seems to be a torture chamber. You are surrounded by many
+medieval devices used for the darkest of purposes. There is a
+rack, a pinwheel, cages, whips, and chains, just to name a few.
+You can see a skeleton off to the east and can hear water
+dripping to the north.
+:e
+
+You are in a dark and gloomy dungeon. A horrifying skeleton
+is chained to the wall and is looking down at you with haunting
+eyes. There is a hole in the ceiling to the north and some
+kind of equipment to the west.
+:n
+
+At this end of the dungeon there are old rusty ladder rungs
+bolted to the stone wall. The rungs go up through a tubular
+hole in the ceiling. You can see a skeleton off to the south.
+:u
+
+You are the top of the ladder tube, directly below a steel
+grate. There is a latch on this side of the grate. The
+ladder goes down from here.
+:open latch
+I don't understand.
+:pull latch
+
+You emerge in a room full of weapons. The grate snaps shut.
+
+You are in the weapons room. There are all kinds of swords,
+daggers, shields, and crossbows resting against the walls.
+There is a grate in the floor, but the latch is on the other
+side. A tunnel goes north.
+:n
+
+This must be the wizard's laboratory, for there are many
+bottles filled with strange colored liquids and powders.
+There is a small tunnel to the south and a curtain to the east.
+:e
+
+You are in the wizard's quarters. There is a strange looking
+pointed hat on a night stand beside an unmade bed. There is a
+curtain to the west, and the room exits to the north.
+There is an open chest here.
+:n
+
+The walls of this room are covered with black velvet, which
+gives it an eerie appearance. The mood is only broken by a
+beam of sunlight coming from the west. There is a dark passage
+to the south and a flight of stairs to the east.
+:e
+
+You are at the top of a spiral staircase. There is a dark room
+to the west.
+:d
+
+You are in the main hall of the castle. You are greeted by a
+majestic red carpet, which extends through a low archway to the
+north. Sunlight reflected off the waters of the moat can be
+seen through a large archway to the south. You can see an
+immense room to the east. A spiral staircase twists up out of
+sight.
+:n
+
+You are in a low north/south hallway between two arches. There
+is a small statue resting on a pedestal on the right side of
+the hall. The statue is missing one of its ruby eyes!
+:n
+
+This is a magnificent room with a ceiling twenty feet high. At
+one end sits a beautiful throne made of solid gold. The red
+carpet ends at the foot of the throne. There is a doorway to
+the west. To the south is a low archway.
+The steel bar door to the west is so rusty it won't budge.
+:w
+You can't go that way.
+:open door
+I don't understand.
+:oil door
+The door opens easily.
+:open door
+I don't understand.
+:w
+
+This room is the holding place for the Royal Crown Jewels.
+The plentiful supply of gold, silver and precious jewels must
+be worth millions! There are rooms to the west and south and
+an open gate to the east.
+There is a royal crown here.
+:e
+
+This is a magnificent room with a ceiling twenty feet high. At
+one end sits a beautiful throne made of solid gold. The red
+carpet ends at the foot of the throne. There is a doorway to
+the west. To the south is a low archway.
+:w
+
+This room is the holding place for the Royal Crown Jewels.
+The plentiful supply of gold, silver and precious jewels must
+be worth millions! There are rooms to the west and south and
+an open gate to the east.
+There is a royal crown here.
+:w
+
+You have entered the King's chambers. His closet contains only
+the most elegant of clothes. His beautiful brass bed is
+covered with white silk sheets. You can see the setting sun
+through the huge bay window. The room exits to the east.
+:w
+You can't go that way.
+:e
+
+This room is the holding place for the Royal Crown Jewels.
+The plentiful supply of gold, silver and precious jewels must
+be worth millions! There are rooms to the west and south and
+an open gate to the east.
+There is a royal crown here.
+:s
+
+This is the Queen's Chambers. Her bed is covered with pink
+silk sheets. Many beautiful gowns are hanging on the walls.
+The room exits to the north.
+:n
+
+This room is the holding place for the Royal Crown Jewels.
+The plentiful supply of gold, silver and precious jewels must
+be worth millions! There are rooms to the west and south and
+an open gate to the east.
+There is a royal crown here.
+:get crown
+Your hands are full - you can't carry any more.
+:drop flask
+Ok
+:look
+
+This room is the holding place for the Royal Crown Jewels.
+The plentiful supply of gold, silver and precious jewels must
+be worth millions! There are rooms to the west and south and
+an open gate to the east.
+There is a royal crown here.
+There is a flask here.
+:get crown
+Ok
+:drop bottle
+Ok
+:get flask
+Ok
+:e
+
+This is a magnificent room with a ceiling twenty feet high. At
+one end sits a beautiful throne made of solid gold. The red
+carpet ends at the foot of the throne. There is a doorway to
+the west. To the south is a low archway.
+:s
+
+You are in a low north/south hallway between two arches. There
+is a small statue resting on a pedestal on the right side of
+the hall. The statue is missing one of its ruby eyes!
+:insert ruby
+
+You feel the floor give way beneath your feet as you fall down
+into a dark and gloomy dungeon. The ruby bounces off your head
+and lands on the floor beside you.
+
+You are in a dark and gloomy dungeon. A horrifying skeleton
+is chained to the wall and is looking down at you with haunting
+eyes. There is a hole in the ceiling to the north and some
+kind of equipment to the west.
+There is a ruby here.
+:get ruby
+Ok
+:s
+You can't go that way.
+:w
+
+This seems to be a torture chamber. You are surrounded by many
+medieval devices used for the darkest of purposes. There is a
+rack, a pinwheel, cages, whips, and chains, just to name a few.
+You can see a skeleton off to the east and can hear water
+dripping to the north.
+:n
+
+This is a very damp section of the dungeon. You can hear water
+dripping somewhere. Spanish moss is hanging from the ceiling,
+and there is a large pool of oil in the center of the room.
+You can see some torture equipment off to the south.
+:fill flask
+The flask is now full of oil.
+:s
+
+This seems to be a torture chamber. You are surrounded by many
+medieval devices used for the darkest of purposes. There is a
+rack, a pinwheel, cages, whips, and chains, just to name a few.
+You can see a skeleton off to the east and can hear water
+dripping to the north.
+:e
+
+You are in a dark and gloomy dungeon. A horrifying skeleton
+is chained to the wall and is looking down at you with haunting
+eyes. There is a hole in the ceiling to the north and some
+kind of equipment to the west.
+:n
+
+At this end of the dungeon there are old rusty ladder rungs
+bolted to the stone wall. The rungs go up through a tubular
+hole in the ceiling. You can see a skeleton off to the south.
+:u
+
+You are the top of the ladder tube, directly below a steel
+grate. There is a latch on this side of the grate. The
+ladder goes down from here.
+:open grate
+
+You emerge in a room full of weapons. The grate snaps shut.
+
+You are in the weapons room. There are all kinds of swords,
+daggers, shields, and crossbows resting against the walls.
+There is a grate in the floor, but the latch is on the other
+side. A tunnel goes north.
+:n
+
+This must be the wizard's laboratory, for there are many
+bottles filled with strange colored liquids and powders.
+There is a small tunnel to the south and a curtain to the east.
+:e
+
+You are in the wizard's quarters. There is a strange looking
+pointed hat on a night stand beside an unmade bed. There is a
+curtain to the west, and the room exits to the north.
+There is an open chest here.
+:n
+
+The walls of this room are covered with black velvet, which
+gives it an eerie appearance. The mood is only broken by a
+beam of sunlight coming from the west. There is a dark passage
+to the south and a flight of stairs to the east.
+:e
+
+You are at the top of a spiral staircase. There is a dark room
+to the west.
+:d
+
+You are in the main hall of the castle. You are greeted by a
+majestic red carpet, which extends through a low archway to the
+north. Sunlight reflected off the waters of the moat can be
+seen through a large archway to the south. You can see an
+immense room to the east. A spiral staircase twists up out of
+sight.
+:e
+
+You have walked into a lavishly decorated cathedral. There are
+huge windows on the east and south walls and colorful banners
+hanging from the ceiling. An aisle leads north to the altar,
+and the main exit is to the west.
+:n
+
+You are standing on the altar of the cathedral. There is a low
+platform in front of you with an imbedded gold ring about the
+size of a crown. High above you is a hole in the ceiling about
+as large as the altar. There is a curtain to the north and an
+aisle leading south.
+:drop crown
+
+The crown glows white hot as the altar suddenly begins to rise
+towards the hole in the ceiling. When the platform completes
+its ascent, you find yourself in a room high above the
+cathedral.
+
+You are in a room resembling an attic. You are still standing
+on the altar, but your surroundings have changed greatly. Dust
+is everywhere, and the room has a smell of mildew. Light is
+coming in from the east.
+There is a royal crown here.
+:e
+
+You are looking out of a large French window. You can see a
+small village in the distance. Under your feet is an Oriental
+rug that seems to be vibrating. The room goes in to the west.
+:fly
+
+You almost lose your balance as the rug takes off and glides
+through the window. The rug takes you over an immense field to
+the town, where the people eye you very suspiciously.
+
+Nice job! You successfully completed this adventure!
+
+]0;joe@nova:~/explore[33mnova-joe[36m [~/explore] (5005)[0m exit
+
+Script done on Sat 04 Feb 2017 10:00:38 AM MST

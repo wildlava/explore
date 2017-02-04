@@ -1,0 +1,709 @@
+Script started on Sat 28 Jan 2017 09:53:38 AM MST
+]0;joe@nova:~/explore[33mnova-joe[36m [~/explore] (5011)[0m explore cave
+
+
+*** EXPLORE ***  ver 4.10
+
+cave is now being built...
+
+
+Welcome to the Enchanted Cave!
+This adventure was created by Joe Peterson and De Crandell.
+
+
+To the east is a large opening in a wall of rock.
+You are surrounded by a dense forest.
+:w
+
+You are walking through a dense forest.
+:w
+You can't go that way.
+:s
+
+You are walking through a dense forest.
+:s
+
+You have just entered a small hut.
+A message scratched in the dirt reads,
+     "Roses are red, violets are blue,
+      Leaves are green, but only dandelions are true..."
+:n
+
+You are walking through a dense forest.
+:e
+
+You are walking through a dense forest.
+:e
+You can't go that way.
+:n
+
+To the east is a large opening in a wall of rock.
+You are surrounded by a dense forest.
+:e
+
+You are in a room dimly lit by torches. Light is pouring
+in through a large opening to the west. A passage goes
+south.
+:s
+
+You are in an antechamber. There is dust everywhere.
+This room must have served as a waiting room because there
+are comfortable looking chairs along one wall.
+The room exits to the north and south.
+:sit
+
+As you sit down, the chair falls back and you find
+yourself in another room. Looking back, you see nothing
+but a chair sitting against the wall.
+
+You are in a secret anteroom. There is a chair against
+one wall.
+There is an unlit lantern here.
+There is a metallic sheet here.
+:get lantern
+Ok
+:get sheet
+Ok
+:read sheet
+It says,
+     "Matches can be found where things burn..."
+:sit
+
+The chair falls back again, and you find yourself
+back in the antechamber.
+
+You are in an antechamber. There is dust everywhere.
+This room must have served as a waiting room because there
+are comfortable looking chairs along one wall.
+The room exits to the north and south.
+:n
+
+You are in a room dimly lit by torches. Light is pouring
+in through a large opening to the west. A passage goes
+south.
+:w
+
+To the east is a large opening in a wall of rock.
+You are surrounded by a dense forest.
+:w
+
+You are walking through a dense forest.
+:s
+
+You are walking through a dense forest.
+:s
+
+There are matches on the floor.
+
+You have just entered a small hut.
+A message scratched in the dirt reads,
+     "Roses are red, violets are blue,
+      Leaves are green, but only dandelions are true..."
+There are some matches here.
+:get matches
+Ok
+:light lantern
+The lantern is now shining brightly.
+:n
+
+You are walking through a dense forest.
+:n
+
+You are walking through a dense forest.
+:e
+
+To the east is a large opening in a wall of rock.
+You are surrounded by a dense forest.
+:e
+
+You are in a room dimly lit by torches. Light is pouring
+in through a large opening to the west. A passage goes
+south.
+:e
+You can't go that way.
+:s
+
+You are in an antechamber. There is dust everywhere.
+This room must have served as a waiting room because there
+are comfortable looking chairs along one wall.
+The room exits to the north and south.
+:s
+
+A tall canyon looms above, which contains the last torch
+in sight. There is a cryptic message etched in the wall.
+There is a large opening to the north and a dim passage to the
+east.
+:e
+
+You are crossing a thin bridge overlooking a chasm.
+The bridge goes north, while to the west is a large canyon.
+:n
+
+You have come to a fork in the path. Passages go north and
+east. The main passage goes south.
+There is a gold plaque imbedded in the rock.
+:read plaque
+It says,
+     "You have entered a place of magic and enchantment.
+You have already come across some magic, but there is much
+more. Remember this: Powder may scare animals, but a
+moving bone will surely bring the non-living to life..."
+:n
+
+You are standing at the edge of a large hole in the floor.
+If you go down, you probably won't be able to climb back
+up. There is a low crawl to the north and a passage to
+the south.
+:n
+
+You are at the intersection of a south and west passage.
+:w
+
+This room is full of colored mist. It is coming from a
+small pool of colored water in the center of the room.
+There is a pipe in the ceiling sucking the mist up from
+the pool. A low crawl exits to the east.
+:drink water
+
+Suddenly you are vaporized and turned into a wisp of
+multicolored mist. Before you know it, you are sucked
+up the pipe and then returned to normal.
+
+You are at the edge of a small stream. Colored mist is
+rising out of a pipe that is protruding from the floor.
+There is a large passage to the south.
+:s
+
+Four paths meet here. One from each direction.
+:s
+
+You are standing on bare dirt. This seems to be a burial
+ground for the dinosaurs. A passage exits to the north.
+:n
+
+Four paths meet here. One from each direction.
+:w
+
+Scattered about you are small pieces of leather and wood.
+This must be a workshop of some kind. The elves who worked
+here must have been very secretive, for the wooden door to
+the west has no doorknob!
+:w
+You can't go that way.
+:open door
+You can't do that here.
+:e
+
+Four paths meet here. One from each direction.
+:e
+
+You have walked into a chamber shaped like a cylinder.
+In the center of the room is a pedestal, on top of which
+is a large stone slab. The inscription on it says:
+     "This is the center of four colors. There is one
+in each of four directions - North, South, East, and Up.
+Not all bring you good, so listen to what was first said;
+this will get you through..."
+:w
+
+Four paths meet here. One from each direction.
+:n
+
+You are at the edge of a small stream. Colored mist is
+rising out of a pipe that is protruding from the floor.
+There is a large passage to the south.
+:swim
+
+You are suddenly swept downstream by the current.
+The current carries you into a whirlpool where you
+are sucked down into the murky depths. You emerge
+in a multicolored pool.
+
+This room is full of colored mist. It is coming from a
+small pool of colored water in the center of the room.
+There is a pipe in the ceiling sucking the mist up from
+the pool. A low crawl exits to the east.
+:s
+You can't go that way.
+:e
+
+You are at the intersection of a south and west passage.
+:s
+
+You are standing at the edge of a large hole in the floor.
+If you go down, you probably won't be able to climb back
+up. There is a low crawl to the north and a passage to
+the south.
+:d
+
+You are standing beneath a large hole in the ceiling.
+It's too far up for you to reach. Dim passages exit to the
+south and west, and a large opening goes north.
+:e
+You can't go that way.
+:s
+
+A south passage ends here. A large canyon slopes down to
+the east.
+:e
+
+A large canyon slopes up to the west. The walls are glowing
+brightly to the north.
+:n
+
+You are in a room with brightly glowing walls. This is the
+Spell Room. There is a shining plaque on the wall. To the
+south is a dim passage.
+:read plaque
+It says,
+     "To rise up in the world, you must LEVITATE!"
+:s
+
+A large canyon slopes up to the west. The walls are glowing
+brightly to the north.
+:w
+
+A south passage ends here. A large canyon slopes down to
+the east.
+:w
+You can't go that way.
+:s
+You can't go that way.
+:w
+You can't go that way.
+:n
+
+You are standing beneath a large hole in the ceiling.
+It's too far up for you to reach. Dim passages exit to the
+south and west, and a large opening goes north.
+:s
+
+A south passage ends here. A large canyon slopes down to
+the east.
+:n
+
+You are standing beneath a large hole in the ceiling.
+It's too far up for you to reach. Dim passages exit to the
+south and west, and a large opening goes north.
+:w
+
+This room is the first of the Rooms of the World.
+There are many painted objects, including a picture of a
+fiesta. On one table is a taco. Tunnels go north and west,
+and a passage leads out to the east.
+There is a sombrero here.
+:eat taco
+Ouch! That was hot!
+Another taco magically appears on the table!
+:get sombrero
+Ok
+:wear sombrero
+I don't understand.
+:n
+
+This room is decorated with old prehistoric cave paintings.
+The most outstanding painting is one of a cave man with
+a bare stone slab in his hand. Dim tunnels go south and west.
+:s
+
+This room is the first of the Rooms of the World.
+There are many painted objects, including a picture of a
+fiesta. On one table is a taco. Tunnels go north and west,
+and a passage leads out to the east.
+:w
+
+The air is very foggy here. You hear a foghorn in the
+distance. On the wall is a portrait of the King of England.
+Tunnels go north, south, and east.
+There is a s-shaped pipe here.
+:w
+You can't go that way.
+:s
+
+In this room oriental decorations cover the walls and hang
+from the ceiling. A statue of Buddha is sitting in one corner.
+A tunnel goes north.
+There is a tiny urn here.
+:get urn
+Ok
+:open urn
+Some magic powder spills out!
+:get powder
+Ok
+:e
+You can't go that way.
+:s
+You can't go that way.
+:e
+You can't go that way.
+:n
+
+The air is very foggy here. You hear a foghorn in the
+distance. On the wall is a portrait of the King of England.
+Tunnels go north, south, and east.
+There is a s-shaped pipe here.
+:e
+
+This room is the first of the Rooms of the World.
+There are many painted objects, including a picture of a
+fiesta. On one table is a taco. Tunnels go north and west,
+and a passage leads out to the east.
+:e
+
+You are standing beneath a large hole in the ceiling.
+It's too far up for you to reach. Dim passages exit to the
+south and west, and a large opening goes north.
+:u
+You can't go that way.
+:levitate
+
+You float up through the hole.
+
+You are standing at the edge of a large hole in the floor.
+If you go down, you probably won't be able to climb back
+up. There is a low crawl to the north and a passage to
+the south.
+:s
+
+You have come to a fork in the path. Passages go north and
+east. The main passage goes south.
+There is a gold plaque imbedded in the rock.
+:e
+
+A twisting path continues north and west.
+:n
+
+There is an opening in the rock to the north. You can hear
+something screeching in that direction. There is a passage
+to the south.
+:n
+
+You are out on a ledge overlooking an immense forest.
+A hawk is carefully guarding its nest. There is a hole
+in the rock to the south.
+:throw powder
+
+The hawk's eyes fill with fright as it soars off
+into the distance.
+
+You are out on a ledge overlooking an immense forest.
+Ten feet away is a hawk's nest. There is a hole in the
+rock to the south.
+There is a hawk egg here.
+:get egg
+Ok
+:s
+
+There is an opening in the rock to the north. You can hear
+something screeching in that direction. There is a passage
+to the south.
+:n
+
+You are out on a ledge overlooking an immense forest.
+A hawk is carefully guarding its nest. There is a hole
+in the rock to the south.
+:s
+
+There is an opening in the rock to the north. You can hear
+something screeching in that direction. There is a passage
+to the south.
+:s
+
+A twisting path continues north and west.
+:w
+
+You have come to a fork in the path. Passages go north and
+east. The main passage goes south.
+There is a gold plaque imbedded in the rock.
+:break egg
+A piece of paper falls out.
+:get paper
+Ok
+:burn paper
+The paper burns up and leaves nothing but ash.
+:invent
+
+You are currently holding the following:
+
+- metallic sheet
+- matches
+- shining lantern
+- sombrero
+- tiny urn
+- eggshells
+- ashes
+
+:look
+
+You have come to a fork in the path. Passages go north and
+east. The main passage goes south.
+There is a gold plaque imbedded in the rock.
+:n
+
+You are standing at the edge of a large hole in the floor.
+If you go down, you probably won't be able to climb back
+up. There is a low crawl to the north and a passage to
+the south.
+:n
+
+You are at the intersection of a south and west passage.
+:w
+
+This room is full of colored mist. It is coming from a
+small pool of colored water in the center of the room.
+There is a pipe in the ceiling sucking the mist up from
+the pool. A low crawl exits to the east.
+:drink pool
+
+Suddenly you are vaporized and turned into a wisp of
+multicolored mist. Before you know it, you are sucked
+up the pipe and then returned to normal.
+
+You are at the edge of a small stream. Colored mist is
+rising out of a pipe that is protruding from the floor.
+There is a large passage to the south.
+:s
+
+Four paths meet here. One from each direction.
+:e
+
+You have walked into a chamber shaped like a cylinder.
+In the center of the room is a pedestal, on top of which
+is a large stone slab. The inscription on it says:
+     "This is the center of four colors. There is one
+in each of four directions - North, South, East, and Up.
+Not all bring you good, so listen to what was first said;
+this will get you through..."
+:s
+
+This is a room with yellow walls.
+There is a button on the wall.
+:push button
+
+A sepulchral voice says,
+     "You have chosen the right color. I will now reward you
+by taking you beyond the door with no knob."
+
+This seems to be an old tool storage room. There is a
+low crawl to the south and a wooden door to the east.
+There is a shovel here.
+:get shovel
+Your hands are full - you can't carry any more.
+:invent
+
+You are currently holding the following:
+
+- metallic sheet
+- matches
+- shining lantern
+- sombrero
+- tiny urn
+- eggshells
+- ashes
+
+:drop sombrero
+Ok
+:get shovel
+Ok
+:drop shhet
+You have no shhet.
+:drop sheet
+Ok
+:e
+You can't go that way.
+:open door
+
+After you walk through the doorway, the door slams shut!
+
+Scattered about you are small pieces of leather and wood.
+This must be a workshop of some kind. The elves who worked
+here must have been very secretive, for the wooden door to
+the west has no doorknob!
+:e
+
+Four paths meet here. One from each direction.
+:s
+
+You are standing on bare dirt. This seems to be a burial
+ground for the dinosaurs. A passage exits to the north.
+:dig
+As you are digging, you strike something hard! It's a bone!
+:look
+
+You are standing on bare dirt. This seems to be a burial
+ground for the dinosaurs. A passage exits to the north.
+There is a dinosaur bone here.
+:get bone
+Ok
+:n
+
+Four paths meet here. One from each direction.
+:n
+
+You are at the edge of a small stream. Colored mist is
+rising out of a pipe that is protruding from the floor.
+There is a large passage to the south.
+:swim
+
+You are suddenly swept downstream by the current.
+The current carries you into a whirlpool where you
+are sucked down into the murky depths. You emerge
+in a multicolored pool.
+
+This room is full of colored mist. It is coming from a
+small pool of colored water in the center of the room.
+There is a pipe in the ceiling sucking the mist up from
+the pool. A low crawl exits to the east.
+:invent
+
+You are currently holding the following:
+
+- matches
+- shining lantern
+- tiny urn
+- eggshells
+- ashes
+- shovel
+- dinosaur bone
+
+:e
+
+You are at the intersection of a south and west passage.
+:s
+
+You are standing at the edge of a large hole in the floor.
+If you go down, you probably won't be able to climb back
+up. There is a low crawl to the north and a passage to
+the south.
+:d
+
+You are standing beneath a large hole in the ceiling.
+It's too far up for you to reach. Dim passages exit to the
+south and west, and a large opening goes north.
+:n
+
+You are at the intersection of east and south passages.
+To the east light can be seen in the distance. There
+is a massive stone door to the north - with a keyhole!
+The door feels warm.
+:s
+
+You are standing beneath a large hole in the ceiling.
+It's too far up for you to reach. Dim passages exit to the
+south and west, and a large opening goes north.
+:w
+
+This room is the first of the Rooms of the World.
+There are many painted objects, including a picture of a
+fiesta. On one table is a taco. Tunnels go north and west,
+and a passage leads out to the east.
+:n
+
+This room is decorated with old prehistoric cave paintings.
+The most outstanding painting is one of a cave man with
+a bare stone slab in his hand. Dim tunnels go south and west.
+:wave bone
+Suddenly you hear a tremendous blast as the cave man comes to
+life, drops the slab, and returns to the wall, where another
+slab materializes in his hand!
+:get slab
+Your hands are full - you can't carry any more.
+:drop eggshells
+Ok
+:get slab
+Ok
+:sprinkle ash
+The writing magically appears on the slab!
+:read slab
+It says,
+     "Use this for higher purposes only!"
+The slab then changes shape and becomes a key!
+:s
+
+This room is the first of the Rooms of the World.
+There are many painted objects, including a picture of a
+fiesta. On one table is a taco. Tunnels go north and west,
+and a passage leads out to the east.
+:e
+
+You are standing beneath a large hole in the ceiling.
+It's too far up for you to reach. Dim passages exit to the
+south and west, and a large opening goes north.
+:levitate
+
+You float up through the hole.
+
+You are standing at the edge of a large hole in the floor.
+If you go down, you probably won't be able to climb back
+up. There is a low crawl to the north and a passage to
+the south.
+:n
+
+You are at the intersection of a south and west passage.
+:w
+
+This room is full of colored mist. It is coming from a
+small pool of colored water in the center of the room.
+There is a pipe in the ceiling sucking the mist up from
+the pool. A low crawl exits to the east.
+:drink water
+
+Suddenly you are vaporized and turned into a wisp of
+multicolored mist. Before you know it, you are sucked
+up the pipe and then returned to normal.
+
+You are at the edge of a small stream. Colored mist is
+rising out of a pipe that is protruding from the floor.
+There is a large passage to the south.
+:s
+
+Four paths meet here. One from each direction.
+:w
+
+Scattered about you are small pieces of leather and wood.
+This must be a workshop of some kind. The elves who worked
+here must have been very secretive, for the wooden door to
+the west has no doorknob!
+:e
+
+Four paths meet here. One from each direction.
+:e
+
+You have walked into a chamber shaped like a cylinder.
+In the center of the room is a pedestal, on top of which
+is a large stone slab. The inscription on it says:
+     "This is the center of four colors. There is one
+in each of four directions - North, South, East, and Up.
+Not all bring you good, so listen to what was first said;
+this will get you through..."
+:s
+
+This is a room with yellow walls.
+There is a button on the wall.
+:push button
+
+A sepulchral voice says,
+     "You have chosen the right color. I will now reward you
+by taking you beyond the door with no knob."
+
+This seems to be an old tool storage room. There is a
+low crawl to the south and a wooden door to the east.
+There is a sombrero here.
+There is a metallic sheet here.
+:s
+
+The crawl widens, and there is a massive stone door to the
+south - with a keyhole!
+:open door
+Through the doorway you can see a bright light!
+:s
+
+As you step through the doorway, you hear a tremendous roar
+as the entire cave crumbles behind you!
+                        YOU ARE FREE!
+
+Nice job! You successfully completed this adventure!
+
+]0;joe@nova:~/explore[33mnova-joe[36m [~/explore] (5012)[0m exit
+
+Script done on Sat 28 Jan 2017 10:29:08 AM MST

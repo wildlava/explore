@@ -1,0 +1,863 @@
+Script started on Wed 01 Feb 2017 08:03:53 AM MST
+]0;joe@nova:~/explore[33mnova-joe[36m [~/explore] (4990)[0m explore mine
+
+
+*** EXPLORE ***  ver 4.10
+
+mine is now being built...
+
+
+Welcome to the Lost Mine!
+This adventure was created by Joe Peterson and De Crandell.
+
+
+You are standing on a sand covered plateau. To one side is a
+big boulder. To the south you see a tree growing out of the
+side of the cliff with a rope tied to the very end. A clear
+path leads west.
+:move boulder
+There is a rope hidden under the boulder!
+:get rope
+Ok
+:w
+
+Sand covers the ground all around you. Under your feet is a
+steel grate through which you can see a large room. Paths go
+south and east.
+:s
+
+You are standing at the edge of a cliff. Far below you a
+platform extends from the cliff. There is no way to climb down
+on the rocks. Off to one side is a cactus, and a path exits to
+the north.
+:throw rope
+The rope is now hanging over the edge.
+:d
+
+You are standing on a platform jutting out from the rock wall.
+A rope is dangling from the cliff above. The rock opens to the
+west.
+:w
+
+You are in an east/west passage. There was once a passage
+going north, but it is now blocked by fallen rock.
+:n
+You can't go that way.
+:w
+
+You are in the mine elevator. It is on the upper level.
+The doors open to the east, and there is a button on the wall.
+:push button
+
+There is a hum as you feel yourself moving downward.
+
+You are in the mine elevator. It is on the lower level.
+The doors open to the east, and there is a button on the wall.
+:e
+
+There is a wide open passage to the north and a small tunnel
+to the east. To the west is the mine elevator.
+:e
+
+A ghastly sight lies before you! Sitting against the wall is a
+skeleton. It looks like he hasn't eaten for a hundred years!
+Passages go north, east, and west.
+:e
+
+Extending from the wall is the bottom of a long chute.
+There is an exit to the west.
+:w
+
+A ghastly sight lies before you! Sitting against the wall is a
+skeleton. It looks like he hasn't eaten for a hundred years!
+Passages go north, east, and west.
+:n
+
+The walls in this room seem to be collapsing. Loose sand
+covers the floor, and among the sand grains are tiny particles
+of glass. A passage exits to the south.
+There is a bucket of sand here.
+:get sand
+Ok
+:pour sand
+The sand spills out to reveal a glass cutter!
+:get cutter
+Ok
+:s
+
+A ghastly sight lies before you! Sitting against the wall is a
+skeleton. It looks like he hasn't eaten for a hundred years!
+Passages go north, east, and west.
+:w
+
+There is a wide open passage to the north and a small tunnel
+to the east. To the west is the mine elevator.
+:n
+
+You are in an open north/south passage. A low crawl goes west.
+:n
+
+A large dome of glassy rock surrounds you. In the middle of
+the room is a glass case with a miner's pick safely housed
+inside. The room exits to the south.
+:cut glass
+After the pick falls out, the glass repairs itself and another
+pick materializes inside the case.
+:get pick
+Ok
+:invent
+
+You are currently holding the following:
+
+- empty bucket
+- glass cutter
+- pick
+
+:s
+
+You are in an open north/south passage. A low crawl goes west.
+:w
+
+You are in a large empty room. The only thing unusual is a
+door in the ceiling with a handle. There is a low crawl to the
+east.
+:open door
+The door falls open.
+:look
+
+You are in a large empty room. The only thing unusual is a
+door in the ceiling with a handle. There is a low crawl to the
+east.
+:open door
+Nothing happens.
+:u
+
+You are in a small room with debris everywhere. There is a
+small door in the floor which leads down to a lower level.
+To the north is a low crawl.
+:open door
+You can't do that here.
+:d
+
+You are in a large empty room. The only thing unusual is a
+door in the ceiling with a handle. There is a low crawl to the
+east.
+:u
+
+You are in a small room with debris everywhere. There is a
+small door in the floor which leads down to a lower level.
+To the north is a low crawl.
+:n
+
+You are in a hands and knees passage that exits to the south
+and east.
+:e
+
+There is a clear passage to the north and crawls to the east
+and west.
+:e
+
+The walls of this room are covered with pictures of lightning
+bolts. Tunnels lead north and south, and a low crawl goes
+west.
+:s
+
+You are walking through a winding tunnel. The walls glimmer as
+if they were metallic. The tunnel exits to the north and east.
+:e
+
+You are in a large empty room. At one end is a slot with a
+message under it. The message says:
+     "Insert coin in slot to get an edge on this adventure!"
+High above you is a steel grate, which lights the room with a
+beam of sunlight. There is an exit to the west.
+:w
+
+You are walking through a winding tunnel. The walls glimmer as
+if they were metallic. The tunnel exits to the north and east.
+:n
+
+The walls of this room are covered with pictures of lightning
+bolts. Tunnels lead north and south, and a low crawl goes
+west.
+:n
+
+Scattered about you are scraps and shavings of wood and metal.
+A single bare electrical wire hangs from the ceiling. There
+are tunnels to the south and east.
+:e
+
+You are in a long room with a pit stretching out before you to
+the south. Across the pit you can see another room. There is
+a tunnel to the west.
+:s
+You can't go that way.
+:w
+
+Scattered about you are scraps and shavings of wood and metal.
+A single bare electrical wire hangs from the ceiling. There
+are tunnels to the south and east.
+:grab wire
+
+You feel a tremendous surge of energy pass through your body as
+you are pulled into the wire. You emerge from an empty light
+socket.
+
+You are standing below an empty light socket. The room exits
+to the west.
+:w
+
+Passages go south and east, and a dark tunnel goes north.
+:n
+
+The walls of this room are very smooth. In one wall is a chute
+sloping down into the darkness. There is a tunnel to the
+south.
+:s
+
+Passages go south and east, and a dark tunnel goes north.
+:s
+
+This room looks as if it was once a worship place. There is a
+round slab of rock in the center of the room. Imbedded in the
+rock is the point of a spear. The spear is standing vertically
+in the slab and has a rope tied to the end. A passage leads
+out to the north.
+:n
+
+Passages go south and east, and a dark tunnel goes north.
+:e
+
+You are standing below an empty light socket. The room exits
+to the west.
+:w
+
+Passages go south and east, and a dark tunnel goes north.
+:n
+
+The walls of this room are very smooth. In one wall is a chute
+sloping down into the darkness. There is a tunnel to the
+south.
+:slide
+
+You feel as if you're falling through space as you slide down
+the long dark chute. Suddenly, you hit something hard - it's
+the floor of a room!
+
+Extending from the wall is the bottom of a long chute.
+There is an exit to the west.
+:w
+
+A ghastly sight lies before you! Sitting against the wall is a
+skeleton. It looks like he hasn't eaten for a hundred years!
+Passages go north, east, and west.
+:w
+
+There is a wide open passage to the north and a small tunnel
+to the east. To the west is the mine elevator.
+:w
+
+You are in the mine elevator. It is on the lower level.
+The doors open to the east, and there is a button on the wall.
+:push button
+
+There is a humming sound as the elevator does its stuff.
+
+You are in the mine elevator. It is on the upper level.
+The doors open to the east, and there is a button on the wall.
+:e
+
+You are in an east/west passage. There was once a passage
+going north, but it is now blocked by fallen rock.
+:e
+
+You are standing on a platform jutting out from the rock wall.
+A rope is dangling from the cliff above. The rock opens to the
+west.
+:u
+
+You are standing at the edge of a cliff. Far below you a
+platform extends from the cliff. There is no way to climb down
+on the rocks. Off to one side is a cactus, and a path exits to
+the north.
+:d
+
+You are standing on a platform jutting out from the rock wall.
+A rope is dangling from the cliff above. The rock opens to the
+west.
+:w
+
+You are in an east/west passage. There was once a passage
+going north, but it is now blocked by fallen rock.
+:dig
+
+You break through the rock and fall into the next room.
+The wall caves in behind you!
+
+You have entered a small room with a low ceiling. Cobwebs
+hang from the walls in every direction. To the south is a wall
+of crumbled rock.
+There is a container of food here.
+:get food
+Ok
+:s
+You can't go that way.
+:pick rock
+
+You dig through the rock and emerge on the other side.
+The wall behind you crumbles!
+
+You are in an east/west passage. There was once a passage
+going north, but it is now blocked by fallen rock.
+:w
+
+You are in the mine elevator. It is on the upper level.
+The doors open to the east, and there is a button on the wall.
+:push button
+
+There is a hum as you feel yourself moving downward.
+
+You are in the mine elevator. It is on the lower level.
+The doors open to the east, and there is a button on the wall.
+:e
+
+There is a wide open passage to the north and a small tunnel
+to the east. To the west is the mine elevator.
+:e
+
+A ghastly sight lies before you! Sitting against the wall is a
+skeleton. It looks like he hasn't eaten for a hundred years!
+Passages go north, east, and west.
+:feed skeleton
+The skeleton looks at you and says,
+     "Ashes to ashes, rock to dust -
+      Just say ZWOOF, me you must trust..."
+:n
+
+The walls in this room seem to be collapsing. Loose sand
+covers the floor, and among the sand grains are tiny particles
+of glass. A passage exits to the south.
+:s
+
+A ghastly sight lies before you! Sitting against the wall is a
+skeleton. It looks like he hasn't eaten for a hundred years!
+Passages go north, east, and west.
+:w
+
+There is a wide open passage to the north and a small tunnel
+to the east. To the west is the mine elevator.
+:n
+
+You are in an open north/south passage. A low crawl goes west.
+:w
+
+You are in a large empty room. The only thing unusual is a
+door in the ceiling with a handle. There is a low crawl to the
+east.
+:u
+
+You are in a small room with debris everywhere. There is a
+small door in the floor which leads down to a lower level.
+To the north is a low crawl.
+:e
+You can't go that way.
+:n
+
+You are in a hands and knees passage that exits to the south
+and east.
+:e
+
+There is a clear passage to the north and crawls to the east
+and west.
+:e
+
+The walls of this room are covered with pictures of lightning
+bolts. Tunnels lead north and south, and a low crawl goes
+west.
+:n
+
+Scattered about you are scraps and shavings of wood and metal.
+A single bare electrical wire hangs from the ceiling. There
+are tunnels to the south and east.
+:touch wire
+
+You feel a tremendous surge of energy pass through your body as
+you are pulled into the wire. You emerge from an empty light
+socket.
+
+You are standing below an empty light socket. The room exits
+to the west.
+:w
+
+Passages go south and east, and a dark tunnel goes north.
+:s
+
+This room looks as if it was once a worship place. There is a
+round slab of rock in the center of the room. Imbedded in the
+rock is the point of a spear. The spear is standing vertically
+in the slab and has a rope tied to the end. A passage leads
+out to the north.
+:zwoof
+The rock slab turns to dust, and the spear falls out.
+The image of another spear magically appears in place of the
+real one.
+:get spear
+Your hands are full - you can't carry any more.
+:invent
+
+You are currently holding the following:
+
+- empty bucket
+- glass cutter
+- pick
+- empty container
+
+:drop pick
+Ok
+:get spear
+Ok
+:n
+
+Passages go south and east, and a dark tunnel goes north.
+:e
+
+You are standing below an empty light socket. The room exits
+to the west.
+:w
+
+Passages go south and east, and a dark tunnel goes north.
+:s
+
+This room looks as if it was once a worship place. There is a
+round slab of rock in the center of the room. Imbedded in the
+rock is the point of a spear. The spear is standing vertically
+in the slab and has a rope tied to the end. A passage leads
+out to the north.
+There is a pick here.
+:n
+
+Passages go south and east, and a dark tunnel goes north.
+:e
+
+You are standing below an empty light socket. The room exits
+to the west.
+:w
+
+Passages go south and east, and a dark tunnel goes north.
+:n
+
+The walls of this room are very smooth. In one wall is a chute
+sloping down into the darkness. There is a tunnel to the
+south.
+:d
+
+You feel as if you're falling through space as you slide down
+the long dark chute. Suddenly, you hit something hard - it's
+the floor of a room!
+
+Extending from the wall is the bottom of a long chute.
+There is an exit to the west.
+:w
+
+A ghastly sight lies before you! Sitting against the wall is a
+skeleton. It looks like he hasn't eaten for a hundred years!
+Passages go north, east, and west.
+:n
+
+The walls in this room seem to be collapsing. Loose sand
+covers the floor, and among the sand grains are tiny particles
+of glass. A passage exits to the south.
+:s
+
+A ghastly sight lies before you! Sitting against the wall is a
+skeleton. It looks like he hasn't eaten for a hundred years!
+Passages go north, east, and west.
+:w
+
+There is a wide open passage to the north and a small tunnel
+to the east. To the west is the mine elevator.
+:n
+
+You are in an open north/south passage. A low crawl goes west.
+:w
+
+You are in a large empty room. The only thing unusual is a
+door in the ceiling with a handle. There is a low crawl to the
+east.
+:u
+
+You are in a small room with debris everywhere. There is a
+small door in the floor which leads down to a lower level.
+To the north is a low crawl.
+:n
+
+You are in a hands and knees passage that exits to the south
+and east.
+:e
+
+There is a clear passage to the north and crawls to the east
+and west.
+:e
+
+The walls of this room are covered with pictures of lightning
+bolts. Tunnels lead north and south, and a low crawl goes
+west.
+:w
+
+There is a clear passage to the north and crawls to the east
+and west.
+:n
+
+You are in a gaping cavern. To the west a railroad track
+extends into the distance. On the track is an old mining car
+chained to the wall. To the south is a clear passage.
+:s
+
+There is a clear passage to the north and crawls to the east
+and west.
+:e
+
+The walls of this room are covered with pictures of lightning
+bolts. Tunnels lead north and south, and a low crawl goes
+west.
+:s
+
+You are walking through a winding tunnel. The walls glimmer as
+if they were metallic. The tunnel exits to the north and east.
+:e
+
+You are in a large empty room. At one end is a slot with a
+message under it. The message says:
+     "Insert coin in slot to get an edge on this adventure!"
+High above you is a steel grate, which lights the room with a
+beam of sunlight. There is an exit to the west.
+:w
+
+You are walking through a winding tunnel. The walls glimmer as
+if they were metallic. The tunnel exits to the north and east.
+:n
+
+The walls of this room are covered with pictures of lightning
+bolts. Tunnels lead north and south, and a low crawl goes
+west.
+:w
+
+There is a clear passage to the north and crawls to the east
+and west.
+:n
+
+You are in a gaping cavern. To the west a railroad track
+extends into the distance. On the track is an old mining car
+chained to the wall. To the south is a clear passage.
+:s
+
+There is a clear passage to the north and crawls to the east
+and west.
+:w
+
+You are in a hands and knees passage that exits to the south
+and east.
+:e
+
+There is a clear passage to the north and crawls to the east
+and west.
+:e
+
+The walls of this room are covered with pictures of lightning
+bolts. Tunnels lead north and south, and a low crawl goes
+west.
+:n
+
+Scattered about you are scraps and shavings of wood and metal.
+A single bare electrical wire hangs from the ceiling. There
+are tunnels to the south and east.
+:e
+
+You are in a long room with a pit stretching out before you to
+the south. Across the pit you can see another room. There is
+a tunnel to the west.
+:throw spear
+The spear flies across the pit with the rope trailing behind.
+It penetrates the rock on the opposite side, and the rope
+creates a bridge to the south.
+:s
+
+There is a spear protruding from the south wall. To the north
+is the pit you just crossed. A rope creates a bridge between
+the spear and the far side of the pit.
+There is a coin here.
+:get coin
+Ok
+:w
+You can't go that way.
+:n
+
+You are in a long room with a pit stretching out before you to
+the south. Across the pit you can see another room. There is
+a tunnel to the west.
+:w
+
+Scattered about you are scraps and shavings of wood and metal.
+A single bare electrical wire hangs from the ceiling. There
+are tunnels to the south and east.
+:s
+
+The walls of this room are covered with pictures of lightning
+bolts. Tunnels lead north and south, and a low crawl goes
+west.
+:s
+
+ZAP!!! A bolt of lightening suddenly strikes the coin and
+thrusts you out of the room.
+
+The walls of this room are covered with pictures of lightning
+bolts. Tunnels lead north and south, and a low crawl goes
+west.
+:w
+
+There is a clear passage to the north and crawls to the east
+and west.
+:w
+
+You are in a hands and knees passage that exits to the south
+and east.
+:s
+
+You are in a small room with debris everywhere. There is a
+small door in the floor which leads down to a lower level.
+To the north is a low crawl.
+:d
+
+You are in a large empty room. The only thing unusual is a
+door in the ceiling with a handle. There is a low crawl to the
+east.
+:e
+
+You are in an open north/south passage. A low crawl goes west.
+:s
+
+There is a wide open passage to the north and a small tunnel
+to the east. To the west is the mine elevator.
+:w
+
+You are in the mine elevator. It is on the lower level.
+The doors open to the east, and there is a button on the wall.
+:push button
+
+There is a humming sound as the elevator does its stuff.
+
+You are in the mine elevator. It is on the upper level.
+The doors open to the east, and there is a button on the wall.
+:e
+
+You are in an east/west passage. There was once a passage
+going north, but it is now blocked by fallen rock.
+:e
+
+You are standing on a platform jutting out from the rock wall.
+A rope is dangling from the cliff above. The rock opens to the
+west.
+:u
+
+You are standing at the edge of a cliff. Far below you a
+platform extends from the cliff. There is no way to climb down
+on the rocks. Off to one side is a cactus, and a path exits to
+the north.
+:n
+
+Sand covers the ground all around you. Under your feet is a
+steel grate through which you can see a large room. Paths go
+south and east.
+:drop coin
+Ker-plink! The coin drops through the grate.
+:s
+
+You are standing at the edge of a cliff. Far below you a
+platform extends from the cliff. There is no way to climb down
+on the rocks. Off to one side is a cactus, and a path exits to
+the north.
+:d
+
+You are standing on a platform jutting out from the rock wall.
+A rope is dangling from the cliff above. The rock opens to the
+west.
+:w
+
+You are in an east/west passage. There was once a passage
+going north, but it is now blocked by fallen rock.
+:w
+
+You are in the mine elevator. It is on the upper level.
+The doors open to the east, and there is a button on the wall.
+:push button
+
+There is a hum as you feel yourself moving downward.
+
+You are in the mine elevator. It is on the lower level.
+The doors open to the east, and there is a button on the wall.
+:e
+
+There is a wide open passage to the north and a small tunnel
+to the east. To the west is the mine elevator.
+:n
+
+You are in an open north/south passage. A low crawl goes west.
+:w
+
+You are in a large empty room. The only thing unusual is a
+door in the ceiling with a handle. There is a low crawl to the
+east.
+:u
+
+You are in a small room with debris everywhere. There is a
+small door in the floor which leads down to a lower level.
+To the north is a low crawl.
+:e
+You can't go that way.
+:n
+
+You are in a hands and knees passage that exits to the south
+and east.
+:e
+
+There is a clear passage to the north and crawls to the east
+and west.
+:e
+
+The walls of this room are covered with pictures of lightning
+bolts. Tunnels lead north and south, and a low crawl goes
+west.
+:s
+
+You are walking through a winding tunnel. The walls glimmer as
+if they were metallic. The tunnel exits to the north and east.
+:e
+
+You are in a large empty room. At one end is a slot with a
+message under it. The message says:
+     "Insert coin in slot to get an edge on this adventure!"
+High above you is a steel grate, which lights the room with a
+beam of sunlight. There is an exit to the west.
+There is a coin here.
+:get coin
+Ok
+:insert coin
+A hacksaw appears on the floor in front of you.
+:get hacksaw
+Ok
+:invent
+
+You are currently holding the following:
+
+- empty bucket
+- glass cutter
+- empty container
+- hacksaw
+
+:w
+
+You are walking through a winding tunnel. The walls glimmer as
+if they were metallic. The tunnel exits to the north and east.
+:n
+
+The walls of this room are covered with pictures of lightning
+bolts. Tunnels lead north and south, and a low crawl goes
+west.
+:n
+
+Scattered about you are scraps and shavings of wood and metal.
+A single bare electrical wire hangs from the ceiling. There
+are tunnels to the south and east.
+:grab wire
+
+You feel a tremendous surge of energy pass through your body as
+you are pulled into the wire. You emerge from an empty light
+socket.
+
+You are standing below an empty light socket. The room exits
+to the west.
+:w
+
+Passages go south and east, and a dark tunnel goes north.
+:n
+
+The walls of this room are very smooth. In one wall is a chute
+sloping down into the darkness. There is a tunnel to the
+south.
+:s
+
+Passages go south and east, and a dark tunnel goes north.
+:e
+
+You are standing below an empty light socket. The room exits
+to the west.
+:n
+You can't go that way.
+:w
+
+Passages go south and east, and a dark tunnel goes north.
+:w
+You can't go that way.
+:n
+
+The walls of this room are very smooth. In one wall is a chute
+sloping down into the darkness. There is a tunnel to the
+south.
+:d
+
+You feel as if you're falling through space as you slide down
+the long dark chute. Suddenly, you hit something hard - it's
+the floor of a room!
+
+Extending from the wall is the bottom of a long chute.
+There is an exit to the west.
+:w
+
+A ghastly sight lies before you! Sitting against the wall is a
+skeleton. It looks like he hasn't eaten for a hundred years!
+Passages go north, east, and west.
+:w
+
+There is a wide open passage to the north and a small tunnel
+to the east. To the west is the mine elevator.
+:n
+
+You are in an open north/south passage. A low crawl goes west.
+:w
+
+You are in a large empty room. The only thing unusual is a
+door in the ceiling with a handle. There is a low crawl to the
+east.
+:u
+
+You are in a small room with debris everywhere. There is a
+small door in the floor which leads down to a lower level.
+To the north is a low crawl.
+:e
+You can't go that way.
+:n
+
+You are in a hands and knees passage that exits to the south
+and east.
+:e
+
+There is a clear passage to the north and crawls to the east
+and west.
+:n
+
+You are in a gaping cavern. To the west a railroad track
+extends into the distance. On the track is an old mining car
+chained to the wall. To the south is a clear passage.
+:cut chain
+
+The chain breaks, and the car starts to roll. You jump in just
+in time! The car goes faster and faster as it crosses a
+suspension bridge. You then roll to a stop safely outside the
+mine.
+                           YOU WIN!
+
+Nice job! You successfully completed this adventure!
+
+]0;joe@nova:~/explore[33mnova-joe[36m [~/explore] (4991)[0m exit
+
+Script done on Wed 01 Feb 2017 09:07:42 AM MST
