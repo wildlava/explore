@@ -138,16 +138,22 @@ class World
 
             condition = condition.substring(1);
 
-            boolean player_or_room = false;
+            boolean has_item;
             if (condition.startsWith("*"))
             {
-               player_or_room = true;
                condition = condition.substring(1);
+               has_item = (player.hasItem(condition) ||
+                           player.current_room.hasItem(condition));
             }
-
-            boolean has_item = (player.hasItem(condition) ||
-                                (player_or_room &&
-                                 player.current_room.hasItem(condition)));
+            else if (condition.startsWith("@"))
+            {
+               condition = condition.substring(1);
+               has_item = player.current_room.hasItem(condition);
+            }
+            else
+            {
+               has_item = player.hasItem(condition);
+            }
 
             if (invert && has_item)
             {

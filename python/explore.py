@@ -727,14 +727,15 @@ class World:
 
                 condition = condition[1:]
 
-                player_or_room = False
                 if condition.startswith("*"):
-                    player_or_room = True
                     condition = condition[1:]
-
-                has_item = (self.player.has_item(condition) or
-                            (player_or_room and
-                             self.player.current_room.has_item(condition)))
+                    has_item = (self.player.has_item(condition) or
+                                self.player.current_room.has_item(condition))
+                elif condition.startswith("@"):
+                    condition = condition[1:]
+                    has_item = self.player.current_room.has_item(condition)
+                else:
+                    has_item = self.player.has_item(condition)
 
                 if invert and has_item:
                     return False
