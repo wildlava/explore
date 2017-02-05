@@ -1,3 +1,13 @@
+Version 4.10
+
+* Add Radio Shack's "Haunted House"
+* Add new game features to support emulation of Haunted House
+  - Variables
+  - Custom item descriptions
+  - Custom messages when actions are denied
+  - Allow limiting any action to a one-time use
+  - More control of fall-through to built-in and other commands
+
 Version 4.9:
 
 * Improve help text and inform user that help exists

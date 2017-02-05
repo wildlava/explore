@@ -38,6 +38,7 @@ public class Explore extends Activity
    private Button cave_button;
    private Button mine_button;
    private Button castle_button;
+   private Button haunt_button;
    private LinearLayout button_layout;
 
    @Override
@@ -52,6 +53,7 @@ public class Explore extends Activity
       cave_button = new Button(this);
       mine_button = new Button(this);
       castle_button = new Button(this);
+      haunt_button = new Button(this);
 
       //output_area.setWidth(320);
       //output_area.setHeight(320);
@@ -66,7 +68,7 @@ public class Explore extends Activity
 
       //output_area.setGravity(Gravity.BOTTOM);
       //output_area.setTypeface(Typeface.MONOSPACE);
-      output_area.setTextSize((float) 12.0);
+      output_area.setTextSize((float) 14.0);
       //output_area.setTextSize((float) 9.0);
 
       //input_area.setLines(1);
@@ -108,7 +110,7 @@ public class Explore extends Activity
 
       button_layout = new LinearLayout(this);
 
-      cave_button.setText("Play Cave");
+      cave_button.setText("Play Enchanted Cave");
       cave_button.setOnClickListener(new View.OnClickListener()
       {
          public void onClick(View v)
@@ -117,7 +119,7 @@ public class Explore extends Activity
          }
       });
 
-      mine_button.setText("Play Mine");
+      mine_button.setText("Play Lost Mine");
       mine_button.setOnClickListener(new View.OnClickListener()
       {
          public void onClick(View v)
@@ -126,12 +128,21 @@ public class Explore extends Activity
          }
       });
 
-      castle_button.setText("Play Castle");
+      castle_button.setText("Play Medieval Castle");
       castle_button.setOnClickListener(new View.OnClickListener()
       {
          public void onClick(View v)
          {
             start("castle");
+         }
+      });
+
+      haunt_button.setText("Play Haunted House");
+      haunt_button.setOnClickListener(new View.OnClickListener()
+      {
+         public void onClick(View v)
+         {
+            start("haunt");
          }
       });
 
@@ -142,11 +153,13 @@ public class Explore extends Activity
 
          layout.setOrientation(LinearLayout.VERTICAL);
 
-         control_layout.setMeasureAllChildren(true);
-         button_layout.setOrientation(LinearLayout.HORIZONTAL);
+         control_layout.setMeasureAllChildren(false);
+         //button_layout.setOrientation(LinearLayout.HORIZONTAL);
+         button_layout.setOrientation(LinearLayout.VERTICAL);
          button_layout.addView(cave_button);
          button_layout.addView(mine_button);
          button_layout.addView(castle_button);
+         button_layout.addView(haunt_button);
          control_layout.addView(input_area);
          control_layout.addView(button_layout);
 
@@ -165,11 +178,12 @@ public class Explore extends Activity
 
          layout.setOrientation(LinearLayout.HORIZONTAL);
 
-         control_layout.setMeasureAllChildren(true);
+         control_layout.setMeasureAllChildren(false);
          button_layout.setOrientation(LinearLayout.VERTICAL);
          button_layout.addView(cave_button);
          button_layout.addView(mine_button);
          button_layout.addView(castle_button);
+         button_layout.addView(haunt_button);
          control_layout.addView(input_area);
          control_layout.addView(button_layout);
 
@@ -280,6 +294,10 @@ public class Explore extends Activity
          else if (advname.equals("castle"))
          {
             file = new BufferedReader(new InputStreamReader(getResources().openRawResource(R.raw.castle)));
+         }
+         else if (advname.equals("haunt"))
+         {
+            file = new BufferedReader(new InputStreamReader(getResources().openRawResource(R.raw.haunt)));
          }
 
          if (!silent_load)
