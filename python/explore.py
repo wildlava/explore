@@ -1082,7 +1082,7 @@ class World:
                 if version_change.startswith('NUM_COMMANDS'):
                     num_commands_arg = version_change[12:]
                     at_pos = num_commands_arg.find("@")
-                    if at_pos != 1:
+                    if at_pos != -1:
                         delta = int(num_commands_arg[:at_pos])
                         position = int(num_commands_arg[at_pos + 1:])
                         num_commands_deltas[position] = delta
