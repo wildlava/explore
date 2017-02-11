@@ -21,6 +21,7 @@ public class Explore
       String input_script = null;
       boolean no_delay = false;
       boolean list_commands = false;
+      boolean trs_compat = false;
 
       for (String arg : args)
       {
@@ -34,13 +35,17 @@ public class Explore
             list_commands = true;
             no_delay = true;
          }
+         else if (arg.equals("--trs-compat"))
+         {
+            trs_compat = true;
+         }
          else
          {
             advname = arg;
          }
       }
 
-      game.start(advname, input_script, no_delay, list_commands);
+      game.start(advname, input_script, no_delay, list_commands, trs_compat);
    }
 }
 
@@ -52,13 +57,15 @@ class Game
    void start(String advname,
               String input_script,
               boolean no_delay,
-              boolean list_commands)
+              boolean list_commands,
+              boolean trs_compat)
    {
       io = new ExpIO();
       world = new World(io, advname);
 
       io.no_delay = no_delay;
       world.list_commands_on_load = list_commands;
+      world.trs_compat = trs_compat;
 
       ArrayList<String> input_script_commands = null;
       Iterator<String> input_script_iter = null;
