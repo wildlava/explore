@@ -22,7 +22,7 @@ class ExpIO
    private EditText input;
    private String[] screen;
    private int cur_line;
-   public boolean wrap = true;
+   public boolean unwrap = true;
 
    public static final int SCREEN_LINES = 64;
 
@@ -54,7 +54,7 @@ class ExpIO
       {
          String out_str;
 
-         if (wrap)
+         if (unwrap)
          {
             out_str = s.replace("\\\\", "\n\n");
             out_str = out_str.replace("\\ ", "\n ");

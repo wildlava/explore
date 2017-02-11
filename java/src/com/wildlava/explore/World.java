@@ -42,9 +42,6 @@ class World
    World(ExpIO i, String a)
    {
       io = i;
-      if (trs_compat)
-         io.wrap = false;
-
       advname = a;
 
       player = new Player(io, this);

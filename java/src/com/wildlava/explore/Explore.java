@@ -22,6 +22,7 @@ public class Explore
       boolean no_delay = false;
       boolean list_commands = false;
       boolean trs_compat = false;
+      boolean unwrap_lines = false;
 
       for (String arg : args)
       {
@@ -39,13 +40,18 @@ public class Explore
          {
             trs_compat = true;
          }
+         else if (arg.equals("--unwrap-lines"))
+         {
+            unwrap_lines = true;
+         }
          else
          {
             advname = arg;
          }
       }
 
-      game.start(advname, input_script, no_delay, list_commands, trs_compat);
+      game.start(advname, input_script, no_delay,
+                 list_commands, trs_compat, unwrap_lines);
    }
 }
 
@@ -58,12 +64,14 @@ class Game
               String input_script,
               boolean no_delay,
               boolean list_commands,
-              boolean trs_compat)
+              boolean trs_compat,
+              boolean unwrap_lines)
    {
       io = new ExpIO();
-      world = new World(io, advname);
-
       io.no_delay = no_delay;
+      io.unwrap = unwrap_lines && !trs_compat;
+
+      world = new World(io, advname);
       world.list_commands_on_load = list_commands;
       world.trs_compat = trs_compat;
 

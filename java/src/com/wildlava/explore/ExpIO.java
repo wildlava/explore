@@ -19,7 +19,7 @@ import java.util.Base64;
 
 class ExpIO
 {
-   public boolean wrap = false;
+   public boolean unwrap = false;
    public int max_line_length = 79;
    public boolean no_delay = false;
 
@@ -27,7 +27,7 @@ class ExpIO
    {
       String out_str;
 
-      if (wrap)
+      if (unwrap)
       {
          out_str = s.replace("\\\\", "\n\n");
          out_str = out_str.replace("\\ ", "\n ");
