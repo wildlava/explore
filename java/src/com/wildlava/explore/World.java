@@ -1152,7 +1152,7 @@ class World
          int num_commands = commands.size();
          int command_idx;
 
-         io.print("");
+         io.printRaw("");
 
          for (int i=0; i<num_commands; i++)
          {
@@ -1162,12 +1162,16 @@ class World
 
             buf.append(i);
 
+            buf.append(": ");
+
             if (c.location == null)
             {
-               buf.append(" [GLOBAL]");
+               buf.append("*GLOBAL* ");
             }
-
-            buf.append(": ");
+            else
+            {
+               buf.append("[" + c.location + "] ");
+            }
 
             if (c.commands != null)
             {
@@ -1183,14 +1187,20 @@ class World
             }
             else
             {
-               buf.append("[AUTO]");
+               buf.append("*AUTO*");
             }
 
-            if (c.condition != null) {
-               buf.append(" | " + c.condition);
+            if (c.condition != null)
+            {
+               buf.append(" / " + c.condition);
             }
 
-            io.print(buf.toString());
+            if (c.cont)
+            {
+               buf.append("+");
+            }
+
+            io.printRaw(buf.toString());
          }
       }
 
