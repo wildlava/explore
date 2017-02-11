@@ -29,12 +29,10 @@ public class Explore
          if (arg.startsWith("--script="))
          {
             input_script = arg.substring(9);
-            no_delay = true;
          }
          else if (arg.equals("--list-commands"))
          {
             list_commands = true;
-            no_delay = true;
          }
          else if (arg.equals("--trs-compat"))
          {
@@ -43,6 +41,15 @@ public class Explore
          else if (arg.equals("--unwrap-lines"))
          {
             unwrap_lines = true;
+         }
+         else if (arg.equals("--no-delay"))
+         {
+            no_delay = true;
+         }
+         else if (arg.startsWith("--"))
+         {
+            System.out.println("Invalid option: " + arg);
+            System.exit(1);
          }
          else
          {
