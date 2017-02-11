@@ -36,14 +36,13 @@ class World
    boolean suspend_interactive = false;
 
    public static boolean trs_compat = false;
-   public static boolean trs_look = false;
    public static boolean use_fixed_objects = false;
    public static boolean list_commands_on_load = false;
 
    World(ExpIO i, String a)
    {
       io = i;
-      if (trs_look)
+      if (trs_compat)
          io.wrap = false;
 
       advname = a;
@@ -881,7 +880,7 @@ class World
 
          line = line.trim();
 
-         if (!trs_look)
+         if (!trs_compat)
          {
             // Remove double spaces after punctuation
             line = line.replace("!  ", "! ");

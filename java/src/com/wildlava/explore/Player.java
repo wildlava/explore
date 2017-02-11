@@ -29,7 +29,7 @@ class Player extends ItemContainer
       {
          if (hasItem(full_item_self))
          {
-            if (World.trs_look)
+            if (World.trs_compat)
             {
                io.print("You are already carrying the " + full_item_self + ".");
             }
@@ -40,16 +40,13 @@ class Player extends ItemContainer
          }
          else
          {
-            if (World.trs_compat || !World.use_fixed_objects)
+            if (World.trs_compat)
             {
-               if (World.trs_look)
-               {
-                  io.print("I see no " + item + " here that you can pick up.");
-               }
-               else
-               {
-                  io.print("I see no " + item.toLowerCase() + " here that you can pick up.");
-               }
+               io.print("I see no " + item + " here that you can pick up.");
+            }
+            else if (!World.use_fixed_objects)
+            {
+               io.print("I see no " + item.toLowerCase() + " here that you can pick up.");
             }
             else
             {
@@ -109,16 +106,8 @@ class Player extends ItemContainer
 
          if (World.trs_compat)
          {
-            if (World.trs_look)
-            {
-               io.print("You are not carrying " +
-                        ExpUtil.aOrAn(item_lower) + " " + item + ".");
-            }
-            else
-            {
-               io.print("You are not carrying " +
-                        ExpUtil.aOrAn(item_lower) + " " + item_lower + ".");
-            }
+            io.print("You are not carrying " +
+                     ExpUtil.aOrAn(item_lower) + " " + item + ".");
          }
          else
          {
@@ -150,7 +139,7 @@ class Player extends ItemContainer
 
          for (int i=0; i<items.size(); ++i)
          {
-            if (World.trs_look)
+            if (World.trs_compat)
             {
                io.print("- " + items.get(i) + " -");
             }

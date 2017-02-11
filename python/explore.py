@@ -222,7 +222,7 @@ class Room(ItemContainer):
         for item in self.items:
             item_lower = item.lower()
             if trs_compat:
-                out_desc.append("There is " + a_or_an(item_lower) + " " + item_lower + " here.")
+                out_desc.append("There is " + a_or_an(item_lower) + " " + item + " here.")
             else:
                 if item in self.world.item_descs:
                     out_desc.append(self.world.item_descs[item])
@@ -253,9 +253,14 @@ class Player(ItemContainer):
 
         if not self.current_room.has_item(full_item_room):
             if self.has_item(full_item_self):
-                self.exp_io.tell("You are already carrying the " + full_item_self.lower() + ".")
+                if trs_compat:
+                    self.exp_io.tell("You are already carrying the " + full_item_self + ".")
+                else:
+                    self.exp_io.tell("You are already carrying the " + full_item_self.lower() + ".")
             else:
-                if trs_compat or not use_fixed_objects:
+                if trs_compat:
+                    self.exp_io.tell("I see no " + item + " here that you can pick up.")
+                elif not use_fixed_objects:
                     self.exp_io.tell("I see no " + item.lower() + " here that you can pick up.")
                 else:
                     found_fixed_object = True
@@ -287,7 +292,7 @@ class Player(ItemContainer):
         if not self.remove_item(full_item):
             item_lower = item.lower()
             if trs_compat:
-                self.exp_io.tell("You are not carrying " + a_or_an(item_lower) + " " + item_lower + ".")
+                self.exp_io.tell("You are not carrying " + a_or_an(item_lower) + " " + item + ".")
             else:
                 self.exp_io.tell("You have no " + item_lower + ".")
         else:
@@ -305,8 +310,10 @@ class Player(ItemContainer):
             self.exp_io.tell("")
 
             for item in self.items:
-                #self.exp_io.tell("- " + item + " -")
-                self.exp_io.tell("- " + item.lower())
+                if trs_compat:
+                    self.exp_io.tell("- " + item + " -")
+                else:
+                    self.exp_io.tell("- " + item.lower())
 
             self.exp_io.tell("")
 
@@ -366,11 +373,12 @@ class World:
         for line in file_stream:
             line = line.strip()
 
-            # Remove double spaces after punctuation
-            line = line.replace('!  ', '! ');
-            line = line.replace('?  ', '? ');
-            line = line.replace('.  ', '. ');
-            line = line.replace(':  ', ': ');
+            if not trs_compat:
+                # Remove double spaces after punctuation
+                line = line.replace('!  ', '! ');
+                line = line.replace('?  ', '? ');
+                line = line.replace('.  ', '. ');
+                line = line.replace(':  ', ': ');
 
             if line.find("=") != -1:
                 keyword, params = line.split("=", 1)
@@ -846,7 +854,22 @@ class World:
 
             elif command == "HELP":
                 self.exp_io.tell("")
-                self.exp_io.tell("Welcome! The object of this game is simple: You just need to escape alive! You will use short commands (usually just one or two words) to do various things like move around, manipulate objects, and interact with your environment. To move, simply type a direction (using the first letter is fine: \"n\" for north, \"d\" for down, etc.). To be reminded of where you are, type \"look\". When you find objects, you can pick them up (\"get bottle\"), drop them (\"drop gold\"), or do other things (\"eat food\", \"wave wand\", etc.). To see what you are carrying, type \"inventory\" (\"invent\" for short). To save your game for later (or in case you think you are about about to do something perilous), type \"suspend\". To resume later, type \"resume\". To end the game, type \"quit\". The key is to use your imagination and just try things (like \"fly\", \"open door\", \"push button\", etc.). If what you are attempting to do does not work, try saying it another way. Have fun, and good luck!")
+                if trs_compat:
+                    self.exp_io.tell("These are some of the commands you may use:");
+                    self.exp_io.tell("");
+                    self.exp_io.tell("NORTH or N      (go north)");
+                    self.exp_io.tell("SOUTH or S      (go south)");
+                    self.exp_io.tell("EAST or E       (go east)");
+                    self.exp_io.tell("WEST or W       (go west)");
+                    self.exp_io.tell("UP or U         (go up)");
+                    self.exp_io.tell("DOWN or D       (go down)");
+                    self.exp_io.tell("INVENT          (see your inventory - what you are carrying)");
+                    self.exp_io.tell("LOOK            (see where you are)");
+                    self.exp_io.tell("SUSPEND         (save game to finish later)");
+                    self.exp_io.tell("RESUME          (take up where you left off last time)");
+                    self.exp_io.tell("QUIT or STOP    (quit game)");
+                else:
+                    self.exp_io.tell("Welcome! The object of this game is simple: You just need to escape alive! You will use short commands (usually just one or two words) to do various things like move around, manipulate objects, and interact with your environment. To move, simply type a direction (using the first letter is fine: \"n\" for north, \"d\" for down, etc.). To be reminded of where you are, type \"look\". When you find objects, you can pick them up (\"get bottle\"), drop them (\"drop gold\"), or do other things (\"eat food\", \"wave wand\", etc.). To see what you are carrying, type \"inventory\" (\"invent\" for short). To save your game for later (or in case you think you are about about to do something perilous), type \"suspend\". To resume later, type \"resume\". To end the game, type \"quit\". The key is to use your imagination and just try things (like \"fly\", \"open door\", \"push button\", etc.). If what you are attempting to do does not work, try saying it another way. Have fun, and good luck!")
                 self.exp_io.tell("")
 
             elif ((command == "QUIT" or command == "STOP") and

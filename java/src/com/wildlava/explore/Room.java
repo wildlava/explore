@@ -77,16 +77,8 @@ class Room extends ItemContainer
 
          if (World.trs_compat)
          {
-            if (World.trs_look)
-            {
-               desc_strings.add("There is " + ExpUtil.aOrAn(item_lower) +
-                                " " + items.get(i) + " here.");
-            }
-            else
-            {
-               desc_strings.add("There is " + ExpUtil.aOrAn(item_lower) +
-                                " " + item_lower + " here.");
-            }
+            desc_strings.add("There is " + ExpUtil.aOrAn(item_lower) +
+                             " " + item + " here.");
          }
          else
          {
