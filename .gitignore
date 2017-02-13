@@ -13,3 +13,4 @@
 *.pyc
 __pycache__
 /*.sus
+.DS_Store
