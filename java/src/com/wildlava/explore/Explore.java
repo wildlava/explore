@@ -78,10 +78,6 @@ class Game
       io.no_delay = no_delay;
       io.unwrap = unwrap_lines && !trs_compat;
 
-      world = new World(io, advname);
-      world.list_commands_on_load = list_commands;
-      world.trs_compat = trs_compat;
-
       ArrayList<String> input_script_commands = null;
       Iterator<String> input_script_iter = null;
       if (input_script != null)
@@ -131,6 +127,10 @@ class Game
 
          advname = advname.trim().toLowerCase();
       }
+
+      world = new World(io, advname);
+      world.list_commands_on_load = list_commands;
+      world.trs_compat = trs_compat;
 
       try
       {
