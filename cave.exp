@@ -256,7 +256,7 @@ DESC=You are in a room with blue walls.\There is a button on the wall.
 FIXED_OBJECTS=ROOM,WALL,WALLS,BUTTON
 SOUTH=3,1,2
 COMMAND=PUSH BUTTON,PRESS BUTTON
-ACTION=A blue lightening bolt strikes you!  You are fried to a crisp!
+ACTION=A blue lightning bolt strikes you!  You are fried to a crisp!
 
 ROOM=0,1,2
 DESC=This seems to be an old tool storage room.  There is a\low crawl to the south and a wooden door to the east.

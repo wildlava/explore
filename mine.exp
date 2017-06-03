@@ -132,7 +132,7 @@ FIXED_OBJECTS=TUNNEL,WALL,WALLS
 NORTH=2,1,1
 EAST=3,2,1
 COMMAND=+COIN
-ACTION=/2,1,1:ZAP!!!  A bolt of lightening suddenly strikes the coin and\thrusts you out of the room.
+ACTION=/2,1,1:ZAP!!!  A bolt of lightning suddenly strikes the coin and\thrusts you out of the room.
 
 ROOM=3,2,1
 DESC=You are in a large empty room.  At one end is a slot with a\message under it.  The message says:\     "Insert coin in slot to get an edge on this adventure!"\High above you is a steel grate, which lights the room with a
