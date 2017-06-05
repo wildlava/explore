@@ -140,6 +140,13 @@ later in Ruby.
 
 ### Java issues ###
 
+* Consider changing public member variables to package private.
+
+* Constants (e.g. in World) should all be at top of class.
+
+* When referencing constants (e.g. those in World), use the class name
+  instead of the object name (e.g. use "World." instead of "world.").
+
 * If there is minimal stuff in adventure file, NullPointerException thrown
   (may be fixed now).
 
