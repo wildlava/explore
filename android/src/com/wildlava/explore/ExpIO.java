@@ -246,11 +246,21 @@ class ExpIO
 
    static String encodeBase64(byte[] bytes)
    {
-      return Base64.encodeToString(bytes, Base64.NO_WRAP | Base64.NO_PADDING);
+      return Base64.encodeToString(bytes, Base64.URL_SAFE | Base64.NO_WRAP | Base64.NO_PADDING);
    }
 
    static byte[] decodeBase64(String s)
    {
-      return Base64.decode(s, Base64.NO_WRAP | Base64.NO_PADDING);
+      if (s.contains("+"))
+      {
+         s = s.replace("+", "-");
+      }
+
+      if (s.contains("/"))
+      {
+         s = s.replace("/", "_");
+      }
+
+      return Base64.decode(s, Base64.URL_SAFE | Base64.NO_WRAP | Base64.NO_PADDING);
    }
 }

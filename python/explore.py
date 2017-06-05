@@ -972,12 +972,18 @@ class World:
         for i, character in enumerate(comp_bytes):
             out_str += chr(ord(character) ^ ord(self.key[i % key_len]))
 
-        return base64.b64encode(out_str).strip("=")
+        return base64.urlsafe_b64encode(out_str).strip("=")
 
     def decrypt(self, in_str):
         try:
-            comp_bytes = base64.b64decode(in_str +
-                                          ((4 - len(in_str) % 4) & 0x3) * '=')
+            if '+' in in_str:
+                in_str = in_str.replace('+', '-')
+
+            if '/' in in_str:
+                in_str = in_str.replace('/', '_')
+
+            comp_bytes = base64.urlsafe_b64decode(in_str +
+                                                  ((4 - len(in_str) % 4) & 0x3) * '=')
         except TypeError:
             return "Decrypt failed"
 

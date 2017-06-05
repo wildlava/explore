@@ -197,13 +197,24 @@ class ExpIO
 
    static String encodeBase64(byte[] bytes)
    {
-      Base64.Encoder encoder = Base64.getEncoder().withoutPadding();
+      Base64.Encoder encoder = Base64.getUrlEncoder().withoutPadding();
       return encoder.encodeToString(bytes);
    }
 
    static byte[] decodeBase64(String s)
    {
-      Base64.Decoder decoder = Base64.getDecoder();
+      Base64.Decoder decoder = Base64.getUrlDecoder();
+
+      if (s.contains("+"))
+      {
+         s = s.replace("+", "-");
+      }
+
+      if (s.contains("/"))
+      {
+         s = s.replace("/", "_");
+      }
+
       return decoder.decode(s);
    }
 }
