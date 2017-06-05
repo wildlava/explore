@@ -1478,17 +1478,17 @@ def play_once(filename, command=None, resume=None, last_suspend=None, return_out
         exp_io.tell("")
         exp_io.tell(world.player.current_room.description())
 
-    if (result & RESULT_WIN) != 0:
-        print("%WIN")
-    elif (result & RESULT_DIE):
-        print("%DIE")
-    elif (result & RESULT_END_GAME):
+    if (result & RESULT_END_GAME) != 0:
         print("%END")
+        if (result & RESULT_WIN) != 0:
+            print("%WIN")
+        elif (result & RESULT_DIE) != 0:
+            print("%DIE")
     else:
         print("%PROMPT=:")
         print("%STATE=" + world.get_state())
 
-        if (result & RESULT_SUSPEND):
+        if (result & RESULT_SUSPEND) != 0:
             print("%SUSPEND")
 
     return exp_io.get_output()
