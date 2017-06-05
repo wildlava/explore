@@ -32,8 +32,14 @@ class World
    HashMap<String, String> same_items;
    HashMap<String, String> old_items;
    HashMap<Integer, String> old_versions;
+
+   public static final int SUSPEND_TO_MEMORY = 0;
+   public static final int SUSPEND_INTERACTIVE = 1;
+   public static final int SUSPEND_TO_FILE = 2;
+
    int suspend_version = 2;
-   boolean suspend_interactive = false;
+   int suspend_mode = SUSPEND_TO_FILE;
+   String last_suspend = null;
 
    public static boolean trs_compat = false;
    public static boolean use_fixed_objects = false;
@@ -66,6 +72,7 @@ class World
    public static final int RESULT_DIE = 8;
    public static final int RESULT_END_GAME = 16;
    public static final int RESULT_NO_CHECK = 32;
+   public static final int RESULT_SUSPEND = 64;
 
    public static final String[] DIRECTIONS = {"N", "S", "E", "W", "U", "D"};
 
@@ -444,7 +451,7 @@ class World
          else if ((command.equals("SUSPEND") || command.equals("SAVE")) &&
                   argument == null)
          {
-            if (suspend_interactive)
+            if (suspend_mode == SUSPEND_INTERACTIVE)
             {
                io.print("");
                io.print("OK, grab the following long line and save it away somewhere. This will be the command you use later to resume your game:");
@@ -452,7 +459,7 @@ class World
                io.printRaw("resume " + state());
                io.print("");
             }
-            else
+            else if (suspend_mode == SUSPEND_TO_FILE)
             {
                if (!io.saveSuspendedState(advname + ".sus", state()))
                {
@@ -466,18 +473,35 @@ class World
                   }
                }
             }
+            else
+            {
+               last_suspend = state();
+
+               if (acknowledge)
+               {
+                  io.print("Ok");
+               }
+
+               result |= RESULT_SUSPEND;
+            }
          }
          else if ((command.equals("RESUME") || command.equals("RESTORE")) &&
-                  (!suspend_interactive && argument == null))
+                  (suspend_mode != SUSPEND_INTERACTIVE && argument == null))
          {
-            String old_state = io.loadSuspendedState(advname + ".sus");
-            if (old_state == null)
+            String new_state;
+
+            if (suspend_mode == SUSPEND_TO_FILE)
             {
-               io.print("Hmm, there seems to be no suspended game information. Sorry.");
+               new_state = io.loadSuspendedState(advname + ".sus");
             }
             else
             {
-               if (!state(old_state))
+               new_state = last_suspend;
+            }
+
+            if (new_state != null)
+            {
+               if (!state(new_state))
                {
                   io.print("Hmm, the suspended game information doesn't look valid. Sorry.");
                }
@@ -486,9 +510,13 @@ class World
                   result |= (RESULT_DESCRIBE | RESULT_NO_CHECK);
                }
             }
+            else
+            {
+               io.print("Hmm, there seems to be no suspended game information. Sorry.");
+            }
          }
          else if ((command.equals("RESUME") || command.equals("RESTORE")) &&
-                  suspend_interactive)
+                  suspend_mode == SUSPEND_INTERACTIVE)
          {
             if (argument == null)
             {

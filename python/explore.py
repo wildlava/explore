@@ -325,10 +325,9 @@ RESULT_DIE = 8
 RESULT_END_GAME = 16
 RESULT_NO_CHECK = 32
 RESULT_SUSPEND = 64
-RESULT_RESUME = 128
 
-SUSPEND_INTERACTIVE = 0
-SUSPEND_QUIET = 1
+SUSPEND_TO_MEMORY = 0
+SUSPEND_INTERACTIVE = 1
 
 LONG_DIRECTION_COMMANDS = ["NORTH", "SOUTH", "EAST", "WEST", "UP", "DOWN"]
 DIRECTIONS = []
@@ -355,6 +354,7 @@ class World:
         self.same_items = {}
         self.old_items = {}
         self.old_versions = {}
+
         self.suspend_version = 2
         self.suspend_mode = SUSPEND_INTERACTIVE
         self.last_suspend = None
@@ -909,6 +909,7 @@ class World:
                     self.exp_io.tell_raw("resume " + self.get_state())
                     self.exp_io.tell("")
                 else:
+                    self.last_suspend = self.get_state()
                     if acknowledge:
                         self.exp_io.tell("Ok")
                     result |= RESULT_SUSPEND
@@ -1417,7 +1418,7 @@ def play_once(filename, command=None, resume=None, last_suspend=None, return_out
     world = World(exp_io)
 
     exp_io.no_delay = True
-    world.suspend_mode = SUSPEND_QUIET
+    world.suspend_mode = SUSPEND_TO_MEMORY
     world.last_suspend = last_suspend
     if return_output:
         exp_io.store_output = True
