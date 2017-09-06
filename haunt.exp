@@ -118,7 +118,7 @@ SOUTH=4,2,0
 EAST=4,2,0
 WEST=3,2,0
 COMMAND=DROP ROPE,THROW ROPE:+ROPE
-ACTION=[U4,2,1;-ROPE;*+:Instantly the rope unwinds and levitates to the hole in the ceiling!
+ACTION=[U4,2,1;-ROPE;*+:Ok\Instantly the rope unwinds and levitates to the hole in the ceiling!
 COMMAND=CLIMB ROPE,CLIMB UP,CLIMB
 ACTION==U
 
@@ -149,7 +149,7 @@ SOUTH=9,3,0
 EAST=9,2,0
 WEST=9,2,0
 COMMAND=OPEN CABINET,OPEN
-ACTION=+KEY:There is a key in it.
+ACTION=+KEY:Ok\There is a key in it.
 
 ROOM=8,3,0
 DESC=You are at the breakfast room.
