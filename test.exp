@@ -1,6 +1,7 @@
 INVENTORY_LIMIT=2
 
 ROOM=room1
+FIXED_OBJECTS=dirt
 DESC=You are in the first room.  The floor is dirt.
 NORTH=room2
 SOUTH=room3
@@ -9,16 +10,22 @@ ACTION=:Hi back!
 COMMAND=BYE
 ACTION=:see ya!
 COMMAND=THROW DART:DART
-ACTION=:You hit the bullseye!
+ACTION=:You hit the bullseye!||:You don't have a dart!
 COMMAND=DIG
 ACTION=[Dhole:You have dug a hole.
 COMMAND=BLOCK NORTH
 ACTION=[$N
 COMMAND=DETOUR SOUTH
 ACTION=[Shole:Don't fall in the hole!
-                
+COMMAND=DIE
+ACTION=Arrrrrgh! You are dead.
+COMMAND=HOP
+ACTION=/room1:You go up and land in the same place.
+
 ROOM=hole
 DESC=You are down in a hole.
+COMMAND=WAVE
+ACTION=+QUILL;+PAPER
 UP=room1
 
 ROOM=room2
@@ -40,4 +47,10 @@ COMMAND=YOU
 ACTION=:Me?
 COMMAND=I
 ACTION=:You what?
-ACTION=:Oh well...
+ACTION=:I always say this in the first room.
+
+LOCAL=room3
+COMMAND=+PEN
+ACTION=:Hi!
+COMMAND=+PEN
+ACTION=/room1:Taking you back...
