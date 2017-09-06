@@ -160,7 +160,7 @@ EAST=9,3,0
 WEST=8,3,0
 COMMAND=+KNIFE
 ACTION=.$armour=fled:A suit of armour here flees when it spots your knife.
-COMMAND=-KNIFE
+COMMAND=$armour!=fled&-KNIFE
 ACTION=/8,2,0:You are at the breakfast room. An animated suit of armour throws you out.
 
 ROOM=9,3,0
