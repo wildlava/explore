@@ -623,10 +623,12 @@ class World:
                                 self.exp_io.tell("You are carrying too much to do that.")
                                 error = True
                             else:
-                                command.action = "^" + command.action
+                                if command.action[0] != "^":
+                                    command.action = "^" + command.action
                         else:
                             self.player.current_room.add_item(action[1:], True)
-                            command.action = "^" + command.action
+                            if command.action[0] != "^":
+                                command.action = "^" + command.action
 
                     elif action[0] == "-":
                         if not self.player.remove_item(action[1:]):
@@ -653,7 +655,8 @@ class World:
                         else:
                             self.player.current_room.make_way(action[1], action[2:])
 
-                        command.action = "^" + command.action
+                        if command.action[0] != "^":
+                            command.action = "^" + command.action
 
                     elif action[0] == "*":
                         if self.player.current_room.desc_ctrl != None:

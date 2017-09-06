@@ -726,7 +726,10 @@ class World
                      }
                      else
                      {
-                        command.action = "^" + command.action;
+                        if (!command.action.startsWith("^"))
+                        {
+                           command.action = "^" + command.action;
+                        }
                      }
                   }
                   else
@@ -734,7 +737,10 @@ class World
                      player.current_room.addItem(action.substring(1),
                                                  true);
 
-                     command.action = "^" + command.action;
+                     if (!command.action.startsWith("^"))
+                     {
+                        command.action = "^" + command.action;
+                     }
                   }
                }
                else if (action.startsWith("-"))
@@ -795,7 +801,10 @@ class World
                      }
                   }
 
-                  command.action = "^" + command.action;
+                  if (!command.action.startsWith("^"))
+                  {
+                     command.action = "^" + command.action;
+                  }
                }
                else if (action.startsWith("*"))
                {
