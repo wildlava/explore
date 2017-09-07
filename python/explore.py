@@ -1408,16 +1408,15 @@ def play(filename=None, input_script=None, no_delay=False):
             game_started = True
             result = RESULT_DESCRIBE
 
-        if (result & RESULT_NO_CHECK) == 0:
-            check_result = world.check_for_auto(result)
-            if check_result != RESULT_NORMAL:
-                result = check_result
+        if (result & RESULT_END_GAME) == 0:
+            if (result & RESULT_NO_CHECK) == 0:
+                result |= world.check_for_auto(result)
 
-        if (result & RESULT_DESCRIBE) != 0:
-            exp_io.tell("")
-            exp_io.tell(world.player.current_room.description())
-
-        if (result & RESULT_END_GAME) != 0:
+        if (result & RESULT_END_GAME) == 0:
+            if (result & RESULT_DESCRIBE) != 0:
+                exp_io.tell("")
+                exp_io.tell(world.player.current_room.description())
+        else:
             if (result & RESULT_WIN) != 0:
                 exp_io.tell("")
                 exp_io.tell("Nice job! You successfully completed this adventure!")
@@ -1486,27 +1485,26 @@ def play_once(filename, command=None, resume=None, last_suspend=None, return_out
     else:
         result = RESULT_DESCRIBE
 
-    if (result & RESULT_NO_CHECK) == 0:
-        check_result = world.check_for_auto(result)
-        if check_result != RESULT_NORMAL:
-            result = check_result
+    if (result & RESULT_END_GAME) == 0:
+        if (result & RESULT_NO_CHECK) == 0:
+            result |= world.check_for_auto(result)
 
-    if (result & RESULT_DESCRIBE) != 0:
-        exp_io.tell("")
-        exp_io.tell(world.player.current_room.description())
+    if (result & RESULT_END_GAME) == 0:
+        if (result & RESULT_DESCRIBE) != 0:
+            exp_io.tell("")
+            exp_io.tell(world.player.current_room.description())
 
-    if (result & RESULT_END_GAME) != 0:
-        print("%END")
-        if (result & RESULT_WIN) != 0:
-            print("%WIN")
-        elif (result & RESULT_DIE) != 0:
-            print("%DIE")
-    else:
         print("%PROMPT=:")
         print("%STATE=" + world.get_state())
 
         if (result & RESULT_SUSPEND) != 0:
             print("%SUSPEND")
+    else:
+        print("%END")
+        if (result & RESULT_WIN) != 0:
+            print("%WIN")
+        elif (result & RESULT_DIE) != 0:
+            print("%DIE")
 
     return exp_io.get_output()
 

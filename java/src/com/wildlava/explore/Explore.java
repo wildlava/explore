@@ -206,24 +206,27 @@ class Game
          result = world.RESULT_DESCRIBE;
       }
 
-      if ((result & world.RESULT_NO_CHECK) == 0)
+      if ((result & world.RESULT_END_GAME) == 0)
       {
-         int check_result = world.checkForAuto(result);
-         if (check_result != world.RESULT_NORMAL)
+         if ((result & world.RESULT_NO_CHECK) == 0)
          {
-            result = check_result;
+            result |= world.checkForAuto(result);
          }
       }
 
-      if ((result & world.RESULT_DESCRIBE) != 0)
+      if ((result & world.RESULT_END_GAME) == 0)
       {
-         io.print("");
-         io.print(world.player.current_room.description());
-      }
+         if ((result & world.RESULT_DESCRIBE) != 0)
+         {
+            io.print("");
+            io.print(world.player.current_room.description());
+         }
 
-      //if ((result & world.RESULT_WIN) != 0 ||
-      //    (result & world.RESULT_DIE) != 0)
-      if ((result & world.RESULT_END_GAME) != 0)
+         io.printRaw(":", false);
+
+         return true;
+      }
+      else
       {
          if ((result & world.RESULT_WIN) != 0)
          {
@@ -239,12 +242,6 @@ class Game
          io.print("");
 
          return false;
-      }
-      else
-      {
-         io.printRaw(":", false);
-
-         return true;
       }
    }
 }

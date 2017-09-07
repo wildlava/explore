@@ -100,22 +100,31 @@ class Explore
                   result = World.RESULT_DESCRIBE;
                }
 
-               if ((result & World.RESULT_NO_CHECK) == 0)
+               if ((result & World.RESULT_END_GAME) == 0)
                {
-                  int check_result = world.checkForAuto(result);
-                  if (check_result != World.RESULT_NORMAL)
+                  if ((result & World.RESULT_NO_CHECK) == 0)
                   {
-                     result = check_result;
+                     result |= world.checkForAuto(result);
                   }
                }
 
-               if ((result & World.RESULT_DESCRIBE) != 0)
+               if ((result & World.RESULT_END_GAME) == 0)
                {
-                  io.print("");
-                  io.print(world.player.current_room.description());
-               }
+                  if ((result & World.RESULT_DESCRIBE) != 0)
+                  {
+                     io.print("");
+                     io.print(world.player.current_room.description());
+                  }
 
-               if ((result & World.RESULT_END_GAME) != 0)
+                  response.setPrompt(":");
+                  response.setState(world.state());
+
+                  if ((result & World.RESULT_SUSPEND) != 0)
+                  {
+                     response.setSuspend(true);
+                  }
+               }
+               else
                {
                   response.setEnd(true);
                   if ((result & World.RESULT_WIN) != 0)
@@ -125,16 +134,6 @@ class Explore
                   else if ((result & World.RESULT_DIE) != 0)
                   {
                      response.setDie(true);
-                  }
-               }
-               else
-               {
-                  response.setPrompt(":");
-                  response.setState(world.state());
-
-                  if ((result & World.RESULT_SUSPEND) != 0)
-                  {
-                     response.setSuspend(true);
                   }
                }
             }
