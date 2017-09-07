@@ -362,6 +362,12 @@ class World
          {
             if (argument != null)
             {
+               if (!action_newline_inserted)
+               {
+                  io.print("");
+                  action_newline_inserted = true;
+               }
+
                io.print("There's really nothing more to see.");
             }
 

@@ -857,6 +857,9 @@ class World:
 
             elif command == "LOOK":
                 if argument != None:
+                    if not self.action_newline_inserted:
+                        self.exp_io.tell("")
+                        self.action_newline_inserted = True
                     self.exp_io.tell("There's really nothing more to see.")
 
                 result |= RESULT_DESCRIBE
