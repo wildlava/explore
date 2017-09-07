@@ -18,7 +18,7 @@ class Explore
    static void playOnce(ExploreResponse response,
                         String advname,
                         String command,
-                        String resume,
+                        String state,
                         String last_suspend)
    {
       boolean trs_compat = false;
@@ -71,11 +71,11 @@ class Explore
                   io.print("");
                }
 
-               if (resume != null)
+               if (state != null)
                {
-                  if (!world.state(resume))
+                  if (!world.state(state))
                   {
-                     response.setError("Bad resume code");
+                     response.setError("Bad state code");
                      return;
                   }
                }

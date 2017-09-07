@@ -1428,7 +1428,7 @@ def play(filename=None, input_script=None, no_delay=False):
             break
 
 
-def play_once(filename, command=None, resume=None, last_suspend=None, return_output=True, quiet=False, show_title=True, show_title_only=False):
+def play_once(filename, command=None, state=None, last_suspend=None, return_output=True, quiet=False, show_title=True, show_title_only=False):
     exp_io = ExpIO()
     world = World(exp_io)
 
@@ -1471,9 +1471,9 @@ def play_once(filename, command=None, resume=None, last_suspend=None, return_out
         exp_io.tell(world.title)
         exp_io.tell("")
 
-    if resume != None:
-        if not world.set_state(resume):
-            print("%ERROR=Bad resume code")
+    if state != None:
+        if not world.set_state(state):
+            print("%ERROR=Bad state code")
             return exp_io.get_output()
 
     if command != None:
@@ -1512,7 +1512,7 @@ def play_once(filename, command=None, resume=None, last_suspend=None, return_out
 filename = None
 one_shot = False
 command = None
-resume = None
+state = None
 last_suspend = None
 no_delay = False
 input_script = None
@@ -1537,7 +1537,7 @@ for arg_num in range(1, len(sys.argv)):
             skip_next = True
     elif sys.argv[arg_num] == "-r":
         if len(sys.argv) > (arg_num + 1) and (len(sys.argv[arg_num + 1]) == 0 or sys.argv[arg_num + 1][0] != '-'):
-            resume = sys.argv[arg_num + 1]
+            state = sys.argv[arg_num + 1]
             skip_next = True
     elif sys.argv[arg_num] == "-s":
         if len(sys.argv) > (arg_num + 1) and (len(sys.argv[arg_num + 1]) == 0 or sys.argv[arg_num + 1][0] != '-'):
@@ -1558,7 +1558,7 @@ for arg_num in range(1, len(sys.argv)):
     else:
         filename = sys.argv[arg_num] + ".exp"
 
-if one_shot or (command != None) or (resume != None) or (last_suspend != None):
-    play_once(filename, command, resume, last_suspend, False)
+if one_shot or (command != None) or (state != None) or (last_suspend != None):
+    play_once(filename, command, state, last_suspend, False)
 else:
     play(filename, input_script, no_delay)
