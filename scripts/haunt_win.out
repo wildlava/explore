@@ -1,8 +1,6 @@
-Script started on Sat 21 Jan 2017 11:07:34 PM MST
-]0;joe@nova:~/explore[33mnova-joe[36m [~/explore] (4995)[0m explore haunt
 
 
-*** EXPLORE ***  ver 4.9
+*** EXPLORE ***  ver 4.10
 
 haunt is now being built...
 
@@ -49,6 +47,7 @@ There is a cabinet on the wall.
 You are at the servants quarters.
 There is a cabinet on the wall.
 :open cabinet
+Ok
 There is a key in it.
 :get key
 Ok
@@ -100,6 +99,7 @@ A wall of raging fire blocks the way east.
 
 You are at the library. There is a hole in the ceiling.
 :drop rope
+Ok
 Instantly the rope unwinds and levitates to the hole in the ceiling!
 :u
 
@@ -156,6 +156,3 @@ and escape to safety! Congratulations! You made it!
 
 Nice job! You successfully completed this adventure!
 
-]0;joe@nova:~/explore[33mnova-joe[36m [~/explore] (4996)[0m exit
-
-Script done on Sat 21 Jan 2017 11:08:44 PM MST
