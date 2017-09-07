@@ -1553,7 +1553,6 @@ for arg_num in range(1, len(sys.argv)):
         trs_compat = True
     elif sys.argv[arg_num].startswith("--script="):
         input_script = sys.argv[arg_num][9:]
-        no_delay = True
 #    elif sys.argv[arg_num] == "--no-title":
 #        show_title = False
 #    elif sys.argv[arg_num] == "--title-only":
