@@ -355,6 +355,8 @@ class World:
         self.old_items = {}
         self.old_versions = {}
 
+        self.action_newline_inserted = False
+
         self.suspend_version = 2
         self.suspend_mode = SUSPEND_INTERACTIVE
         self.last_suspend = None
@@ -691,8 +693,13 @@ class World:
                     command.action = "^" + command.action
 
             if len(messages) > 0:
-                if (result & RESULT_DESCRIBE) != 0 or (not trs_compat and auto and (previous_result & RESULT_DESCRIBE) != 0):
+                if ((not self.action_newline_inserted or
+                     trs_compat) and
+                    ((result & RESULT_DESCRIBE) != 0 or
+                     (not trs_compat and auto and
+                      (previous_result & RESULT_DESCRIBE) != 0))):
                     self.exp_io.tell("")
+                    self.action_newline_inserted = True
                 for message in messages:
                     self.exp_io.tell(message)
 
@@ -803,6 +810,9 @@ class World:
 
         try_builtin = True
         action_denied_directive = None
+
+        # Note: this assumes process_command() is called before check_for_auto()
+        self.action_newline_inserted = False;
 
         if trs_compat:
             if custom != None and player_in_correct_room:

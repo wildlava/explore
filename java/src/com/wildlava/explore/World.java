@@ -33,6 +33,8 @@ class World
    HashMap<String, String> old_items;
    HashMap<Integer, String> old_versions;
 
+   private boolean action_newline_inserted = false;
+
    public static final int SUSPEND_TO_MEMORY = 0;
    public static final int SUSPEND_INTERACTIVE = 1;
    public static final int SUSPEND_TO_FILE = 2;
@@ -259,6 +261,9 @@ class World
 
       boolean try_builtin = true;
       String action_denied_directive = null;
+
+      // Note: this assumes processCommand() is called before checkForAuto()
+      action_newline_inserted = false;
 
       if (trs_compat)
       {
@@ -874,10 +879,16 @@ class World
 
          if (!messages.isEmpty())
          {
-            if ((result & RESULT_DESCRIBE) != 0 || (!trs_compat && auto && (previous_result & RESULT_DESCRIBE) != 0))
+            if ((!action_newline_inserted ||
+                 trs_compat) &&
+                ((result & RESULT_DESCRIBE) != 0 ||
+                 (!trs_compat && auto &&
+                  (previous_result & RESULT_DESCRIBE) != 0)))
             {
                io.print("");
+               action_newline_inserted = true;
             }
+
             for (String message : messages)
             {
                io.print(message);
