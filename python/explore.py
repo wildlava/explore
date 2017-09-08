@@ -8,7 +8,6 @@
 import sys
 import os
 import time
-import string
 import zlib
 import base64
 import re
@@ -54,7 +53,7 @@ class ExpIO:
         if self.store_output:
             self.output.append(s)
         else:
-            print s
+            print(s)
             if not self.no_delay:
                 time.sleep(.03)
 
@@ -233,7 +232,7 @@ class Room(ItemContainer):
                 else:
                     out_desc.append("There is " + a_or_an(item_lower) + " " + item_lower + " here.")
 
-        return string.join(out_desc, '\n')
+        return '\n'.join(out_desc)
 
     def has_fixed_object(self, item):
         return item in self.fixed_objects
@@ -335,6 +334,8 @@ for dir in LONG_DIRECTION_COMMANDS:
     DIRECTIONS.append(dir[0])
 DIRECTION_COMMANDS = DIRECTIONS + LONG_DIRECTION_COMMANDS
 
+KEY = b'We were inspired by Steely Dan.'
+
 class World:
     def __init__(self, exp_io):
         self.exp_io = exp_io
@@ -370,7 +371,7 @@ class World:
         new_command = None
         cur_room_name = None
 
-        file_stream = file(filename)
+        file_stream = open(filename, 'r')
 
         for line in file_stream:
             line = line.strip()
@@ -398,7 +399,7 @@ class World:
                 start_room = params[:]
 
             elif keyword == "INVENTORY_LIMIT":
-                self.player.item_limit = string.atoi(params)
+                self.player.item_limit = int(params)
 
             elif keyword == "ROOM":
                 new_room = Room(self)
@@ -545,7 +546,7 @@ class World:
                 self.commands.append(c);
 
         # Set up the starting room
-        if self.rooms.has_key(start_room):
+        if start_room in self.rooms:
             self.player.current_room = self.rooms[start_room]
         elif first_room != None:
             self.player.current_room = first_room
@@ -590,7 +591,7 @@ class World:
 
                 if action != None:
                     if action[0] == "/":
-                        if self.rooms.has_key(action[1:]):
+                        if action[1:] in self.rooms:
                             room = self.rooms[action[1:]]
 
                             self.player.current_room = room
@@ -643,7 +644,7 @@ class World:
                             room_name, item = action[1:].split(">", 1)
 
                             if self.player.remove_item(item) or self.player.current_room.remove_item(item):
-                                if self.rooms.has_key(room_name):
+                                if room_name in self.rooms:
                                     self.rooms[room_name].add_item(item, True)
                                 else:
                                     self.exp_io.tell("Wow, I think somthing just left our universe!")
@@ -970,7 +971,7 @@ class World:
                 self.exp_io.tell("I don't understand.")
 
             if wants_to_walk:
-                if self.rooms.has_key(goto_room):
+                if goto_room in self.rooms:
                     room = self.rooms[goto_room]
                     self.player.current_room = room
                     result |= RESULT_DESCRIBE
@@ -979,17 +980,15 @@ class World:
 
         return result
 
-    key = "We were inspired by Steely Dan."
-
     def encrypt(self, in_str):
-        comp_bytes = zlib.compress(in_str)
+        comp_bytes = zlib.compress(in_str.encode('ascii'))
 
-        out_str = ""
-        key_len = len(self.key)
-        for i, character in enumerate(comp_bytes):
-            out_str += chr(ord(character) ^ ord(self.key[i % key_len]))
+        out = bytearray()
+        key_len = len(KEY)
+        for i, b in enumerate(comp_bytes):
+            out.append(b ^ KEY[i % key_len])
 
-        return base64.urlsafe_b64encode(out_str).strip("=")
+        return base64.urlsafe_b64encode(bytes(out)).decode('ascii').strip('=')
 
     def decrypt(self, in_str):
         try:
@@ -1004,36 +1003,37 @@ class World:
         except TypeError:
             return "Decrypt failed"
 
-        out_str = ""
-        key_len = len(self.key)
-        for i, character in enumerate(comp_bytes):
-            out_str += chr(ord(character) ^ ord(self.key[i % key_len]))
+        out = bytearray()
+        key_len = len(KEY)
+        for i, b in enumerate(comp_bytes):
+            out.append(b ^ KEY[i % key_len])
 
         try:
-            return zlib.decompress(out_str)
+            return zlib.decompress(out).decode('ascii')
         except zlib.error:
             return "Decrypt failed"
 
     def old_decrypt(self, in_str):
-        out_str = ""
-        for i in range(len(in_str)):
-            c = ord(in_str[-(i + 1)])
+        out = bytearray()
+        in_bytes = in_str.encode('ascii')
+        for i in range(len(in_bytes)):
+            c = in_bytes[-(i + 1)]
 
             c -= 0x3b
             c &= 0x3f
-            c ^= ord(self.key[i % len(self.key)]) & 0x3f
+            c ^= (KEY[i % len(KEY)]) & 0x3f
             c += 0x20
 
-            out_str += chr(c)
+            out.append(c)
 
-        return out_str
+        return out.decode('ascii')
 
     def get_state(self):
         # our current room
         buf = [self.player.current_room.name]
 
         # what we're carrying
-        buf.append(string.join(self.player.items, ','))
+        buf.append(','.join(self.player.items))
 
         # and the variables that are set
         buf.append(','.join([variable + "=" + self.variables[variable] for variable in self.variables]))
@@ -1047,7 +1047,7 @@ class World:
             else:
                 command_buf.append(".")
 
-        buf.append(string.join(command_buf, ''))
+        buf.append(''.join(command_buf))
 
         # now the room details that have changed
         for room_name in self.room_list:
@@ -1062,10 +1062,10 @@ class World:
                 room_data_buf.append(room.neighbor_save_string(dir))
 
             # the items in the room
-            room_data_buf.append(string.join(room.items, ','))
+            room_data_buf.append(','.join(room.items))
 
             # Compress things a little
-            room_data_string = string.join(room_data_buf, ':')
+            room_data_string = ':'.join(room_data_buf)
 
             if room_data_string[0:8] == '.:::::::':
                 room_data_string = room_data_string[8:]
@@ -1074,7 +1074,7 @@ class World:
 
             buf.append(room_data_string)
 
-        buf_string = string.join(buf, ';')
+        buf_string = ';'.join(buf)
         checksum = 0
         for i in range(len(buf_string)):
             checksum += ord(buf_string[i])
@@ -1344,7 +1344,7 @@ def play(filename=None, input_script=None, no_delay=False):
     exp_io.no_delay = no_delay
 
     if input_script != None:
-        input_script_fp = open(input_script, "r")
+        input_script_fp = open(input_script, 'r')
         input_script_commands = []
         for line in input_script_fp:
             input_script_commands.append(line.strip())
@@ -1359,7 +1359,7 @@ def play(filename=None, input_script=None, no_delay=False):
         exp_io.tell("")
 
         while True:
-            advname = raw_input("Name of adventure: ")
+            advname = input("Name of adventure: ")
             if advname != "":
                 break
 
@@ -1379,7 +1379,7 @@ def play(filename=None, input_script=None, no_delay=False):
         try:
             world.load(os.path.join('/usr/share/explore/adventures', filename))
         except IOError:
-            print >> sys.stderr, 'Adventure not found'
+            print('Adventure not found', file=sys.stderr)
             sys.exit(1)
 
     exp_io.tell("")
@@ -1393,13 +1393,13 @@ def play(filename=None, input_script=None, no_delay=False):
         if game_started:
             if input_script != None:
                 try:
-                    wish = input_script_iter.next()
+                    wish = next(input_script_iter)
                     exp_io.tell_raw(":" + wish)
                 except StopIteration:
-                    wish = raw_input(":")
+                    wish = input(":")
             else:
-                wish = raw_input(":")
-            wish = string.join(string.split(wish))
+                wish = input(":")
+            wish = ' '.join(wish.split())
             if wish != "":
                 result = world.process_command(wish, True)
             else:
@@ -1477,7 +1477,7 @@ def play_once(filename, command=None, state=None, last_suspend=None, return_outp
             return exp_io.get_output()
 
     if command != None:
-        wish = string.join(string.split(command))
+        wish = ' '.join(command.split())
         if wish != "":
             result = world.process_command(wish, True)
         else:
@@ -1527,7 +1527,7 @@ for arg_num in range(1, len(sys.argv)):
             filename = sys.argv[arg_num + 1]
             skip_next = True
         else:
-            print >> sys.stderr, "Error: Missing adventure filename"
+            print("Error: Missing adventure filename", file=sys.stderr)
             sys.exit(1)
     elif sys.argv[arg_num] == "-q":
         quiet = True

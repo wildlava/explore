@@ -1,7 +1,7 @@
 #!/bin/bash
 
-if [ -x "$(command -v python2)" ]; then
-    python2 $(dirname "$0")/explore.py $@
+if [ -x "$(command -v python3)" ]; then
+    python3 $(dirname "$0")/explore.py $@
 else
     python $(dirname "$0")/explore.py $@
 fi
