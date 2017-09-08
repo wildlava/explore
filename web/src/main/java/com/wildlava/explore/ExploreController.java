@@ -23,7 +23,7 @@ public class ExploreController {
                                       @PathVariable Optional<String> command,
                                       @RequestBody ExploreRequest request) {
       ExploreResponse response = new ExploreResponse();
-      Explore.playOnce(response, advname, command.orElse(null),
+      Explore.playOnce(response, advname, command.orElse(""),
                        request.getState(),
                        request.getLastSuspend());
       return response;
