@@ -11,6 +11,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 
 import static org.junit.Assert.*;
 import static org.hamcrest.Matchers.*;
@@ -26,7 +28,11 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.junit.Assert.*;
 
 @RunWith(SpringRunner.class)
-@WebMvcTest(ExploreController.class)
+// Use the following for unit tests:
+// @WebMvcTest(ExploreController.class)
+// Use the following for integration tests:
+@SpringBootTest
+@AutoConfigureMockMvc
 public class ExploreControllerTest {
    @Autowired
    private MockMvc mvc;
