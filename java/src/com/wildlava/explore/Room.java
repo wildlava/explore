@@ -7,7 +7,9 @@
 
 package com.wildlava.explore;
 
+import java.util.List;
 import java.util.ArrayList;
+import java.util.Map;
 import java.util.HashMap;
 
 class Room extends ItemContainer
@@ -16,21 +18,21 @@ class Room extends ItemContainer
    String desc;
    String desc_alt;
    String desc_ctrl;
-   ArrayList<String> fixed_objects;
-   HashMap<String, String> neighbors;
-   HashMap<String, String> original_neighbors;
+   List<String> fixed_objects;
+   Map<String, String> neighbors;
+   Map<String, String> original_neighbors;
 
    Room(World world)
    {
       super(world);
 
-      neighbors = new HashMap<String, String>();
-      original_neighbors = new HashMap<String, String>();
+      neighbors = new HashMap<>();
+      original_neighbors = new HashMap<>();
    }
 
    String description()
    {
-      ArrayList<String> desc_strings = new ArrayList<String>();
+      List<String> desc_strings = new ArrayList<>();
       String ctrl = "RC";
 
       if (desc_ctrl != null)

@@ -7,7 +7,7 @@
 
 package com.wildlava.explore;
 
-import java.util.AbstractCollection;
+import java.util.List;
 import java.util.Iterator;
 import java.util.zip.InflaterInputStream;
 import java.util.zip.DeflaterOutputStream;
@@ -39,7 +39,7 @@ class ExpUtil
       return new_s.trim();
    }
 
-   static String join(AbstractCollection s, String delimiter)
+   static String join(List s, String delimiter)
    {
       StringBuilder buffer = new StringBuilder();
       Iterator iter = s.iterator();

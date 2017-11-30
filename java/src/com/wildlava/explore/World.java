@@ -9,8 +9,10 @@ package com.wildlava.explore;
 
 import java.io.BufferedReader;
 import java.util.Collections;
-import java.util.HashMap;
+import java.util.List;
 import java.util.ArrayList;
+import java.util.Map;
+import java.util.HashMap;
 
 class World
 {
@@ -20,18 +22,18 @@ class World
    int version = 0;
    String title = "This adventure has no title!";
    Player player;
-   HashMap<String, Room> rooms;
-   ArrayList<String> room_list;
-   ArrayList<Command> commands;
-   HashMap<String, String> variables;
-   HashMap<String, String> item_descs;
+   Map<String, Room> rooms;
+   List<String> room_list;
+   List<Command> commands;
+   Map<String, String> variables;
+   Map<String, String> item_descs;
 
-   ArrayList<String> plural_items;
-   ArrayList<String> mass_items;
+   List<String> plural_items;
+   List<String> mass_items;
 
-   HashMap<String, String> same_items;
-   HashMap<String, String> old_items;
-   HashMap<Integer, String> old_versions;
+   Map<String, String> same_items;
+   Map<String, String> old_items;
+   Map<Integer, String> old_versions;
 
    private boolean action_newline_inserted = false;
 
@@ -54,18 +56,18 @@ class World
 
       player = new Player(io, this);
 
-      rooms = new HashMap<String, Room>();
-      room_list = new ArrayList<String>();
-      commands = new ArrayList<Command>();
-      variables = new HashMap<String, String>();
-      item_descs = new HashMap<String, String>();
+      rooms = new HashMap<>();
+      room_list = new ArrayList<>();
+      commands = new ArrayList<>();
+      variables = new HashMap<>();
+      item_descs = new HashMap<>();
 
-      plural_items = new ArrayList<String>();
-      mass_items = new ArrayList<String>();
+      plural_items = new ArrayList<>();
+      mass_items = new ArrayList<>();
 
-      same_items = new HashMap<String, String>();
-      old_items = new HashMap<String, String>();
-      old_versions = new HashMap<Integer, String>();
+      same_items = new HashMap<>();
+      old_items = new HashMap<>();
+      old_versions = new HashMap<>();
    }
 
    public static final int RESULT_NORMAL = 0;
@@ -632,7 +634,7 @@ class World
       }
       else
       {
-         ArrayList<String> messages = new ArrayList<String>();
+         List<String> messages = new ArrayList<>();
 
          String action_str;
          int or_pos = command.action.indexOf("|");
@@ -1075,7 +1077,7 @@ class World
          {
             if (new_room != null)
             {
-               new_room.fixed_objects = new ArrayList<String>();
+               new_room.fixed_objects = new ArrayList<>();
                String[] objects = line.substring(line.indexOf("=") + 1).split(",", -1);
                for (String item : objects)
                {
@@ -1089,7 +1091,7 @@ class World
          {
             if (new_room != null)
             {
-               new_room.items = new ArrayList<String>();
+               new_room.items = new ArrayList<>();
                String[] contents = line.substring(line.indexOf("=") + 1).split(",", -1);
                for (String item : contents)
                {
@@ -1181,8 +1183,8 @@ class World
       }
 
       // Sort commands so globals are last
-      ArrayList<Command> tmp_commands = commands;
-      commands = new ArrayList<Command>();
+      List<Command> tmp_commands = commands;
+      commands = new ArrayList<>();
 
       for (Command c : tmp_commands)
       {
@@ -1473,7 +1475,7 @@ class World
       }
 
       int num_commands_total_delta = 0;
-      HashMap<Integer, Integer> num_commands_deltas = new HashMap<Integer, Integer>();
+      Map<Integer, Integer> num_commands_deltas = new HashMap<>();
       if (old_versions.containsKey(saved_adventure_version))
       {
          String[] version_changes = old_versions.get(saved_adventure_version).split(",", -1);
@@ -1597,7 +1599,7 @@ class World
       //
       // Recover the player's items
       //
-      player.items = new ArrayList<String>();
+      player.items = new ArrayList<>();
 
       if (!parts[part_num].equals(""))
       {
@@ -1620,7 +1622,7 @@ class World
       //
       // Recover the variables
       //
-      variables = new HashMap<String, String>();
+      variables = new HashMap<>();
 
       if (saved_suspend_version >= 2)
       {
@@ -1719,10 +1721,10 @@ class World
       // Recover the room details
       //
       int room_idx = 0;
-      ArrayList<String> ordered_room_list;
+      List<String> ordered_room_list;
       if (saved_suspend_version < 2)
       {
-         ordered_room_list = new ArrayList<String>(room_list);
+         ordered_room_list = new ArrayList<>(room_list);
          Collections.reverse(ordered_room_list);
       }
       else
@@ -1831,7 +1833,7 @@ class World
          //
          // now the contents
          //
-         room.items = new ArrayList<String>();
+         room.items = new ArrayList<>();
 
          if (!room_code[7].equals(""))
          {

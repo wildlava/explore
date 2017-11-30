@@ -7,20 +7,21 @@
 
 package com.wildlava.explore;
 
+import java.util.List;
 import java.util.ArrayList;
 
 class ItemContainer
 {
    World world;
 
-   ArrayList<String> items;
+   List<String> items;
    int item_limit = -1;
 
    ItemContainer(World world)
    {
       this.world = world;
 
-      items = new ArrayList<String>();
+      items = new ArrayList<>();
    }
 
    String expandItemName(String item)

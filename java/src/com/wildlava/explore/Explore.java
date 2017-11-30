@@ -9,6 +9,7 @@ package com.wildlava.explore;
 
 import java.io.FileReader;
 import java.io.BufferedReader;
+import java.util.List;
 import java.util.ArrayList;
 import java.util.Iterator;
 
@@ -78,7 +79,7 @@ class Game
       io.no_delay = no_delay;
       io.unwrap = unwrap_lines && !trs_compat;
 
-      ArrayList<String> input_script_commands = null;
+      List<String> input_script_commands = null;
       Iterator<String> input_script_iter = null;
       if (input_script != null)
       {
@@ -88,7 +89,7 @@ class Game
 
             try
             {
-               input_script_commands = new ArrayList<String>();
+               input_script_commands = new ArrayList<>();
                while(true)
                {
                   String line = file.readLine();
