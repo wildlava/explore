@@ -108,7 +108,7 @@ later in Ruby.
     - And new "action denied directive" feature does an even better job.
 
 
-### General bugs/questions ###
+### General issues ###
 
 * If you go to a non-existant room, you get "you can't go that way" - OK?
 
