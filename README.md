@@ -123,13 +123,7 @@ later in Ruby.
 * If "/" command tries to send you to a non-existant room, no error
   message is returned.
 
-* Walking into breakfast room and dropping knife prints "Ok"
-  grouped with action stuff (getting thrown out by knight).
-  Old BASIC version prints "Ok" normally with blank line after.
-
 * Multiple duplicate globals should work requiring different objects.
-
-* What should be done for multiple ACTION lines after one COMMAND?
 
 * Variables (TITLE, ROOM, etc.) are not case insensitive.
 
