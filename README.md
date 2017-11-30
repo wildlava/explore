@@ -134,6 +134,8 @@ later in Ruby.
 
 ### Java issues ###
 
+* Consider changing declarations of generics to use interfaces (e.g. HashMap -> Map and ArrayList -> List)
+
 * Consider changing public member variables to package private.
 
 * Constants (e.g. in World) should all be at top of class.
