@@ -14,7 +14,7 @@ import re
 
 trs_compat = False
 use_fixed_objects = False
-max_line_length = 79;
+max_line_length = 79
 
 def a_or_an(s):
     s_lower = s.lower()
@@ -37,7 +37,7 @@ class ExpIO:
         out_lines = []
         for line in s.split('\n'):
             while len(line) > max_line_length:
-                last_space_pos = line.rfind(' ', 0, max_line_length + 1);
+                last_space_pos = line.rfind(' ', 0, max_line_length + 1)
                 if last_space_pos == -1:
                     break
                 else:
@@ -378,10 +378,10 @@ class World:
 
             if not trs_compat:
                 # Remove double spaces after punctuation
-                line = line.replace('!  ', '! ');
-                line = line.replace('?  ', '? ');
-                line = line.replace('.  ', '. ');
-                line = line.replace(':  ', ': ');
+                line = line.replace('!  ', '! ')
+                line = line.replace('?  ', '? ')
+                line = line.replace('.  ', '. ')
+                line = line.replace(':  ', ': ')
 
             if line.find("=") != -1:
                 keyword, params = line.split("=", 1)
@@ -534,16 +534,16 @@ class World:
                 self.old_versions[int(old_version)] = old_version_changes
 
         # Sort commands so globals are last
-        tmp_commands = self.commands;
+        tmp_commands = self.commands
         self.commands = []
 
         for c in tmp_commands:
             if c.location != None:
-                self.commands.append(c);
+                self.commands.append(c)
 
         for c in tmp_commands:
             if c.location == None:
-                self.commands.append(c);
+                self.commands.append(c)
 
         # Set up the starting room
         if start_room in self.rooms:
@@ -813,7 +813,7 @@ class World:
         action_denied_directive = None
 
         # Note: this assumes process_command() is called before check_for_auto()
-        self.action_newline_inserted = False;
+        self.action_newline_inserted = False
 
         if trs_compat:
             if custom != None and player_in_correct_room:
@@ -872,19 +872,19 @@ class World:
             elif command == "HELP":
                 self.exp_io.tell("")
                 if trs_compat:
-                    self.exp_io.tell("These are some of the commands you may use:");
-                    self.exp_io.tell("");
-                    self.exp_io.tell("NORTH or N      (go north)");
-                    self.exp_io.tell("SOUTH or S      (go south)");
-                    self.exp_io.tell("EAST or E       (go east)");
-                    self.exp_io.tell("WEST or W       (go west)");
-                    self.exp_io.tell("UP or U         (go up)");
-                    self.exp_io.tell("DOWN or D       (go down)");
-                    self.exp_io.tell("INVENT          (see your inventory - what you are carrying)");
-                    self.exp_io.tell("LOOK            (see where you are)");
-                    self.exp_io.tell("SUSPEND         (save game to finish later)");
-                    self.exp_io.tell("RESUME          (take up where you left off last time)");
-                    self.exp_io.tell("QUIT or STOP    (quit game)");
+                    self.exp_io.tell("These are some of the commands you may use:")
+                    self.exp_io.tell("")
+                    self.exp_io.tell("NORTH or N      (go north)")
+                    self.exp_io.tell("SOUTH or S      (go south)")
+                    self.exp_io.tell("EAST or E       (go east)")
+                    self.exp_io.tell("WEST or W       (go west)")
+                    self.exp_io.tell("UP or U         (go up)")
+                    self.exp_io.tell("DOWN or D       (go down)")
+                    self.exp_io.tell("INVENT          (see your inventory - what you are carrying)")
+                    self.exp_io.tell("LOOK            (see where you are)")
+                    self.exp_io.tell("SUSPEND         (save game to finish later)")
+                    self.exp_io.tell("RESUME          (take up where you left off last time)")
+                    self.exp_io.tell("QUIT or STOP    (quit game)")
                 else:
                     self.exp_io.tell("Welcome! The object of this game is simple: You just need to escape alive! You will use short commands (usually just one or two words) to do various things like move around, manipulate objects, and interact with your environment. To move, simply type a direction (using the first letter is fine: \"n\" for north, \"d\" for down, etc.). To be reminded of where you are, type \"look\". When you find objects, you can pick them up (\"get bottle\"), drop them (\"drop gold\"), or do other things (\"eat food\", \"wave wand\", etc.). To see what you are carrying, type \"inventory\" (\"invent\" for short). To save your game for later (or in case you think you are about about to do something perilous), type \"suspend\". To resume later, type \"resume\". To end the game, type \"quit\". The key is to use your imagination and just try things (like \"fly\", \"open door\", \"push button\", etc.). If what you are attempting to do does not work, try saying it another way. Have fun, and good luck!")
                 self.exp_io.tell("")
@@ -1202,17 +1202,17 @@ class World:
         part_num += 1
 
         # Recover the variables
-        self.variables = {};
+        self.variables = {}
 
         if saved_suspend_version >= 2:
             if parts[part_num] != "":
-                saved_variables = parts[part_num].split(",");
+                saved_variables = parts[part_num].split(",")
                 for variable in saved_variables:
-                    equals_pos = variable.find("=");
+                    equals_pos = variable.find("=")
                     if equals_pos != -1:
                         self.variables[variable[:equals_pos]] = variable[equals_pos + 1:]
 
-            part_num += 1;
+            part_num += 1
 
         # Recover the state of the actions
         num_commands = len(self.commands)
