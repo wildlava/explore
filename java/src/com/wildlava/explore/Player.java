@@ -44,7 +44,7 @@ class Player extends ItemContainer
             {
                io.print("I see no " + item + " here that you can pick up.");
             }
-            else if (!World.use_fixed_objects)
+            else if (!world.use_fixed_objects)
             {
                io.print("I see no " + item.toLowerCase() + " here that you can pick up.");
             }
