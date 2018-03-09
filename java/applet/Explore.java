@@ -173,19 +173,19 @@ public class Explore extends Applet implements Runnable
     
    void playAdventure(World world)
    {
-      int result = world.RESULT_DESCRIBE;
-      while ((result & world.RESULT_END_GAME) == 0)
+      int result = World.RESULT_DESCRIBE;
+      while ((result & World.RESULT_END_GAME) == 0)
       {
          io.holdOutput();
             
          int check_result = world.checkForAuto();
-         if (check_result != world.RESULT_NOTHING)
+         if (check_result != World.RESULT_NOTHING)
          {
             result = check_result;
             continue;
          }
 
-         if ((result & world.RESULT_DESCRIBE) != 0)
+         if ((result & World.RESULT_DESCRIBE) != 0)
          {
             io.printNow("");
 
@@ -211,19 +211,19 @@ public class Explore extends Applet implements Runnable
             io.holdOutput();
                 
             result = world.processCommand(wish, true);
-            if ((result & world.RESULT_END_GAME) != 0)
+            if ((result & World.RESULT_END_GAME) != 0)
             {
                break;
             }
          }
          else
          {
-            result = world.RESULT_NORMAL;
+            result = World.RESULT_NORMAL;
          }
       }
 
-      if ((result & world.RESULT_WIN) != 0 ||
-          (result & world.RESULT_DIE) != 0)
+      if ((result & World.RESULT_WIN) != 0 ||
+          (result & World.RESULT_DIE) != 0)
       {
          io.printNow("");
       }

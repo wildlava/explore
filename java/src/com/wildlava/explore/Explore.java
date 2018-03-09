@@ -130,8 +130,8 @@ class Game
       }
 
       world = new World(io, advname);
-      world.list_commands_on_load = list_commands;
-      world.trs_compat = trs_compat;
+      World.list_commands_on_load = list_commands;
+      World.trs_compat = trs_compat;
 
       try
       {
@@ -199,25 +199,25 @@ class Game
          }
          else
          {
-            result = world.RESULT_NORMAL;
+            result = World.RESULT_NORMAL;
          }
       }
       else
       {
-         result = world.RESULT_DESCRIBE;
+         result = World.RESULT_DESCRIBE;
       }
 
-      if ((result & world.RESULT_END_GAME) == 0)
+      if ((result & World.RESULT_END_GAME) == 0)
       {
-         if ((result & world.RESULT_NO_CHECK) == 0)
+         if ((result & World.RESULT_NO_CHECK) == 0)
          {
             result |= world.checkForAuto(result);
          }
       }
 
-      if ((result & world.RESULT_END_GAME) == 0)
+      if ((result & World.RESULT_END_GAME) == 0)
       {
-         if ((result & world.RESULT_DESCRIBE) != 0)
+         if ((result & World.RESULT_DESCRIBE) != 0)
          {
             io.print("");
             io.print(world.player.current_room.description());
@@ -229,12 +229,12 @@ class Game
       }
       else
       {
-         if ((result & world.RESULT_WIN) != 0)
+         if ((result & World.RESULT_WIN) != 0)
          {
             io.print("");
             io.print("Nice job! You successfully completed this adventure!");
          }
-         else if ((result & world.RESULT_DIE) != 0)
+         else if ((result & World.RESULT_DIE) != 0)
          {
             io.print("");
             io.print("Game over.");

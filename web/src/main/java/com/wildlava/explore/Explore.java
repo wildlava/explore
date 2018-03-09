@@ -43,7 +43,7 @@ class Explore
       }
 
       world = new World(io, advname);
-      world.trs_compat = trs_compat;
+      World.trs_compat = trs_compat;
       world.suspend_mode = World.SUSPEND_TO_MEMORY;
       world.last_suspend = last_suspend;
 
