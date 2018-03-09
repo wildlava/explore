@@ -1206,12 +1206,9 @@ class World
       // List all commands if "--list-commands" option given
       if (list_commands_on_load)
       {
-         int num_commands = commands.size();
-         int command_idx;
-
          io.printRaw("");
 
-         for (int i=0; i<num_commands; i++)
+         for (int i=0; i<commands.size(); i++)
          {
             StringBuffer buf = new StringBuffer();
 
