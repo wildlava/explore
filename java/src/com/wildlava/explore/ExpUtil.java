@@ -39,10 +39,10 @@ class ExpUtil
       return new_s.trim();
    }
 
-   static String join(List s, String delimiter)
+   static String join(List<String> s, String delimiter)
    {
       StringBuilder buffer = new StringBuilder();
-      Iterator iter = s.iterator();
+      Iterator<String> iter = s.iterator();
 
       if (iter.hasNext())
       {
