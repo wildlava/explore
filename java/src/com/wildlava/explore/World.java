@@ -1031,7 +1031,7 @@ class World
 
             if (cur_room_name != null)
             {
-               new_command.location = new String(cur_room_name);
+               new_command.location = cur_room_name;
             }
          }
          else if (line.startsWith("ACTION="))
@@ -1047,7 +1047,7 @@ class World
 
                if (cur_room_name != null)
                {
-                  new_command.location = new String(cur_room_name);
+                  new_command.location = cur_room_name;
                }
             }
 

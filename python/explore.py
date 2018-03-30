@@ -393,17 +393,17 @@ class World:
                 self.version = int(params)
 
             elif keyword == "TITLE":
-                self.title = params[:]
+                self.title = params
 
             elif keyword == "START_ROOM":
-                start_room = params[:]
+                start_room = params
 
             elif keyword == "INVENTORY_LIMIT":
                 self.player.item_limit = int(params)
 
             elif keyword == "ROOM":
                 new_room = Room(self)
-                new_room.name = params[:]
+                new_room.name = params
                 self.rooms[new_room.name] = new_room
                 self.room_list.append(new_room.name)
                 if first_room == None:
@@ -414,7 +414,7 @@ class World:
                 new_command = None
 
             elif keyword == "LOCAL":
-                cur_room_name = params[:]
+                cur_room_name = params
 
                 new_room = None
                 new_command = None
@@ -432,7 +432,7 @@ class World:
                 if (params[0] == "+" or
                     params[0] == "-" or
                     params[0] == "$"):
-                    new_command.condition = params[:]
+                    new_command.condition = params
                 else:
                     pos = params.find(":")
                     if pos != -1:
@@ -452,7 +452,7 @@ class World:
                     new_command.cont = True
 
                 if cur_room_name != None:
-                    new_command.location = cur_room_name[:]
+                    new_command.location = cur_room_name
 
             elif keyword == "ACTION":
                 # If there is no current command, or if there is one,
@@ -462,21 +462,21 @@ class World:
                     self.commands.append(new_command)
 
                     if cur_room_name != None:
-                        new_command.location = cur_room_name[:]
+                        new_command.location = cur_room_name
 
-                new_command.action = params[:]
+                new_command.action = params
 
             elif keyword == "DESC":
                 if new_room != None:
-                    new_room.desc = params[:]
+                    new_room.desc = params
 
             elif keyword == "ALT_DESC":
                 if new_room != None:
-                   new_room.desc_alt = params[:]
+                   new_room.desc_alt = params
 
             elif keyword == "DESC_CONTROL":
                 if new_room != None:
-                   new_room.desc_ctrl = params[:]
+                   new_room.desc_ctrl = params
 
             elif keyword == "FIXED_OBJECTS":
                 if new_room != None:
@@ -489,27 +489,27 @@ class World:
 
             elif keyword == "NORTH":
                 if new_room != None:
-                   new_room.init_neighbor("N", params[:])
+                   new_room.init_neighbor("N", params)
 
             elif keyword == "SOUTH":
                 if new_room != None:
-                   new_room.init_neighbor("S", params[:])
+                   new_room.init_neighbor("S", params)
 
             elif keyword == "EAST":
                 if new_room != None:
-                   new_room.init_neighbor("E", params[:])
+                   new_room.init_neighbor("E", params)
 
             elif keyword == "WEST":
                 if new_room != None:
-                   new_room.init_neighbor("W", params[:])
+                   new_room.init_neighbor("W", params)
 
             elif keyword == "UP":
                 if new_room != None:
-                   new_room.init_neighbor("U", params[:])
+                   new_room.init_neighbor("U", params)
 
             elif keyword == "DOWN":
                 if new_room != None:
-                   new_room.init_neighbor("D", params[:])
+                   new_room.init_neighbor("D", params)
 
             elif line.startswith("ITEM DESC "):
                 item_name, item_desc = line[10:].split(":")
@@ -843,7 +843,7 @@ class World:
             if wish.find(" ") != -1:
                 command, argument = wish.split(None, 1)
             else:
-                command = wish[:]
+                command = wish
 
             wants_to_walk = False
             goto_room = None

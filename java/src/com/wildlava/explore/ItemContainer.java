@@ -83,7 +83,7 @@ class ItemContainer
          return false;
       }
 
-      items.add(new String(item));
+      items.add(item);
 
       return true;
    }
