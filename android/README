@@ -1,5 +1,7 @@
 To create the needed files for building with ant, do:
 
-    android update project --target 4 -p .
+    cd tools; ./mkicons; cd ..
+    android update project --name Explore --target 4 -p .
+
+  if needed:
     cat ~/android/keys/explore_key_settings >> local.properties
-    cd tools; ./mkicons
