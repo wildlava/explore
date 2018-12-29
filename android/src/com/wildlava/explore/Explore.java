@@ -20,7 +20,7 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.Gravity;
 import android.view.KeyEvent;
-import android.view.inputmethod.InputMethodManager;
+//import android.view.inputmethod.InputMethodManager;
 import android.view.inputmethod.EditorInfo;
 import android.widget.TextView.OnEditorActionListener;
 import android.graphics.Typeface;
@@ -55,6 +55,9 @@ public class Explore extends Activity
       castle_button = new Button(this);
       haunt_button = new Button(this);
 
+      layout.setBackgroundColor(0xff222222);
+      output_area.setBackgroundColor(0xff222222);
+      output_area.setTextColor(0xff66ff66);
       //output_area.setWidth(320);
       //output_area.setHeight(320);
       //output_area.setHeight(480);
@@ -73,7 +76,7 @@ public class Explore extends Activity
 
       //input_area.setLines(1);
       input_area.setSingleLine(true);
-      input_area.setImeOptions(EditorInfo.IME_ACTION_DONE);
+      input_area.setImeOptions(EditorInfo.IME_ACTION_GO);
       input_area.setWidth(150);
       input_area.setVisibility(View.GONE);
 
@@ -82,26 +85,12 @@ public class Explore extends Activity
          @Override
          public boolean onEditorAction(TextView v, int actionId, KeyEvent event)
          {
-            if(actionId == EditorInfo.IME_ACTION_DONE)
+            if (actionId == EditorInfo.IME_ACTION_GO)
             {
                String wish = input_area.getText().toString();
                io.print(wish);
                play(wish);
                input_area.setText("");
-
-               if (getResources().getConfiguration().orientation ==
-                   Configuration.ORIENTATION_LANDSCAPE)
-               {
-                  // Remove soft keyboard if in landscape mode,
-                  // since it covers up the game.
-                  return false;
-               }
-               else
-               {
-                  // Keep soft keyboard on the screen if in portrait mode,
-                  // since it makes for smoother interaction.
-                  return true;
-               }
             }
 
             return false;
@@ -266,6 +255,8 @@ public class Explore extends Activity
       //input_area.setEnabled(true);
       input_area.setVisibility(View.VISIBLE);
       input_area.requestFocus();
+      //InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+      //imm.showSoftInput(input_area, InputMethodManager.SHOW_IMPLICIT);
 
       if (!silent_load)
       {
@@ -395,8 +386,8 @@ public class Explore extends Activity
          //input_area.setFocusable(false);
          //input_area.setEnabled(false);
          input_area.setVisibility(View.GONE);
-         InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
-         imm.hideSoftInputFromWindow(input_area.getWindowToken(), 0);
+         //InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
+         //imm.hideSoftInputFromWindow(input_area.getWindowToken(), 0);
          button_layout.setVisibility(View.VISIBLE);
 
          if ((result & World.RESULT_WIN) != 0)
