@@ -1509,56 +1509,57 @@ def play_once(filename, command=None, state=None, last_suspend=None, return_outp
     return exp_io.get_output()
 
 
-filename = None
-one_shot = False
-command = None
-state = None
-last_suspend = None
-no_delay = False
-input_script = None
+if __name__ == '__main__':
+    filename = None
+    one_shot = False
+    command = None
+    state = None
+    last_suspend = None
+    no_delay = False
+    input_script = None
 
-skip_next = False
-for arg_num in range(1, len(sys.argv)):
-    if skip_next:
-        skip_next = False
-        continue
-    if sys.argv[arg_num] == "-f":
-        if len(sys.argv) > (arg_num + 1) and (len(sys.argv[arg_num + 1]) == 0 or sys.argv[arg_num + 1][0] != '-'):
-            filename = sys.argv[arg_num + 1]
-            skip_next = True
+    skip_next = False
+    for arg_num in range(1, len(sys.argv)):
+        if skip_next:
+            skip_next = False
+            continue
+        if sys.argv[arg_num] == "-f":
+            if len(sys.argv) > (arg_num + 1) and (len(sys.argv[arg_num + 1]) == 0 or sys.argv[arg_num + 1][0] != '-'):
+                filename = sys.argv[arg_num + 1]
+                skip_next = True
+            else:
+                print("Error: Missing adventure filename", file=sys.stderr)
+                sys.exit(1)
+        elif sys.argv[arg_num] == "-q":
+            quiet = True
+        elif sys.argv[arg_num] == "-c":
+            if len(sys.argv) > (arg_num + 1) and (len(sys.argv[arg_num + 1]) == 0 or sys.argv[arg_num + 1][0] != '-'):
+                command = sys.argv[arg_num + 1]
+                skip_next = True
+        elif sys.argv[arg_num] == "-r":
+            if len(sys.argv) > (arg_num + 1) and (len(sys.argv[arg_num + 1]) == 0 or sys.argv[arg_num + 1][0] != '-'):
+                state = sys.argv[arg_num + 1]
+                skip_next = True
+        elif sys.argv[arg_num] == "-s":
+            if len(sys.argv) > (arg_num + 1) and (len(sys.argv[arg_num + 1]) == 0 or sys.argv[arg_num + 1][0] != '-'):
+                last_suspend = sys.argv[arg_num + 1]
+                skip_next = True
+        elif sys.argv[arg_num] == "--one-shot":
+            one_shot = True
+        elif sys.argv[arg_num] == "--no-delay":
+            no_delay = True
+        elif sys.argv[arg_num] == "--trs-compat":
+            trs_compat = True
+        elif sys.argv[arg_num].startswith("--script="):
+            input_script = sys.argv[arg_num][9:]
+    #    elif sys.argv[arg_num] == "--no-title":
+    #        show_title = False
+    #    elif sys.argv[arg_num] == "--title-only":
+    #        show_title_only = True
         else:
-            print("Error: Missing adventure filename", file=sys.stderr)
-            sys.exit(1)
-    elif sys.argv[arg_num] == "-q":
-        quiet = True
-    elif sys.argv[arg_num] == "-c":
-        if len(sys.argv) > (arg_num + 1) and (len(sys.argv[arg_num + 1]) == 0 or sys.argv[arg_num + 1][0] != '-'):
-            command = sys.argv[arg_num + 1]
-            skip_next = True
-    elif sys.argv[arg_num] == "-r":
-        if len(sys.argv) > (arg_num + 1) and (len(sys.argv[arg_num + 1]) == 0 or sys.argv[arg_num + 1][0] != '-'):
-            state = sys.argv[arg_num + 1]
-            skip_next = True
-    elif sys.argv[arg_num] == "-s":
-        if len(sys.argv) > (arg_num + 1) and (len(sys.argv[arg_num + 1]) == 0 or sys.argv[arg_num + 1][0] != '-'):
-            last_suspend = sys.argv[arg_num + 1]
-            skip_next = True
-    elif sys.argv[arg_num] == "--one-shot":
-        one_shot = True
-    elif sys.argv[arg_num] == "--no-delay":
-        no_delay = True
-    elif sys.argv[arg_num] == "--trs-compat":
-        trs_compat = True
-    elif sys.argv[arg_num].startswith("--script="):
-        input_script = sys.argv[arg_num][9:]
-#    elif sys.argv[arg_num] == "--no-title":
-#        show_title = False
-#    elif sys.argv[arg_num] == "--title-only":
-#        show_title_only = True
-    else:
-        filename = sys.argv[arg_num] + ".exp"
+            filename = sys.argv[arg_num] + ".exp"
 
-if one_shot or (command != None) or (state != None) or (last_suspend != None):
-    play_once(filename, command, state, last_suspend, False)
-else:
-    play(filename, input_script, no_delay)
+    if one_shot or (command != None) or (state != None) or (last_suspend != None):
+        play_once(filename, command, state, last_suspend, False)
+    else:
+        play(filename, input_script, no_delay)
