@@ -5,7 +5,7 @@ INVENTORY_LIMIT=8
 
 ROOM=3,0,0
 DESC=You are at the blue bedroom. There's a panel on the east wall.
-FIXED_OBJECTS=BEDROOM,PANEL,WALL
+FIXED_OBJECTS=BEDROOM,PANEL,WALL,WALLS
 NORTH=3,0,0
 SOUTH=3,1,0
 EAST=3,0,0
@@ -24,7 +24,7 @@ WEST=3,0,0
 
 ROOM=5,0,0
 DESC=You are at the green bedroom. There's a panel on the west wall.
-FIXED_OBJECTS=BEDROOM,PANEL,WALL
+FIXED_OBJECTS=BEDROOM,PANEL,WALL,WALLS
 NORTH=5,0,0
 SOUTH=5,1,0
 EAST=5,0,0
@@ -143,7 +143,7 @@ ACTION=:Ouch! You hurt your hand.
 
 ROOM=9,2,0
 DESC=You are at the servants quarters.\There is a cabinet on the wall.
-FIXED_OBJECTS=QUARTERS,CABINET,WALL
+FIXED_OBJECTS=QUARTERS,CABINET,WALL,WALLS
 NORTH=9,2,0
 SOUTH=9,3,0
 EAST=9,2,0
@@ -165,7 +165,7 @@ ACTION=/8,2,0:You are at the breakfast room. An animated suit of armour throws y
 
 ROOM=9,3,0
 DESC=You are at the servants quarters.\There is a cabinet on the wall.
-FIXED_OBJECTS=QUARTERS,CABINET,WALL
+FIXED_OBJECTS=QUARTERS,CABINET,WALL,WALLS
 NORTH=9,2,0
 SOUTH=9,3,0
 EAST=9,3,0

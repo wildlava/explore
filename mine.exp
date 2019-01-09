@@ -74,7 +74,7 @@ ACTION=!The chain breaks, and the car starts to roll.  You jump in just\in time!
 
 ROOM=2,0,1
 DESC=Scattered about you are scraps and shavings of wood and metal.\A single bare electrical wire hangs from the ceiling.  There\are tunnels to the south and east.
-FIXED_OBJECTS=SCRAP,SCRAPS,SHAVINGS,WOOD,METAL,WIRE,CEILING,TUNNEL,TUNNELS
+FIXED_OBJECTS=SCRAP,SCRAPS,SHAVING,SHAVINGS,WOOD,METAL,WIRE,CEILING,TUNNEL,TUNNELS
 SOUTH=2,1,1
 EAST=3,0,1
 COMMAND=GRAB WIRE,TOUCH WIRE,HOLD WIRE,PULL WIRE,GET WIRE,TAKE WIRE
@@ -82,7 +82,7 @@ ACTION=/1,1,2:You feel a tremendous surge of energy pass through your body as\yo
 
 ROOM=3,0,1
 DESC=You are in a long room with a pit stretching out before you to\the south.  Across the pit you can see another room.  There is\a tunnel to the west.
-FIXED_OBJECTS=ROOM,PIT,ROOM,TUNNEL
+FIXED_OBJECTS=ROOM,PIT,TUNNEL
 WEST=2,0,1
 COMMAND=THROW SPEAR,CHUCK SPEAR:SPEAR WITH ROPE
 ACTION=-SPEAR WITH ROPE;[S3,1,1:The spear flies across the pit with the rope trailing behind.\It penetrates the rock on the opposite side, and the rope\creates a bridge to the south.
@@ -159,7 +159,7 @@ ACTION=/1,2,1:You break through the rock and fall into the next room.\The wall c
 
 ROOM=2,3,1
 DESC=You are standing on a platform jutting out from the rock wall.\A rope is dangling from the cliff above.  The rock opens to the\west.
-FIXED_OBJECTS=PLATFORM,ROCK,WALL,ROPE,CLIFF
+FIXED_OBJECTS=PLATFORM,ROCK,WALL,WALLS,ROPE,CLIFF
 WEST=1,3,1
 UP=2,3,2
 COMMAND=CLIMB,CLIMB ROPE,CLIMB UP
