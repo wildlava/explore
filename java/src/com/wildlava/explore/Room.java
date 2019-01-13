@@ -26,6 +26,11 @@ class Room extends ItemContainer
    {
       super(world);
 
+      name = null;
+      desc = null;
+      desc_alt = null;
+      desc_ctrl = null;
+      fixed_objects = new ArrayList<>();
       neighbors = new HashMap<>();
       original_neighbors = new HashMap<>();
    }
@@ -109,14 +114,7 @@ class Room extends ItemContainer
 
    boolean hasFixedObject(String item)
    {
-      if (fixed_objects != null)
-      {
-         return fixed_objects.contains(item);
-      }
-      else
-      {
-         return false;
-      }
+      return fixed_objects.contains(item);
    }
 
    String neighbor(String direction)

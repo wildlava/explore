@@ -19,9 +19,11 @@ class World
    private ExpIO io;
    private String advname;
 
-   int version = 0;
-   String title = "This adventure has no title!";
+   int version;
+   String title;
+
    Player player;
+
    Map<String, Room> rooms;
    List<String> room_list;
    List<Command> commands;
@@ -35,15 +37,15 @@ class World
    Map<String, String> old_items;
    Map<Integer, String> old_versions;
 
-   private boolean action_newline_inserted = false;
+   private boolean action_newline_inserted;
 
    public static final int SUSPEND_TO_MEMORY = 0;
    public static final int SUSPEND_INTERACTIVE = 1;
    public static final int SUSPEND_TO_FILE = 2;
 
-   int suspend_version = 2;
-   int suspend_mode = SUSPEND_TO_FILE;
-   String last_suspend = null;
+   int suspend_version;
+   int suspend_mode;
+   String last_suspend;
 
    boolean use_fixed_objects = false;
 
@@ -54,6 +56,9 @@ class World
    {
       io = i;
       advname = a;
+
+      version = 0;
+      title = "This adventure has no title!";
 
       player = new Player(io, this);
 
@@ -69,6 +74,12 @@ class World
       same_items = new HashMap<>();
       old_items = new HashMap<>();
       old_versions = new HashMap<>();
+
+      action_newline_inserted = false;
+
+      suspend_version = 2;
+      suspend_mode = SUSPEND_TO_FILE;
+      last_suspend = null;
    }
 
    public static final int RESULT_NORMAL = 0;
@@ -332,8 +343,8 @@ class World
             command = wish;
          }
 
-         String goto_room = null;
          boolean wants_to_walk = false;
+         String goto_room = null;
 
          if (command.equals("GO"))
          {
@@ -390,8 +401,8 @@ class World
                    command.equals("D")) &&
                   argument == null)
          {
-            goto_room = player.current_room.neighbor(command.substring(0, 1));
             wants_to_walk = true;
+            goto_room = player.current_room.neighbor(command.substring(0, 1));
          }
          else if (command.equals("HELP"))
          {
@@ -587,19 +598,6 @@ class World
 
          if (wants_to_walk)
          {
-            if (goto_room != null)
-            {
-               int tilde_pos = goto_room.indexOf("^");
-               if (tilde_pos != -1)
-               {
-                  goto_room = goto_room.substring(0, tilde_pos);
-                  if (goto_room.equals(""))
-                  {
-                     goto_room = null;
-                  }
-               }
-            }
-
             Room room = rooms.get(goto_room);
             if (room != null)
             {

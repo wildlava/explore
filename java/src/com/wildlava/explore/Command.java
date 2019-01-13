@@ -14,4 +14,13 @@ class Command
    String condition;
    String action;
    boolean cont;
+
+   Command()
+   {
+      location = null;
+      commands = null;
+      condition = null;
+      action = null;
+      cont = false;
+   }
 }

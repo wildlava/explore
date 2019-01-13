@@ -15,13 +15,14 @@ class ItemContainer
    World world;
 
    List<String> items;
-   int item_limit = -1;
+   int item_limit;
 
    ItemContainer(World world)
    {
       this.world = world;
 
       items = new ArrayList<>();
+      item_limit = -1;
    }
 
    String expandItemName(String item)

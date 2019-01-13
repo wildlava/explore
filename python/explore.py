@@ -14,7 +14,6 @@ import re
 
 trs_compat = False
 use_fixed_objects = False
-max_line_length = 79
 
 def a_or_an(s):
     s_lower = s.lower()
@@ -29,6 +28,7 @@ class ExpIO:
     def __init__(self):
         self.output = []
         self.store_output = False
+        self.max_line_length = 79
         self.no_delay = False
 
     def tell(self, s):
@@ -36,8 +36,8 @@ class ExpIO:
 
         out_lines = []
         for line in s.split('\n'):
-            while len(line) > max_line_length:
-                last_space_pos = line.rfind(' ', 0, max_line_length + 1)
+            while len(line) > self.max_line_length:
+                last_space_pos = line.rfind(' ', 0, self.max_line_length + 1)
                 if last_space_pos == -1:
                     break
                 else:
@@ -86,7 +86,6 @@ class ItemContainer:
     def __init__(self, world):
         self.world = world
 
-        self.fixed_objects = []
         self.items = []
         self.item_limit = None
 
@@ -142,6 +141,7 @@ class Room(ItemContainer):
         self.desc = None
         self.desc_alt = None
         self.desc_ctrl = None
+        self.fixed_objects = []
         self.neighbors = [None, None, None, None, None, None]
         self.original_neighbors = [None, None, None, None, None, None]
 
@@ -342,7 +342,9 @@ class World:
 
         self.version = 0
         self.title = "This adventure has no title!"
+
         self.player = Player(exp_io, self)
+
         self.rooms = {}
         self.room_list = []
         self.commands = []

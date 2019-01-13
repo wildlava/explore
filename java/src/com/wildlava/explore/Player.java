@@ -18,6 +18,8 @@ class Player extends ItemContainer
       super(world);
 
       io = i;
+
+      current_room = null;
    }
 
    void getItem(String item, boolean acknowledge)
