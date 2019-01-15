@@ -1308,7 +1308,9 @@ class World
       //
       // and the variables that are set
       //
-      for (String variable : variables.keySet())
+      ArrayList<String> sortedKeys = new ArrayList<>(variables.keySet());
+      Collections.sort(sortedKeys);
+      for (String variable : sortedKeys)
       {
          buf.append(variable + "=" + variables.get(variable) + ",");
       }

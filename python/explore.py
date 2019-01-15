@@ -1036,7 +1036,7 @@ class World:
         buf.append(','.join(self.player.items))
 
         # and the variables that are set
-        buf.append(','.join([variable + "=" + self.variables[variable] for variable in self.variables]))
+        buf.append(','.join([variable + "=" + self.variables[variable] for variable in sorted(self.variables.keys())]))
 
         # and the state of the actions
         command_buf = []
