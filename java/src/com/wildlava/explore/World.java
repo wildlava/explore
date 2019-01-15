@@ -618,7 +618,21 @@ class World
       {
          if (!auto)
          {
-            io.print("Nothing happens.");
+            if (command.denied_directive != null)
+            {
+               if (command.denied_directive.startsWith(":"))
+               {
+                  io.print(command.denied_directive.substring(1));
+               }
+               else
+               {
+                  io.print(command.denied_directive);
+               }
+            }
+            else
+            {
+               io.print("Nothing happens.");
+            }
          }
       }
       else

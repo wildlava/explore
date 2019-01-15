@@ -583,7 +583,13 @@ class World:
 
         if not command.actions or command.disabled:
             if not auto:
-                self.exp_io.tell("Nothing happens.")
+                if command.denied_directive:
+                    if command.denied_directive.startswith(':'):
+                        self.exp_io.tell(command.denied_directive[1:])
+                    else:
+                        self.exp_io.tell(command.denied_directive)
+                else:
+                    self.exp_io.tell('Nothing happens.')
         else:
             messages = []
 
