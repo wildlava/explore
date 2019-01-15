@@ -1,0 +1,17 @@
+#!/bin/bash
+
+python/explore --script="scripts/cave_win.in" --no-delay cave > /tmp/explore.out
+diff -u scripts/cave_win.out /tmp/explore.out
+rm /tmp/explore.out
+
+python/explore --script="scripts/mine_win.in" --no-delay mine > /tmp/explore.out
+diff -u scripts/mine_win.out /tmp/explore.out
+rm /tmp/explore.out
+
+python/explore --script="scripts/castle_win.in" --no-delay castle > /tmp/explore.out
+diff -u scripts/castle_win.out /tmp/explore.out
+rm /tmp/explore.out
+
+python/explore --script="scripts/haunt_win.in" --no-delay haunt > /tmp/explore.out
+diff -u scripts/haunt_win.out /tmp/explore.out
+rm /tmp/explore.out
