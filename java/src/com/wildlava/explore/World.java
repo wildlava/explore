@@ -274,7 +274,6 @@ class World
       }
 
       boolean try_builtin = true;
-      String action_denied_directive = null;
 
       // Note: this assumes processCommand() is called before checkForAuto()
       action_newline_inserted = false;
@@ -305,25 +304,16 @@ class World
             }
             else
             {
-               if (custom.action != null)
+               if (custom.denied_directive != null && !custom.fall_back_to_builtin)
                {
-                  int or_pos = custom.action.indexOf("|");
-                  if (or_pos != -1)
+                  try_builtin = false;
+                  if (custom.denied_directive.startsWith(":"))
                   {
-                     action_denied_directive =
-                        custom.action.substring(or_pos + 1);
-                     if (action_denied_directive.startsWith("|"))
-                     {
-                        try_builtin = false;
-                        if (action_denied_directive.startsWith("|:"))
-                        {
-                           io.print(action_denied_directive.substring(2));
-                        }
-                        else
-                        {
-                           io.print(action_denied_directive.substring(1));
-                        }
-                     }
+                     io.print(custom.denied_directive.substring(1));
+                  }
+                  else
+                  {
+                     io.print(custom.denied_directive);
                   }
                }
             }
@@ -573,15 +563,15 @@ class World
                }
                else
                {
-                  if (action_denied_directive != null)
+                  if (custom.denied_directive != null)
                   {
-                     if (action_denied_directive.startsWith(":"))
+                     if (custom.denied_directive.startsWith(":"))
                      {
-                        io.print(action_denied_directive.substring(1));
+                        io.print(custom.denied_directive.substring(1));
                      }
                      else
                      {
-                        io.print(action_denied_directive);
+                        io.print(custom.denied_directive);
                      }
                   }
                   else
@@ -624,7 +614,7 @@ class World
       int result = RESULT_NORMAL;
       boolean error = false;
 
-      if (command.action == null || command.action.startsWith("^"))
+      if (command.actions == null || command.disabled)
       {
          if (!auto)
          {
@@ -635,44 +625,15 @@ class World
       {
          List<String> messages = new ArrayList<>();
 
-         String action_str;
-         int or_pos = command.action.indexOf("|");
-         if (or_pos != -1)
+         for (String action : command.actions)
          {
-            action_str = command.action.substring(0, or_pos);
-         }
-         else
-         {
-            action_str = command.action;
-         }
-
-         String[] action_list;
-         boolean action_one_shot;
-         if (command.action.startsWith("."))
-         {
-            action_one_shot = true;
-            action_list = action_str.substring(1).split(";", -1);
-         }
-         else
-         {
-            action_one_shot = false;
-            action_list = action_str.split(";", -1);
-         }
-
-         for (int i=0; i<action_list.length; ++i)
-         {
-            String action = null;
             String message = null;
 
-            int colon_pos = action_list[i].indexOf(":");
+            int colon_pos = action.indexOf(":");
             if (colon_pos != -1)
             {
-               action = action_list[i].substring(0, colon_pos);
-               message = action_list[i].substring(colon_pos + 1);
-            }
-            else
-            {
-               action = action_list[i];
+               message = action.substring(colon_pos + 1);
+               action = action.substring(0, colon_pos);
             }
 
             if (action.length() == 0)
@@ -738,10 +699,7 @@ class World
                      }
                      else
                      {
-                        if (!command.action.startsWith("^"))
-                        {
-                           command.action = "^" + command.action;
-                        }
+                        command.disabled = true;
                      }
                   }
                   else
@@ -749,10 +707,7 @@ class World
                      player.current_room.addItem(action.substring(1),
                                                  true);
 
-                     if (!command.action.startsWith("^"))
-                     {
-                        command.action = "^" + command.action;
-                     }
+                     command.disabled = true;
                   }
                }
                else if (action.startsWith("-"))
@@ -813,10 +768,7 @@ class World
                      }
                   }
 
-                  if (!command.action.startsWith("^"))
-                  {
-                     command.action = "^" + command.action;
-                  }
+                  command.disabled = true;
                }
                else if (action.startsWith("*"))
                {
@@ -876,12 +828,9 @@ class World
             }
          }
 
-         if (action_one_shot)
+         if (command.one_shot)
          {
-            if (!command.action.startsWith("^"))
-            {
-               command.action = "^" + command.action;
-            }
+            command.disabled = true;
          }
 
          if (!messages.isEmpty())
@@ -1038,7 +987,7 @@ class World
             // If there is no current command, or if there is one,
             // but it already has an action, make a new command.
             //
-            if (new_command == null || new_command.action != null)
+            if (new_command == null || new_command.actions != null)
             {
                new_command = new Command();
                commands.add(new_command);
@@ -1049,7 +998,29 @@ class World
                }
             }
 
-            new_command.action = line.substring(line.indexOf("=") + 1);
+            String action_str = line.substring(line.indexOf("=") + 1);
+
+            if (action_str.startsWith("."))
+            {
+               new_command.one_shot = true;
+               action_str = action_str.substring(1);
+            }
+
+            int or_pos = action_str.indexOf("|");
+            if (or_pos != -1)
+            {
+               new_command.actions = action_str.substring(0, or_pos).split(";", -1);
+               new_command.denied_directive = action_str.substring(or_pos + 1);
+               if (new_command.denied_directive.startsWith("|"))
+               {
+                  new_command.fall_back_to_builtin = false;
+                  new_command.denied_directive = new_command.denied_directive.substring(1);
+               }
+            }
+            else
+            {
+               new_command.actions = action_str.split(";", -1);
+            }
          }
          else if (line.startsWith("DESC="))
          {
@@ -1325,7 +1296,7 @@ class World
       //
       for (Command command : commands)
       {
-         if (command.action != null && command.action.startsWith("^"))
+         if (command.actions != null && command.disabled)
          {
             buf.append("^");
          }
@@ -1684,17 +1655,17 @@ class World
          {
             Command command = commands.get(i);
 
-            if (command.action != null)
+            if (command.actions != null)
             {
                if (parts[part_num].charAt(command_idx) == '^' &&
-                   !command.action.startsWith("^"))
+                   !command.disabled)
                {
-                  command.action = "^" + command.action;
+                  command.disabled = true;
                }
                else if (parts[part_num].charAt(command_idx) != '^' &&
-                        command.action.startsWith("^"))
+                        command.disabled)
                {
-                  command.action = command.action.substring(1);
+                  command.disabled = false;
                }
             }
          }

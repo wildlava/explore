@@ -9,18 +9,26 @@ package com.wildlava.explore;
 
 class Command
 {
-   String location;
    String[] commands;
    String condition;
-   String action;
+   String location;
+   String[] actions;
+   String denied_directive;
+   boolean fall_back_to_builtin;
    boolean cont;
+   boolean one_shot;
+   boolean disabled;
 
    Command()
    {
-      location = null;
       commands = null;
       condition = null;
-      action = null;
+      location = null;
+      actions = null;
+      denied_directive = null;
+      fall_back_to_builtin = true;
       cont = false;
+      one_shot = false;
+      disabled = false;
    }
 }

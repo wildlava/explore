@@ -75,11 +75,15 @@ class Command:
     #actions = []
 
     def __init__(self):
-        self.location = None
         self.commands = None
         self.condition = None
-        self.action = None
+        self.location = None
+        self.actions = None
+        self.denied_directive = None
+        self.fall_back_to_builtin = True
         self.cont = False
+        self.one_shot = False
+        self.disabled = False
 
 
 class ItemContainer:
@@ -459,14 +463,28 @@ class World:
             elif keyword == "ACTION":
                 # If there is no current command, or if there is one,
                 # but it already has an action, make a new command.
-                if new_command == None or new_command.action != None:
+                if new_command == None or new_command.actions != None:
                     new_command = Command()
                     self.commands.append(new_command)
 
                     if cur_room_name != None:
                         new_command.location = cur_room_name
 
-                new_command.action = params
+                if params.startswith('.'):
+                    new_command.one_shot = True
+                    action_str = params[1:]
+                else:
+                    action_str = params
+
+                or_pos = action_str.find('|')
+                if or_pos != -1:
+                    new_command.actions = action_str[:or_pos].split(';')
+                    new_command.denied_directive = action_str[or_pos + 1:]
+                    if new_command.denied_directive.startswith('|'):
+                        new_command.fall_back_to_builtin = False
+                        new_command.denied_directive = new_command.denied_directive[1:]
+                else:
+                    new_command.actions = action_str.split(';')
 
             elif keyword == "DESC":
                 if new_room != None:
@@ -563,35 +581,19 @@ class World:
         result = RESULT_NORMAL
         error = False
 
-        if command.action == None or command.action[0] == "^":
+        if not command.actions or command.disabled:
             if not auto:
                 self.exp_io.tell("Nothing happens.")
         else:
             messages = []
 
-            or_pos = command.action.find("|")
-            if or_pos != -1:
-                action_str = command.action[:or_pos]
-            else:
-                action_str = command.action
-
-            if command.action[0] == ".":
-                action_one_shot = True
-                action_list = action_str[1:].split(";")
-            else:
-                action_one_shot = False
-                action_list = action_str.split(";")
-
-            for action in action_list:
+            for action in command.actions:
                 if action.find(":") != -1:
                     action, message = action.split(":", 1)
                 else:
                     message = None
 
-                if len(action) == 0:
-                    action = None
-
-                if action != None:
+                if action:
                     if action[0] == "/":
                         if action[1:] in self.rooms:
                             room = self.rooms[action[1:]]
@@ -628,12 +630,10 @@ class World:
                                 self.exp_io.tell("You are carrying too much to do that.")
                                 error = True
                             else:
-                                if command.action[0] != "^":
-                                    command.action = "^" + command.action
+                                command.disabled = True
                         else:
                             self.player.current_room.add_item(action[1:], True)
-                            if command.action[0] != "^":
-                                command.action = "^" + command.action
+                            command.disabled = True
 
                     elif action[0] == "-":
                         if not self.player.remove_item(action[1:]):
@@ -660,8 +660,7 @@ class World:
                         else:
                             self.player.current_room.make_way(action[1], action[2:])
 
-                        if command.action[0] != "^":
-                            command.action = "^" + command.action
+                        command.disabled = True
 
                     elif action[0] == "*":
                         if self.player.current_room.desc_ctrl != None:
@@ -691,9 +690,8 @@ class World:
                 if message != None:
                     messages.append(message)
 
-            if action_one_shot:
-                if command.action[0] != "^":
-                    command.action = "^" + command.action
+            if command.one_shot:
+                command.disabled = True
 
             if len(messages) > 0:
                 if ((not self.action_newline_inserted or
@@ -812,7 +810,6 @@ class World:
                         custom = c
 
         try_builtin = True
-        action_denied_directive = None
 
         # Note: this assumes process_command() is called before check_for_auto()
         self.action_newline_inserted = False
@@ -830,16 +827,12 @@ class World:
                     try_builtin = False
                     result = self.take_action(custom)
                 else:
-                    if custom.action != None:
-                        or_pos = custom.action.find("|")
-                        if or_pos != -1:
-                            action_denied_directive = custom.action[or_pos + 1:]
-                            if action_denied_directive.startswith("|"):
-                                try_builtin = False
-                                if action_denied_directive.startswith("|:"):
-                                    self.exp_io.tell(action_denied_directive[2:])
-                                else:
-                                    self.exp_io.tell(action_denied_directive[1:])
+                    if custom.denied_directive and not custom.fall_back_to_builtin:
+                        try_builtin = False
+                        if custom.denied_directive.startswith(':'):
+                            self.exp_io.tell(custom.denied_directive[1:])
+                        else:
+                            self.exp_io.tell(custom.denied_directive)
 
         if try_builtin:
             if wish.find(" ") != -1:
@@ -962,11 +955,11 @@ class World:
                     if not player_in_correct_room:
                         self.exp_io.tell("You can't do that here.")
                     else:
-                        if action_denied_directive != None:
-                            if action_denied_directive.startswith(":"):
-                                self.exp_io.tell(action_denied_directive[1:])
+                        if custom.denied_directive != None:
+                            if custom.denied_directive.startswith(':'):
+                                self.exp_io.tell(custom.denied_directive[1:])
                             else:
-                                self.exp_io.tell(action_denied_directive)
+                                self.exp_io.tell(custom.denied_directive)
                         else:
                             self.exp_io.tell("You can't do that yet.")
             else:
@@ -1044,7 +1037,7 @@ class World:
         command_buf = []
 
         for command in self.commands:
-            if command.action != None and command.action[0] == "^":
+            if command.actions and command.disabled:
                 command_buf.append("^")
             else:
                 command_buf.append(".")
@@ -1241,11 +1234,11 @@ class World:
             if command_idx >= 0 and command_idx < num_saved_commands:
                 command = self.commands[i]
 
-                if command.action != None:
-                    if parts[part_num][command_idx] == '^' and command.action[0] != '^':
-                        command.action = "^" + command.action
-                    elif parts[part_num][command_idx] != '^' and command.action[0] == '^':
-                        command.action = command.action[1:]
+                if command.actions:
+                    if parts[part_num][command_idx] == '^' and not command.disabled:
+                        command.disabled = True
+                    elif parts[part_num][command_idx] != '^' and command.disabled:
+                        command.disabled = False
 
             if saved_suspend_version < 2:
                 command_idx -= 1
