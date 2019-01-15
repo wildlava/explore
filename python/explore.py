@@ -1080,7 +1080,7 @@ class World:
             checksum += ord(buf_string[i])
 
         buf_string = ("%04x" % (checksum & 0xffff)) + buf_string
-        #print "Raw string: " + str(self.suspend_version) + ":" + str(self.version) + ":" + buf_string
+        #print("Raw string: " + str(self.suspend_version) + ":" + str(self.version) + ":" + buf_string)
         return str(self.suspend_version) + ":" + str(self.version) + ":" + self.encrypt(buf_string)
 
     def set_state(self, s):
