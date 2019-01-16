@@ -142,14 +142,18 @@ COMMAND=SMASH ARMOUR:$armour!=fled+
 ACTION=:Ouch! You hurt your hand.
 
 ROOM=9,2,0
-DESC=You are at the servants quarters.\There is a cabinet on the wall.
+DESC=You are at the servants quarters.\There is a cabinet on one wall.
 FIXED_OBJECTS=QUARTERS,CABINET,WALL,WALLS
 NORTH=9,2,0
 SOUTH=9,3,0
 EAST=9,2,0
 WEST=9,2,0
+COMMAND=$key!=taken&-@KEY&$cabinet==open
+ACTION=$key=taken
+COMMAND=OPEN CABINET,OPEN:$key==taken+
+ACTION=:It's empty.
 COMMAND=OPEN CABINET,OPEN
-ACTION=+KEY:Ok\There is a key in it.
+ACTION=+KEY;$cabinet=open:Ok\There is a key in it.|:Ok\There is a key in it.
 
 ROOM=8,3,0
 DESC=You are at the breakfast room.
@@ -164,7 +168,7 @@ COMMAND=$armour!=fled&-KNIFE
 ACTION=/8,2,0:You are at the breakfast room. An animated suit of armour throws you out!
 
 ROOM=9,3,0
-DESC=You are at the servants quarters.\There is a cabinet on the wall.
+DESC=You are at the servants quarters.\There is a cabinet on one wall.
 FIXED_OBJECTS=QUARTERS,CABINET,WALL,WALLS
 NORTH=9,2,0
 SOUTH=9,3,0
