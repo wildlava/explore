@@ -704,7 +704,7 @@ class World
                }
                else if (action.startsWith("+"))
                {
-                  if (action.substring(1).startsWith("$"))
+                  if (action.startsWith("+$"))
                   {
                      if (!player.addItem(action.substring(2), false))
                      {
@@ -766,7 +766,7 @@ class World
                }
                else if (action.startsWith("["))
                {
-                  if (action.substring(1).startsWith("$"))
+                  if (action.startsWith("[$"))
                   {
                      if (action.length() >= 3)
                      {
@@ -788,7 +788,7 @@ class World
                {
                   if (player.current_room.desc_ctrl != null)
                   {
-                     if (action.substring(1).startsWith("+"))
+                     if (action.startsWith("*+"))
                      {
                         if (!player.current_room.desc_ctrl.
                             endsWith("+"))

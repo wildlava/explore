@@ -211,7 +211,7 @@ class Room(ItemContainer):
             if pos == -1:
                 ctrl = self.desc_ctrl
             else:
-                if self.desc_ctrl[-1] == "+":
+                if self.desc_ctrl.endswith('+'):
                     ctrl = self.desc_ctrl[pos + 1:]
                 else:
                     ctrl = self.desc_ctrl[:pos]
@@ -435,18 +435,18 @@ class World:
                 new_command = Command()
                 self.commands.append(new_command)
 
-                if (params[0] == "+" or
-                    params[0] == "-" or
-                    params[0] == "$"):
+                if (params.startswith('+') or
+                    params.startswith('-') or
+                    params.startswith('$')):
                     new_command.condition = params
                 else:
                     pos = params.find(":")
                     if pos != -1:
                         new_command.condition = params[pos + 1:]
 
-                        if not (new_command.condition[0] == "+" or
-                                new_command.condition[0] == "-" or
-                                new_command.condition[0] == "$"):
+                        if not (new_command.condition.startswith('+') or
+                                new_command.condition.startswith('-') or
+                                new_command.condition.startswith('$')):
                             new_command.condition = "+" + new_command.condition
 
                         new_command.commands = params[:pos].split(",")
@@ -600,14 +600,14 @@ class World:
                     message = None
 
                 if action:
-                    if action[0] == "/":
+                    if action.startswith('/'):
                         if action[1:] in self.rooms:
                             room = self.rooms[action[1:]]
 
                             self.player.current_room = room
                             result |= RESULT_DESCRIBE
 
-                    elif action[0] == "!":
+                    elif action.startswith('!'):
                         self.exp_io.tell("")
                         self.exp_io.tell(action[1:])
                         #self.exp_io.tell("")
@@ -615,10 +615,10 @@ class World:
                         result |= RESULT_WIN
                         result |= RESULT_END_GAME
 
-                    elif action[0] == "=":
+                    elif action.startswith('='):
                         result |= self.process_command(action[1:], False)
 
-                    elif action[0] == "%":
+                    elif action.startswith('%'):
                         if action.find(",") != -1:
                             old_item, new_item = action[1:].split(",", 1)
 
@@ -630,8 +630,8 @@ class World:
                                 self.exp_io.tell("You can't do that yet.")
                                 error = True
 
-                    elif action[0] == "+":
-                        if action[1] == "$":
+                    elif action.startswith('+'):
+                        if action.startswith('+$'):
                             if not self.player.add_item(action[2:], False):
                                 self.exp_io.tell("You are carrying too much to do that.")
                                 error = True
@@ -641,13 +641,13 @@ class World:
                             self.player.current_room.add_item(action[1:], True)
                             command.disabled = True
 
-                    elif action[0] == "-":
+                    elif action.startswith('-'):
                         if not self.player.remove_item(action[1:]):
                             if not self.player.current_room.remove_item(action[1:]):
                                 self.exp_io.tell("You can't do that yet.")
                                 error = True
 
-                    elif action[0] == "#":
+                    elif action.startswith('#'):
                         if action.find(">") != -1:
                             room_name, item = action[1:].split(">", 1)
 
@@ -660,24 +660,24 @@ class World:
                                 self.exp_io.tell("You can't do that yet.")
                                 error = True
 
-                    elif action[0] == "[":
-                        if action[1] == "$":
+                    elif action.startswith('['):
+                        if action.startswith('[$'):
                             self.player.current_room.block_way(action[2])
                         else:
                             self.player.current_room.make_way(action[1], action[2:])
 
                         command.disabled = True
 
-                    elif action[0] == "*":
+                    elif action.startswith('*'):
                         if self.player.current_room.desc_ctrl != None:
-                            if action[1] == "+":
-                                if not (len(self.player.current_room.desc_ctrl) > 0 and self.player.current_room.desc_ctrl[-1] == "+"):
+                            if action.startswith('*+'):
+                                if not self.player.current_room.desc_ctrl.endswith('+'):
                                     self.player.current_room.desc_ctrl += "+"
                             else:
-                                if len(self.player.current_room.desc_ctrl) > 0 and self.player.current_room.desc_ctrl[-1] == "+":
+                                if self.player.current_room.desc_ctrl.endswith('+'):
                                     self.player.current_room.desc_ctrl = self.player.current_room.desc_ctrl[:-1]
 
-                    elif action[0] == "$":
+                    elif action.startswith('$'):
                         equals_pos = action.find("=")
                         if equals_pos != -1:
                             variable_name = action[1:equals_pos]
@@ -1054,7 +1054,7 @@ class World:
         for room_name in self.room_list:
             room = self.rooms[room_name]
 
-            if room.desc_ctrl != None and len(room.desc_ctrl) > 0 and room.desc_ctrl[-1] == "+":
+            if room.desc_ctrl != None and room.desc_ctrl.endswith('+'):
                 room_data_buf = ["+"]
             else:
                 room_data_buf = ["."]
@@ -1297,9 +1297,9 @@ class World:
 
             # first the description control
             if room.desc_ctrl != None:
-                if room_code[0] == '+' and (len(room.desc_ctrl) == 0 or room.desc_ctrl[-1] != "+"):
+                if room_code[0] == '+' and not room.desc_ctrl.endswith('+'):
                     room.desc_ctrl += "+"
-                elif room_code[0] != "+" and (len(room.desc_ctrl) > 0 and room.desc_ctrl[-1] == '+'):
+                elif room_code[0] != "+" and room.desc_ctrl.endswith('+'):
                     room.desc_ctrl = room.desc_ctrl[:-1]
 
             # now the possible directions
@@ -1525,7 +1525,7 @@ if __name__ == '__main__':
             skip_next = False
             continue
         if sys.argv[arg_num] == "-f":
-            if len(sys.argv) > (arg_num + 1) and (len(sys.argv[arg_num + 1]) == 0 or sys.argv[arg_num + 1][0] != '-'):
+            if len(sys.argv) > (arg_num + 1) and not sys.argv[arg_num + 1].startswith('-'):
                 filename = sys.argv[arg_num + 1]
                 skip_next = True
             else:
@@ -1534,15 +1534,15 @@ if __name__ == '__main__':
         elif sys.argv[arg_num] == "-q":
             quiet = True
         elif sys.argv[arg_num] == "-c":
-            if len(sys.argv) > (arg_num + 1) and (len(sys.argv[arg_num + 1]) == 0 or sys.argv[arg_num + 1][0] != '-'):
+            if len(sys.argv) > (arg_num + 1) and not sys.argv[arg_num + 1].startswith('-'):
                 command = sys.argv[arg_num + 1]
                 skip_next = True
         elif sys.argv[arg_num] == "-r":
-            if len(sys.argv) > (arg_num + 1) and (len(sys.argv[arg_num + 1]) == 0 or sys.argv[arg_num + 1][0] != '-'):
+            if len(sys.argv) > (arg_num + 1) and not sys.argv[arg_num + 1].startswith('-'):
                 state = sys.argv[arg_num + 1]
                 skip_next = True
         elif sys.argv[arg_num] == "-s":
-            if len(sys.argv) > (arg_num + 1) and (len(sys.argv[arg_num + 1]) == 0 or sys.argv[arg_num + 1][0] != '-'):
+            if len(sys.argv) > (arg_num + 1) and not sys.argv[arg_num + 1].startswith('-'):
                 last_suspend = sys.argv[arg_num + 1]
                 skip_next = True
         elif sys.argv[arg_num] == "--one-shot":
