@@ -106,7 +106,7 @@ ACTION=:Are you just going to walk right through that raging fire?
 COMMAND=NO
 ACTION=:A wise decision.
 COMMAND=YES
-ACTION=/4,2,0
+ACTION=/4,2,0:^Ok
 
 ROOM=4,2,0
 DESC=You are at the library. There is a hole in the ceiling.
