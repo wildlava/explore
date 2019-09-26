@@ -1380,11 +1380,8 @@ def play(filename=None, input_script=None, no_delay=False):
     try:
         world.load(filename)
     except IOError:
-        try:
-            world.load(os.path.join('/usr/share/explore/adventures', filename))
-        except IOError:
-            print('Adventure not found', file=sys.stderr)
-            sys.exit(1)
+        print('Adventure not found', file=sys.stderr)
+        sys.exit(1)
 
     exp_io.tell("")
     exp_io.tell("")
