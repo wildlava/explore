@@ -22,7 +22,7 @@ class Player extends ItemContainer
       current_room = null;
    }
 
-   void getItem(String item, boolean acknowledge)
+   void getItem(String item, boolean is_root_command)
    {
       String full_item_room = current_room.expandItemName(item);
       String full_item_self = expandItemName(item);
@@ -91,14 +91,14 @@ class Player extends ItemContainer
       {
          current_room.removeItem(full_item_room);
 
-         if (acknowledge)
+         if (is_root_command)
          {
             io.print("Ok");
          }
       }
    }
 
-   void dropItem(String item, boolean acknowledge)
+   void dropItem(String item, boolean is_root_command)
    {
       String full_item = expandItemName(item);
 
@@ -120,7 +120,7 @@ class Player extends ItemContainer
       {
          current_room.addItem(full_item, true);
 
-         if (acknowledge)
+         if (is_root_command)
          {
             io.print("Ok");
          }

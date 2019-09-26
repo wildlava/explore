@@ -250,7 +250,7 @@ class Player(ItemContainer):
 
         self.current_room = None
 
-    def get_item(self, item, acknowledge):
+    def get_item(self, item, is_root_command):
         full_item_room = self.current_room.expand_item_name(item)
         full_item_self = self.expand_item_name(item)
 
@@ -286,10 +286,10 @@ class Player(ItemContainer):
         else:
             self.current_room.remove_item(full_item_room)
 
-            if acknowledge:
+            if is_root_command:
                 self.exp_io.tell("Ok")
 
-    def drop_item(self, item, acknowledge):
+    def drop_item(self, item, is_root_command):
         full_item = self.expand_item_name(item)
 
         if not self.remove_item(full_item):
@@ -301,7 +301,7 @@ class Player(ItemContainer):
         else:
             self.current_room.add_item(full_item, True)
 
-            if acknowledge:
+            if is_root_command:
                 self.exp_io.tell("Ok")
 
     def list_items(self):
@@ -362,6 +362,7 @@ class World:
         self.old_items = {}
         self.old_versions = {}
 
+        self.action_newline_needed = True
         self.action_newline_inserted = False
 
         self.suspend_version = 2
@@ -596,6 +597,9 @@ class World:
             for action in command.actions:
                 if action.find(":") != -1:
                     action, message = action.split(":", 1)
+                    if message.startswith('^'):
+                        self.action_newline_needed = False
+                        message = message[1:]
                 else:
                     message = None
 
@@ -700,13 +704,14 @@ class World:
                 command.disabled = True
 
             if len(messages) > 0:
-                if ((not self.action_newline_inserted or
-                     trs_compat) and
-                    ((result & RESULT_DESCRIBE) != 0 or
-                     (not trs_compat and auto and
-                      (previous_result & RESULT_DESCRIBE) != 0))):
-                    self.exp_io.tell("")
-                    self.action_newline_inserted = True
+                if self.action_newline_needed:
+                    if ((not self.action_newline_inserted or
+                         trs_compat) and
+                        ((result & RESULT_DESCRIBE) != 0 or
+                         (not trs_compat and auto and
+                          (previous_result & RESULT_DESCRIBE) != 0))):
+                        self.exp_io.tell("")
+                        self.action_newline_inserted = True
                 for message in messages:
                     self.exp_io.tell(message)
 
@@ -783,7 +788,7 @@ class World:
 
         return result
 
-    def process_command(self, wish, acknowledge):
+    def process_command(self, wish, is_root_command):
         result = RESULT_NORMAL
         player_meets_condition = False
         player_in_correct_room = False
@@ -818,7 +823,9 @@ class World:
         try_builtin = True
 
         # Note: this assumes process_command() is called before check_for_auto()
-        self.action_newline_inserted = False
+        if is_root_command:
+            self.action_newline_needed = True
+            self.action_newline_inserted = False
 
         if trs_compat:
             if custom != None and player_in_correct_room:
@@ -859,7 +866,7 @@ class World:
 
             elif command == "LOOK":
                 if argument != None:
-                    if not self.action_newline_inserted:
+                    if self.action_newline_needed and not self.action_newline_inserted:
                         self.exp_io.tell("")
                         self.action_newline_inserted = True
                     self.exp_io.tell("There's really nothing more to see.")
@@ -892,20 +899,20 @@ class World:
 
             elif ((command == "QUIT" or command == "STOP") and
                   argument == None):
-                if acknowledge:
+                if is_root_command:
                     self.exp_io.tell("Ok")
 
                 result |= RESULT_END_GAME
 
             elif command == "GET" or command == "TAKE":
                 if argument != None:
-                    self.player.get_item(argument, acknowledge)
+                    self.player.get_item(argument, is_root_command)
                 else:
                     self.exp_io.tell(command.capitalize() + " what?")
 
             elif command == "DROP" or command == "THROW":
                 if argument != None:
-                    self.player.drop_item(argument, acknowledge)
+                    self.player.drop_item(argument, is_root_command)
                 else:
                     self.exp_io.tell(command.capitalize() + " what?")
 
@@ -924,7 +931,7 @@ class World:
                     self.exp_io.tell("")
                 else:
                     self.last_suspend = self.get_state()
-                    if acknowledge:
+                    if is_root_command:
                         self.exp_io.tell("Ok")
                     result |= RESULT_SUSPEND
 

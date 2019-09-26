@@ -37,7 +37,8 @@ class World
    Map<String, String> old_items;
    Map<Integer, String> old_versions;
 
-   private boolean action_newline_inserted;
+   private boolean action_newline_needed = true;
+   private boolean action_newline_inserted = false;
 
    public static final int SUSPEND_TO_MEMORY = 0;
    public static final int SUSPEND_INTERACTIVE = 1;
@@ -212,7 +213,7 @@ class World
       return result;
    }
 
-   int processCommand(String wish, boolean acknowledge)
+   int processCommand(String wish, boolean is_root_command)
    {
       int result = RESULT_NORMAL;
       boolean player_meets_condition = false;
@@ -276,7 +277,10 @@ class World
       boolean try_builtin = true;
 
       // Note: this assumes processCommand() is called before checkForAuto()
-      action_newline_inserted = false;
+      if (is_root_command) {
+         action_newline_needed = true;
+         action_newline_inserted = false;
+      }
 
       if (trs_compat)
       {
@@ -366,7 +370,7 @@ class World
          {
             if (argument != null)
             {
-               if (!action_newline_inserted)
+               if (action_newline_needed && !action_newline_inserted)
                {
                   io.print("");
                   action_newline_inserted = true;
@@ -425,7 +429,7 @@ class World
                    command.equals("STOP")) &&
                   argument == null)
          {
-            if (acknowledge)
+            if (is_root_command)
             {
                io.print("Ok");
             }
@@ -436,7 +440,7 @@ class World
          {
             if (argument != null)
             {
-               player.getItem(argument, acknowledge);
+               player.getItem(argument, is_root_command);
             }
             else
             {
@@ -449,7 +453,7 @@ class World
          {
             if (argument != null)
             {
-               player.dropItem(argument, acknowledge);
+               player.dropItem(argument, is_root_command);
             }
             else
             {
@@ -482,7 +486,7 @@ class World
                }
                else
                {
-                  if (acknowledge)
+                  if (is_root_command)
                   {
                      io.print("Ok");
                   }
@@ -492,7 +496,7 @@ class World
             {
                last_suspend = state();
 
-               if (acknowledge)
+               if (is_root_command)
                {
                   io.print("Ok");
                }
@@ -647,6 +651,11 @@ class World
             if (colon_pos != -1)
             {
                message = action.substring(colon_pos + 1);
+               if (message.startsWith("^"))
+               {
+                  action_newline_needed = false;
+                  message = message.substring(1);
+               }
                action = action.substring(0, colon_pos);
             }
 
@@ -849,14 +858,17 @@ class World
 
          if (!messages.isEmpty())
          {
-            if ((!action_newline_inserted ||
-                 trs_compat) &&
-                ((result & RESULT_DESCRIBE) != 0 ||
-                 (!trs_compat && auto &&
-                  (previous_result & RESULT_DESCRIBE) != 0)))
+            if (action_newline_needed)
             {
-               io.print("");
-               action_newline_inserted = true;
+               if ((!action_newline_inserted ||
+                    trs_compat) &&
+                   ((result & RESULT_DESCRIBE) != 0 ||
+                    (!trs_compat && auto &&
+                     (previous_result & RESULT_DESCRIBE) != 0)))
+               {
+                  io.print("");
+                  action_newline_inserted = true;
+               }
             }
 
             for (String message : messages)
