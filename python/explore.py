@@ -67,6 +67,27 @@ class ExpIO:
         else:
             return None
 
+    def save_suspended_state(self, filename, state):
+        try:
+            fp = open(filename, 'w')
+            fp.write(state)
+            fp.write('\n')
+            fp.close()
+        except IOError:
+            return False
+
+        return True
+
+    def load_suspended_state(self, filename):
+        try:
+            fp = open(filename, 'r')
+            state = fp.read().strip()
+            fp.close()
+        except IOError:
+            return None
+
+        return state
+
 
 class Command:
     #location = None
@@ -331,6 +352,7 @@ RESULT_SUSPEND = 64
 
 SUSPEND_TO_MEMORY = 0
 SUSPEND_INTERACTIVE = 1
+SUSPEND_TO_FILE = 2
 
 LONG_DIRECTION_COMMANDS = ["NORTH", "SOUTH", "EAST", "WEST", "UP", "DOWN"]
 DIRECTIONS = []
@@ -341,8 +363,9 @@ DIRECTION_COMMANDS = DIRECTIONS + LONG_DIRECTION_COMMANDS
 KEY = b'We were inspired by Steely Dan.'
 
 class World:
-    def __init__(self, exp_io):
+    def __init__(self, exp_io, advname):
         self.exp_io = exp_io
+        self.advname = advname
 
         self.version = 0
         self.title = "This adventure has no title!"
@@ -366,7 +389,7 @@ class World:
         self.action_newline_inserted = False
 
         self.suspend_version = 2
-        self.suspend_mode = SUSPEND_INTERACTIVE
+        self.suspend_mode = SUSPEND_TO_FILE
         self.last_suspend = None
 
     def load(self, filename):
@@ -929,6 +952,12 @@ class World:
                     self.exp_io.tell("")
                     self.exp_io.tell_raw("resume " + self.get_state())
                     self.exp_io.tell("")
+                elif self.suspend_mode == SUSPEND_TO_FILE:
+                    if not self.exp_io.save_suspended_state(self.advname + ".sus", self.get_state()):
+                        self.exp_io.tell("Hmm, for some reason the game cannot be suspended. Sorry.")
+                    else:
+                        if is_root_command:
+                            self.exp_io.tell("Ok")
                 else:
                     self.last_suspend = self.get_state()
                     if is_root_command:
@@ -938,8 +967,13 @@ class World:
             elif ((command == "RESUME" or command == "RESTORE") and
                   (self.suspend_mode != SUSPEND_INTERACTIVE and
                    argument == None)):
-                if self.last_suspend != None:
-                    if not self.set_state(self.last_suspend):
+                if self.suspend_mode == SUSPEND_TO_FILE:
+                    new_state = self.exp_io.load_suspended_state(self.advname + ".sus")
+                else:
+                    new_state = self.last_suspend
+
+                if new_state:
+                    if not self.set_state(new_state):
                         self.exp_io.tell("Hmm, the suspended game information doesn't look valid. Sorry.")
                     else:
                         result |= (RESULT_DESCRIBE | RESULT_NO_CHECK)
@@ -1343,8 +1377,6 @@ class World:
 
 def play(filename=None, input_script=None, no_delay=False):
     exp_io = ExpIO()
-    world = World(exp_io)
-
     exp_io.no_delay = no_delay
 
     if input_script != None:
@@ -1373,6 +1405,8 @@ def play(filename=None, input_script=None, no_delay=False):
         advname = os.path.basename(filename)
         if advname.find(".") != -1:
             advname, extension = advname.split(".", 1)
+
+    world = World(exp_io, advname)
 
     exp_io.tell("")
     exp_io.tell(advname + " is now being built...")
@@ -1431,11 +1465,7 @@ def play(filename=None, input_script=None, no_delay=False):
 
 def play_once(filename, command=None, state=None, last_suspend=None, return_output=True, quiet=False, show_title=True, show_title_only=False):
     exp_io = ExpIO()
-    world = World(exp_io)
-
     exp_io.no_delay = True
-    world.suspend_mode = SUSPEND_TO_MEMORY
-    world.last_suspend = last_suspend
     if return_output:
         exp_io.store_output = True
 
@@ -1455,6 +1485,10 @@ def play_once(filename, command=None, state=None, last_suspend=None, return_outp
     advname = os.path.basename(filename)
     if advname.find(".") != -1:
         advname, extension = advname.split(".", 1)
+
+    world = World(exp_io, advname)
+    world.suspend_mode = SUSPEND_TO_MEMORY
+    world.last_suspend = last_suspend
 
     if not quiet:
         exp_io.tell("")
