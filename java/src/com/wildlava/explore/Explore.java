@@ -199,7 +199,7 @@ class Game
          }
          else
          {
-            result = World.RESULT_NORMAL;
+            result = World.RESULT_NO_CHECK;
          }
       }
       else

@@ -1438,7 +1438,7 @@ def play(filename=None, input_script=None, no_delay=False):
             if wish != "":
                 result = world.process_command(wish, True)
             else:
-                result = RESULT_NORMAL
+                result = RESULT_NO_CHECK
         else:
             game_started = True
             result = RESULT_DESCRIBE
@@ -1516,7 +1516,7 @@ def play_once(filename, command=None, state=None, last_suspend=None, return_outp
         if wish != "":
             result = world.process_command(wish, True)
         else:
-            result = RESULT_NORMAL
+            result = RESULT_NO_CHECK
     else:
         result = RESULT_DESCRIBE
 
