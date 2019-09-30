@@ -1,7 +1,0 @@
-#!/bin/bash
-
-if [ -x "$(command -v python3)" ]; then
-    python3 $(dirname "$0")/explore.py $@
-else
-    python $(dirname "$0")/explore.py $@
-fi

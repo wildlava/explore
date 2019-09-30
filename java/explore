@@ -1,0 +1,3 @@
+#!/bin/bash
+
+CLASSPATH=java/src java com/wildlava/explore/Explore $@
