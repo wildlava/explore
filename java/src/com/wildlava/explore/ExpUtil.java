@@ -92,7 +92,8 @@ class ExpUtil
          deflater.write(s.getBytes());
          deflater.close();
       }
-      catch (java.io.IOException e) {
+      catch (java.io.IOException e)
+      {
          return "Encrypt failed";
       }
 

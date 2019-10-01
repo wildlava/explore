@@ -277,7 +277,8 @@ class World
       boolean try_builtin = true;
 
       // Note: this assumes processCommand() is called before checkForAuto()
-      if (is_root_command) {
+      if (is_root_command)
+      {
          action_newline_needed = true;
          action_newline_inserted = false;
       }
