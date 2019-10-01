@@ -7,6 +7,7 @@
 
 import sys
 import os
+import shutil
 import time
 import zlib
 import base64
@@ -28,11 +29,17 @@ class ExpIO:
     def __init__(self):
         self.output = []
         self.store_output = False
-        self.max_line_length = 80
+        self.unwrap = False
+        self.max_line_length = shutil.get_terminal_size().columns
         self.no_delay = False
 
     def tell(self, s):
-        s = s.replace('\\', '\n')
+        if self.unwrap:
+            s = s.replace("\\\\", "\n\n")
+            s = s.replace("\\ ", "\n ")
+            s = s.replace("\\", " ")
+        else:
+            s = s.replace('\\', '\n')
 
         out_lines = []
         for line in s.split('\n'):
@@ -1375,8 +1382,9 @@ class World:
         return True
 
 
-def play(filename=None, input_script=None, no_delay=False):
+def play(filename=None, input_script=None, unwrap=False, no_delay=False):
     exp_io = ExpIO()
+    exp_io.unwrap = unwrap and not trs_compat
     exp_io.no_delay = no_delay
 
     if input_script != None:
@@ -1463,8 +1471,9 @@ def play(filename=None, input_script=None, no_delay=False):
             break
 
 
-def play_once(filename, command=None, state=None, last_suspend=None, return_output=True, quiet=False, show_title=True, show_title_only=False):
+def play_once(filename, command=None, state=None, last_suspend=None, return_output=True, quiet=False, show_title=True, show_title_only=False, unwrap=False):
     exp_io = ExpIO()
+    exp_io.unwrap = unwrap and not trs_compat
     exp_io.no_delay = True
     if return_output:
         exp_io.store_output = True
@@ -1550,6 +1559,7 @@ if __name__ == '__main__':
     command = None
     state = None
     last_suspend = None
+    unwrap = False
     no_delay = False
     input_script = None
 
@@ -1581,6 +1591,8 @@ if __name__ == '__main__':
                 skip_next = True
         elif sys.argv[arg_num] == "--one-shot":
             one_shot = True
+        elif sys.argv[arg_num] == "--unwrap-lines":
+            unwrap = True
         elif sys.argv[arg_num] == "--no-delay":
             no_delay = True
         elif sys.argv[arg_num] == "--trs-compat":
@@ -1595,6 +1607,6 @@ if __name__ == '__main__':
             filename = sys.argv[arg_num] + ".exp"
 
     if one_shot or (command != None) or (state != None) or (last_suspend != None):
-        play_once(filename, command, state, last_suspend, False)
+        play_once(filename, command, state, last_suspend, False, unwrap=unwrap)
     else:
-        play(filename, input_script, no_delay)
+        play(filename, input_script, unwrap=unwrap, no_delay=no_delay)
