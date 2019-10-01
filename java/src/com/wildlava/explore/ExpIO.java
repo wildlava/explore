@@ -20,7 +20,7 @@ import java.util.Base64;
 class ExpIO
 {
    public boolean unwrap = false;
-   public int max_line_length = 79;
+   public int max_line_length = 80;
    public boolean no_delay = false;
 
    void print(String s)

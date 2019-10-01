@@ -28,7 +28,7 @@ class ExpIO:
     def __init__(self):
         self.output = []
         self.store_output = False
-        self.max_line_length = 79
+        self.max_line_length = 80
         self.no_delay = False
 
     def tell(self, s):
