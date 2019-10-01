@@ -24,6 +24,7 @@ public class Explore
       boolean list_commands = false;
       boolean trs_compat = false;
       boolean unwrap_lines = false;
+      int term_width = 0;
 
       for (String arg : args)
       {
@@ -43,6 +44,18 @@ public class Explore
          {
             unwrap_lines = true;
          }
+         else if (arg.startsWith("--term-width="))
+         {
+            try
+            {
+               term_width = Integer.parseInt(arg.substring(13));
+            }
+            catch (NumberFormatException e)
+            {
+               System.out.println("Terminal width must be an integer");
+               System.exit(1);
+            }
+         }
          else if (arg.equals("--no-delay"))
          {
             no_delay = true;
@@ -59,7 +72,7 @@ public class Explore
       }
 
       game.start(advname, input_script, no_delay,
-                 list_commands, trs_compat, unwrap_lines);
+                 list_commands, trs_compat, unwrap_lines, term_width);
    }
 }
 
@@ -73,11 +86,16 @@ class Game
               boolean no_delay,
               boolean list_commands,
               boolean trs_compat,
-              boolean unwrap_lines)
+              boolean unwrap_lines,
+              int term_width)
    {
       io = new ExpIO();
       io.no_delay = no_delay;
       io.unwrap = unwrap_lines && !trs_compat;
+      if (term_width > 0)
+      {
+         io.max_line_length = term_width;
+      }
 
       List<String> input_script_commands = null;
       Iterator<String> input_script_iter = null;
