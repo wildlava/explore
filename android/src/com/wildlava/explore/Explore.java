@@ -8,6 +8,7 @@
 package com.wildlava.explore;
 
 import android.app.Activity;
+import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.content.Context;
 import android.content.res.Configuration;
@@ -20,8 +21,9 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.Gravity;
 import android.view.KeyEvent;
-//import android.view.inputmethod.InputMethodManager;
+import android.view.inputmethod.InputMethodManager;
 import android.view.inputmethod.EditorInfo;
+import android.view.WindowManager;
 import android.widget.TextView.OnEditorActionListener;
 import android.graphics.Typeface;
 import java.io.InputStreamReader;
@@ -35,6 +37,7 @@ public class Explore extends Activity
    private World world = null;
    private TextView output_area;
    private EditText input_area;
+   private InputMethodManager imm;
    private Button cave_button;
    private Button mine_button;
    private Button castle_button;
@@ -74,11 +77,15 @@ public class Explore extends Activity
       output_area.setTextSize((float) 14.0);
       //output_area.setTextSize((float) 9.0);
 
+      input_area.setBackgroundColor(0xff333333);
+      input_area.setTextColor(0xffcccccc);
       //input_area.setLines(1);
       input_area.setSingleLine(true);
       input_area.setImeOptions(EditorInfo.IME_ACTION_GO);
       input_area.setWidth(150);
       input_area.setVisibility(View.GONE);
+
+      imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
 
       input_area.setOnEditorActionListener(new OnEditorActionListener()
       {
@@ -93,7 +100,7 @@ public class Explore extends Activity
                input_area.setText("");
             }
 
-            return false;
+            return true;
          }
       });
 
@@ -135,56 +142,31 @@ public class Explore extends Activity
          }
       });
 
-      if (getResources().getConfiguration().orientation ==
-          Configuration.ORIENTATION_PORTRAIT)
-      {
-         FrameLayout control_layout = new FrameLayout(this);
+      setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+      getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE);
 
-         layout.setOrientation(LinearLayout.VERTICAL);
+      FrameLayout control_layout = new FrameLayout(this);
 
-         control_layout.setMeasureAllChildren(false);
-         //button_layout.setOrientation(LinearLayout.HORIZONTAL);
-         button_layout.setOrientation(LinearLayout.VERTICAL);
-         button_layout.addView(cave_button);
-         button_layout.addView(mine_button);
-         button_layout.addView(castle_button);
-         button_layout.addView(haunt_button);
-         control_layout.addView(input_area);
-         control_layout.addView(button_layout);
+      layout.setOrientation(LinearLayout.VERTICAL);
 
-         //output_area.setBackgroundColor(0xffff0000);
-         //control_layout.setBackgroundColor(0xff0000ff);
+      control_layout.setMeasureAllChildren(false);
+      //button_layout.setOrientation(LinearLayout.HORIZONTAL);
+      button_layout.setOrientation(LinearLayout.VERTICAL);
+      button_layout.addView(cave_button);
+      button_layout.addView(mine_button);
+      button_layout.addView(castle_button);
+      button_layout.addView(haunt_button);
+      control_layout.addView(input_area);
+      control_layout.addView(button_layout);
 
-         layout.addView(output_area);
-         layout.addView(control_layout);
+      //output_area.setBackgroundColor(0xffff0000);
+      //control_layout.setBackgroundColor(0xff0000ff);
 
-         //output_area.setWidth(output_area.getWidth());
-         //output_area.setHeight(output_area.getHeight());
-      }
-      else
-      {
-         FrameLayout control_layout = new FrameLayout(this);
+      layout.addView(output_area);
+      layout.addView(control_layout);
 
-         layout.setOrientation(LinearLayout.HORIZONTAL);
-
-         control_layout.setMeasureAllChildren(false);
-         button_layout.setOrientation(LinearLayout.VERTICAL);
-         button_layout.addView(cave_button);
-         button_layout.addView(mine_button);
-         button_layout.addView(castle_button);
-         button_layout.addView(haunt_button);
-         control_layout.addView(input_area);
-         control_layout.addView(button_layout);
-
-         //output_area.setBackgroundColor(0xffff0000);
-         //control_layout.setBackgroundColor(0xff0000ff);
-
-         layout.addView(output_area);
-         layout.addView(control_layout);
-
-         //output_area.setWidth(output_area.getWidth());
-         //output_area.setHeight(output_layout.getHeight());
-      }
+      //output_area.setWidth(output_area.getWidth());
+      //output_area.setHeight(output_area.getHeight());
 
       //setContentView(R.layout.main);
       io = new ExpIO(this, output_area, input_area);
@@ -214,7 +196,7 @@ public class Explore extends Activity
 
       if (world == null)
       {
-         input_area.setVisibility(View.GONE);
+         //input_area.setVisibility(View.GONE);
          //input_area.setFocusable(false);
          //input_area.setEnabled(false);
          //button_layout.setVisibility(View.VISIBLE);
@@ -251,12 +233,11 @@ public class Explore extends Activity
    public void start(String name, boolean silent_load)
    {
       button_layout.setVisibility(View.GONE);
-      //input_area.setFocusable(true);
-      //input_area.setEnabled(true);
       input_area.setVisibility(View.VISIBLE);
-      input_area.requestFocus();
-      //InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
-      //imm.showSoftInput(input_area, InputMethodManager.SHOW_IMPLICIT);
+      if (input_area.requestFocus())
+      {
+         imm.showSoftInput(input_area, InputMethodManager.SHOW_IMPLICIT);
+      }
 
       if (!silent_load)
       {
@@ -383,11 +364,9 @@ public class Explore extends Activity
       else
       {
          // Hide input area, close keyboard and bring play buttons back
-         //input_area.setFocusable(false);
-         //input_area.setEnabled(false);
+         imm.showSoftInput(input_area, InputMethodManager.HIDE_IMPLICIT_ONLY);
+         imm.hideSoftInputFromWindow(input_area.getWindowToken(), 0);
          input_area.setVisibility(View.GONE);
-         //InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
-         //imm.hideSoftInputFromWindow(input_area.getWindowToken(), 0);
          button_layout.setVisibility(View.VISIBLE);
 
          if ((result & World.RESULT_WIN) != 0)
