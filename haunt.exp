@@ -1,4 +1,4 @@
-VERSION=3
+VERSION=4
 TITLE=Haunted House!!\(based on Radio Shack's "Haunted House" adventure game)
 START_ROOM=6,0,0
 INVENTORY_LIMIT=8
