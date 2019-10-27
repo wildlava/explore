@@ -483,7 +483,7 @@ class World
             {
                if (!io.saveSuspendedState(advname + ".sus", state()))
                {
-                  io.print("Hmm, for some reason the game cannot be suspended. Sorry.");
+                  io.print("The game cannot be suspended. Sorry.");
                }
                else
                {
@@ -523,7 +523,7 @@ class World
             {
                if (!state(new_state))
                {
-                  io.print("Hmm, the suspended game information doesn't look valid. Sorry.");
+                  io.print("The suspended game information is invalid or too old. Sorry.");
                }
                else
                {
@@ -532,7 +532,7 @@ class World
             }
             else
             {
-               io.print("Hmm, there seems to be no suspended game information. Sorry.");
+               io.print("There is no suspended game information. Sorry.");
             }
          }
          else if ((command.equals("RESUME") || command.equals("RESTORE")) &&
@@ -546,7 +546,7 @@ class World
             {
                if (!state(verbatim_argument))
                {
-                  io.print("Hmm, that resume code just doesn't seem to make sense! Sorry.");
+                  io.print("That resume code is invalid or too old. Sorry.");
                }
                else
                {

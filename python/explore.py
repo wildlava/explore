@@ -961,7 +961,7 @@ class World:
                     self.exp_io.tell("")
                 elif self.suspend_mode == SUSPEND_TO_FILE:
                     if not self.exp_io.save_suspended_state(self.advname + ".sus", self.get_state()):
-                        self.exp_io.tell("Hmm, for some reason the game cannot be suspended. Sorry.")
+                        self.exp_io.tell("The game cannot be suspended. Sorry.")
                     else:
                         if is_root_command:
                             self.exp_io.tell("Ok")
@@ -981,20 +981,19 @@ class World:
 
                 if new_state:
                     if not self.set_state(new_state):
-                        self.exp_io.tell("Hmm, the suspended game information doesn't look valid. Sorry.")
+                        self.exp_io.tell("The suspended game information is invalid or too old. Sorry.")
                     else:
                         result |= (RESULT_DESCRIBE | RESULT_NO_CHECK)
                 else:
-                    self.exp_io.tell("Hmm, there seems to be no suspended game information. Sorry.")
+                    self.exp_io.tell("There is no suspended game information. Sorry.")
 
             elif ((command == "RESUME" or command == "RESTORE") and
                   self.suspend_mode == SUSPEND_INTERACTIVE):
-                #self.exp_io.tell("Sorry, resume has not yet been implemented.")
                 if argument == None:
                     self.exp_io.tell("Please follow this command with the code you were given when you suspended your game.")
                 else:
                     if not self.set_state(verbatim_argument):
-                        self.exp_io.tell("Hmm, that resume code just doesn't seem to make sense! Sorry.")
+                        self.exp_io.tell("That resume code is invalid or too old. Sorry.")
                     else:
                         result |= (RESULT_DESCRIBE | RESULT_NO_CHECK)
 
