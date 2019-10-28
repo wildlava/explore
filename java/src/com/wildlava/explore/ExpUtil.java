@@ -149,26 +149,4 @@ class ExpUtil
 
       return decompressed_string;
    }
-
-   static String oldDecrypt(String s)
-   {
-      StringBuffer buf = new StringBuffer();
-
-      int i = 0;
-      while (i < s.length())
-      {
-         char c = s.charAt(s.length() - i - 1);
-
-         c -= 0x3b;
-         c &= 0x3f;
-         c ^= key.charAt(i % key.length()) & 0x3f;
-         c += 0x20;
-
-         buf.append(c);
-
-         ++i;
-      }
-
-      return buf.toString();
-   }
 }

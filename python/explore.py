@@ -395,7 +395,7 @@ class World:
         self.action_newline_needed = True
         self.action_newline_inserted = False
 
-        self.suspend_version = 2
+        self.suspend_version = 3
         self.suspend_mode = SUSPEND_TO_FILE
         self.last_suspend = None
 
@@ -1057,21 +1057,6 @@ class World:
         except zlib.error:
             return "Decrypt failed"
 
-    def old_decrypt(self, in_str):
-        out = bytearray()
-        in_bytes = in_str.encode('ascii')
-        for i in range(len(in_bytes)):
-            c = in_bytes[-(i + 1)]
-
-            c -= 0x3b
-            c &= 0x3f
-            c ^= (KEY[i % len(KEY)]) & 0x3f
-            c += 0x20
-
-            out.append(c)
-
-        return out.decode('ascii')
-
     def get_state(self):
         # our current room
         buf = [self.player.current_room.name]
@@ -1131,25 +1116,22 @@ class World:
         if not s:
             return False
 
-        colon_pos = s.find(':')
-        if colon_pos == -1 or s[0] < '0' or s[0] > '9':
+        state_parts = s.split(':', 2)
+        if len(state_parts) != 3:
             return False
 
         try:
-            state_parts = s.split(':', 2)
             saved_suspend_version = int(state_parts[0])
-            saved_adventure_version = int(state_parts[1])
-            state_str = state_parts[2]
         except ValueError:
             return False
 
+        # Cannot handle suspend versions lower than 2
         if saved_suspend_version < 2:
-            state_str = self.old_decrypt(state_str)
-        else:
-            state_str = self.decrypt(state_str)
+            return False
 
-        # Cannot handle suspend versions lower than 1
-        if saved_suspend_version < 1:
+        try:
+            saved_adventure_version = int(state_parts[1])
+        except ValueError:
             return False
 
         # Cannot work with saved adventure versions higher than
@@ -1157,12 +1139,10 @@ class World:
         if saved_adventure_version > self.version:
             return False
 
-        if saved_suspend_version < 2:
-            if len(state_str) < 2:
-                return False
-        else:
-            if len(state_str) < 4:
-                return False
+        state_str = self.decrypt(state_parts[2])
+
+        if len(state_str) < 4:
+            return False
 
         num_commands_total_delta = 0
         num_commands_deltas = {}
@@ -1185,40 +1165,21 @@ class World:
                     return False
 
         checksum = 0
-        if saved_suspend_version < 2:
-            for i in range(2, len(state_str)):
-                checksum += ord(state_str[i])
+        for i in range(4, len(state_str)):
+            checksum += ord(state_str[i])
 
-            # Fix a problem in which the '`' character gets converted to ' '
-            # in the encryption/decryption process.
-            checksum_str = (chr(((checksum >> 6) & 0x3f) + 0x21) + chr((checksum & 0x3f) + 0x21)).replace('`', ' ')
+        checksum_str = ("%04x" % (checksum & 0xffff))
 
-            if checksum_str != state_str[:2]:
-                return False
+        if checksum_str != state_str[:4]:
+            return False
 
-            parts = state_str[2:].split(';')
+        parts = state_str[4:].split(';')
 
-            if len(self.rooms) != len(parts) - 3:
-                return False
+        if len(self.rooms) != len(parts) - 4:
+            return False
 
-            if len(self.commands) != len(parts[2]) + num_commands_total_delta:
-                return False
-        else:
-            for i in range(4, len(state_str)):
-                checksum += ord(state_str[i])
-
-            checksum_str = ("%04x" % (checksum & 0xffff))
-
-            if checksum_str != state_str[:4]:
-                return False
-
-            parts = state_str[4:].split(';')
-
-            if len(self.rooms) != len(parts) - 4:
-                return False
-
-            if len(self.commands) != len(parts[3]) + num_commands_total_delta:
-                return False
+        if len(self.commands) != len(parts[3]) + num_commands_total_delta:
+            return False
 
         part_num = 0
 
@@ -1248,23 +1209,19 @@ class World:
         # Recover the variables
         self.variables = {}
 
-        if saved_suspend_version >= 2:
-            if parts[part_num] != "":
-                saved_variables = parts[part_num].split(",")
-                for variable in saved_variables:
-                    equals_pos = variable.find("=")
-                    if equals_pos != -1:
-                        self.variables[variable[:equals_pos]] = variable[equals_pos + 1:]
+        if parts[part_num] != "":
+            saved_variables = parts[part_num].split(",")
+            for variable in saved_variables:
+                equals_pos = variable.find("=")
+                if equals_pos != -1:
+                    self.variables[variable[:equals_pos]] = variable[equals_pos + 1:]
 
-            part_num += 1
+        part_num += 1
 
         # Recover the state of the actions
         num_commands = len(self.commands)
         num_saved_commands = len(parts[part_num])
-        if saved_suspend_version < 2:
-            command_idx = num_commands - num_commands_total_delta - 1
-        else:
-            command_idx = 0
+        command_idx = 0
 
         i = 0
         while i < num_commands:
@@ -1275,10 +1232,7 @@ class World:
                     i += 1
                     continue
                 else:
-                    if saved_suspend_version < 2:
-                        command_idx += delta
-                    else:
-                        command_idx -= delta
+                    command_idx -= delta
 
             if command_idx >= 0 and command_idx < num_saved_commands:
                 command = self.commands[i]
@@ -1289,21 +1243,14 @@ class World:
                     elif parts[part_num][command_idx] != '^' and command.disabled:
                         command.disabled = False
 
-            if saved_suspend_version < 2:
-                command_idx -= 1
-            else:
-                command_idx += 1
-
+            command_idx += 1
             i += 1
 
         part_num += 1
 
         # Recover the room details
         room_idx = 0
-        if saved_suspend_version < 2:
-            ordered_room_list = reversed(self.room_list)
-        else:
-            ordered_room_list = self.room_list
+        ordered_room_list = self.room_list
 
         for room_name in ordered_room_list:
             room = self.rooms[room_name]

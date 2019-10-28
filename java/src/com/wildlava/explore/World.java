@@ -78,7 +78,7 @@ class World
 
       action_newline_inserted = false;
 
-      suspend_version = 2;
+      suspend_version = 3;
       suspend_mode = SUSPEND_TO_FILE;
       last_suspend = null;
    }
@@ -1425,6 +1425,12 @@ class World
 
       saved_suspend_version = Integer.parseInt(s.substring(0, colon_pos));
 
+      // Cannot handle suspend versions lower than 2
+      if (saved_suspend_version < 2)
+      {
+         return false;
+      }
+
       int next_colon_pos = s.indexOf(":", colon_pos + 1);
       if (next_colon_pos == -1)
       {
@@ -1433,21 +1439,6 @@ class World
 
       saved_adventure_version = Integer.parseInt(s.substring(colon_pos + 1, next_colon_pos));
 
-      if (saved_suspend_version < 2)
-      {
-         state_str = ExpUtil.oldDecrypt(s.substring(next_colon_pos + 1));
-      }
-      else
-      {
-         state_str = ExpUtil.decrypt(s.substring(next_colon_pos + 1));
-      }
-
-      // Cannot handle suspend versions lower than 1
-      if (saved_suspend_version < 1)
-      {
-         return false;
-      }
-
       // Cannot work with saved adventure versions higher than
       // version of adventure loaded.
       if (saved_adventure_version > version)
@@ -1455,19 +1446,11 @@ class World
          return false;
       }
 
-      if (saved_suspend_version < 2)
+      state_str = ExpUtil.decrypt(s.substring(next_colon_pos + 1));
+
+      if (state_str.length() < 4)
       {
-         if (state_str.length() < 2)
-         {
-            return false;
-         }
-      }
-      else
-      {
-         if (state_str.length() < 4)
-         {
-            return false;
-         }
+         return false;
       }
 
       int num_commands_total_delta = 0;
@@ -1506,74 +1489,28 @@ class World
       int checksum = 0;
       String[] parts;
 
-      if (saved_suspend_version < 2)
+      for (int i=4; i<state_str.length(); ++i)
       {
-         for (int i=2; i<state_str.length(); ++i)
-         {
-            checksum += (int) state_str.charAt(i);
-         }
-
-         checksum_high = ((checksum >> 6) & 0x3f) + 0x21;
-         checksum_low = (checksum & 0x3f) + 0x21;
-
-         // Fix a problem in which the '`' character gets converted to ' '
-         // in the encryption/decryption process.
-         if (checksum_high == 0x60)
-         {
-            checksum_high = 0x20;
-         }
-
-         if (checksum_low == 0x60)
-         {
-            checksum_low = 0x20;
-         }
-
-         StringBuffer checksum_str = new StringBuffer();
-         checksum_str.append((char) checksum_high);
-         checksum_str.append((char) checksum_low);
-
-         if (!checksum_str.toString().equals(state_str.substring(0, 2)))
-         {
-            return false;
-         }
-
-         parts = state_str.substring(2).split(";", -1);
-
-         if (rooms.size() != parts.length - 3)
-         {
-            return false;
-         }
-
-         if (commands.size() != parts[2].length() + num_commands_total_delta)
-         {
-            return false;
-         }
+         checksum += (int) state_str.charAt(i);
       }
-      else
+
+      String checksum_str = Integer.toHexString(0x10000 | (checksum & 0xffff)).substring(1);
+
+      if (!checksum_str.equals(state_str.substring(0, 4)))
       {
-         for (int i=4; i<state_str.length(); ++i)
-         {
-            checksum += (int) state_str.charAt(i);
-         }
+         return false;
+      }
 
-         String checksum_str = Integer.toHexString(0x10000 | (checksum & 0xffff)).substring(1);
+      parts = state_str.substring(4).split(";", -1);
 
-         if (!checksum_str.equals(state_str.substring(0, 4)))
-         {
-            return false;
-         }
+      if (rooms.size() != parts.length - 4)
+      {
+         return false;
+      }
 
-         parts = state_str.substring(4).split(";", -1);
-
-         if (rooms.size() != parts.length - 4)
-         {
-            return false;
-         }
-
-         if (commands.size() != parts[3].length() + num_commands_total_delta)
-         {
-            return false;
-         }
+      if (commands.size() != parts[3].length() + num_commands_total_delta)
+      {
+         return false;
       }
 
       int part_num = 0;
@@ -1620,24 +1557,21 @@ class World
       //
       variables = new HashMap<>();
 
-      if (saved_suspend_version >= 2)
+      if (!parts[part_num].equals(""))
       {
-         if (!parts[part_num].equals(""))
+         String[] saved_variables = parts[part_num].split(",", -1);
+         for (String variable : saved_variables)
          {
-            String[] saved_variables = parts[part_num].split(",", -1);
-            for (String variable : saved_variables)
+            int equals_pos = variable.indexOf("=");
+            if (equals_pos != -1)
             {
-               int equals_pos = variable.indexOf("=");
-               if (equals_pos != -1)
-               {
-                  variables.put(variable.substring(0, equals_pos),
-                                variable.substring(equals_pos + 1));
-               }
+               variables.put(variable.substring(0, equals_pos),
+                              variable.substring(equals_pos + 1));
             }
          }
-
-         part_num += 1;
       }
+
+      part_num += 1;
 
       //
       // Recover the state of the actions
@@ -1645,14 +1579,7 @@ class World
       int num_commands = commands.size();
       int num_saved_commands = parts[part_num].length();
       int command_idx;
-      if (saved_suspend_version < 2)
-      {
-         command_idx = num_commands - num_commands_total_delta - 1;
-      }
-      else
-      {
-         command_idx = 0;
-      }
+      command_idx = 0;
 
       for (int i=0; i<num_commands; i++)
       {
@@ -1661,20 +1588,12 @@ class World
             int delta = num_commands_deltas.get(i);
             if (delta > 0)
             {
-               //io.print("Skipping: " + commands.get(i).commands[0]);
                i += delta - 1;
                continue;
             }
             else
             {
-               if (saved_suspend_version < 2)
-               {
-                  command_idx += delta;
-               }
-               else
-               {
-                  command_idx -= delta;
-               }
+               command_idx -= delta;
             }
          }
 
@@ -1696,19 +1615,8 @@ class World
                }
             }
          }
-         //else
-         //{
-         //   io.print("Extra: " + commands.get(i).commands[0]);
-         //}
 
-         if (saved_suspend_version < 2)
-         {
-            command_idx--;
-         }
-         else
-         {
-            command_idx++;
-         }
+         command_idx++;
       }
 
       part_num += 1;
@@ -1718,15 +1626,7 @@ class World
       //
       int room_idx = 0;
       List<String> ordered_room_list;
-      if (saved_suspend_version < 2)
-      {
-         ordered_room_list = new ArrayList<>(room_list);
-         Collections.reverse(ordered_room_list);
-      }
-      else
-      {
-         ordered_room_list = room_list;
-      }
+      ordered_room_list = room_list;
 
       for (String room_name : ordered_room_list)
       {
