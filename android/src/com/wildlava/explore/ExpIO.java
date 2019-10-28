@@ -104,14 +104,11 @@ class ExpIO
          {
             cur_line = 0;
          }
-
-         //drawScreen();
       }
 
       if (new_line)
       {
          screen[cur_line] = "";
-         //drawScreen();
       }
       else
       {
@@ -128,14 +125,6 @@ class ExpIO
    {
       StringBuffer screen_buf = new StringBuffer(2048);
 
-      //try
-      //{
-      //   Thread.sleep(30);
-      //}
-      //catch (InterruptedException x)
-      //{
-      //}
-
       for (int i=cur_line-(SCREEN_LINES-1); i<=cur_line; i++)
       {
          screen_buf.append(screen[(i + SCREEN_LINES) % SCREEN_LINES]);
@@ -147,7 +136,6 @@ class ExpIO
       }
 
       output.setText(screen_buf.toString());
-      //output.refreshDrawableState();
    }
 
    String getScreen()
@@ -169,7 +157,6 @@ class ExpIO
 
    void setScreen(String screen)
    {
-      //clearScreen();
       doOutput(screen, false);
    }
 

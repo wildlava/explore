@@ -27,7 +27,6 @@ import android.view.WindowManager;
 import android.widget.TextView.OnEditorActionListener;
 import android.graphics.Typeface;
 import java.io.InputStreamReader;
-//import java.io.FileReader;
 import java.io.BufferedReader;
 
 public class Explore extends Activity
@@ -59,27 +58,15 @@ public class Explore extends Activity
       haunt_button = new Button(this);
 
       layout.setBackgroundColor(0xff222222);
+
       output_area.setBackgroundColor(0xff222222);
       output_area.setTextColor(0xff66ff66);
-      //output_area.setWidth(320);
-      //output_area.setHeight(320);
-      //output_area.setHeight(480);
-      //output_area.setLines(18);
-      //output_area.setLines(64);
-      //output_area.setGravity(0x50 | 0x80);
-      //output_area.setGravity(Gravity.BOTTOM | Gravity.CLIP_VERTICAL | Gravity.FILL);
       output_area.setGravity(Gravity.BOTTOM | Gravity.CLIP_VERTICAL);
-      //output_area.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT, 1));
       output_area.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.FILL_PARENT, LinearLayout.LayoutParams.FILL_PARENT, 1));
-
-      //output_area.setGravity(Gravity.BOTTOM);
-      //output_area.setTypeface(Typeface.MONOSPACE);
       output_area.setTextSize((float) 14.0);
-      //output_area.setTextSize((float) 9.0);
 
       input_area.setBackgroundColor(0xff333333);
       input_area.setTextColor(0xffcccccc);
-      //input_area.setLines(1);
       input_area.setSingleLine(true);
       input_area.setImeOptions(EditorInfo.IME_ACTION_GO);
       input_area.setWidth(150);
@@ -150,7 +137,6 @@ public class Explore extends Activity
       layout.setOrientation(LinearLayout.VERTICAL);
 
       control_layout.setMeasureAllChildren(false);
-      //button_layout.setOrientation(LinearLayout.HORIZONTAL);
       button_layout.setOrientation(LinearLayout.VERTICAL);
       button_layout.addView(cave_button);
       button_layout.addView(mine_button);
@@ -159,16 +145,9 @@ public class Explore extends Activity
       control_layout.addView(input_area);
       control_layout.addView(button_layout);
 
-      //output_area.setBackgroundColor(0xffff0000);
-      //control_layout.setBackgroundColor(0xff0000ff);
-
       layout.addView(output_area);
       layout.addView(control_layout);
 
-      //output_area.setWidth(output_area.getWidth());
-      //output_area.setHeight(output_area.getHeight());
-
-      //setContentView(R.layout.main);
       io = new ExpIO(this, output_area, input_area);
 
       if (savedInstanceState != null)
@@ -196,11 +175,6 @@ public class Explore extends Activity
 
       if (world == null)
       {
-         //input_area.setVisibility(View.GONE);
-         //input_area.setFocusable(false);
-         //input_area.setEnabled(false);
-         //button_layout.setVisibility(View.VISIBLE);
-
          io.print("Please select an adventure to start.");
          io.print("");
          io.print("If you are new to Explore and would like some tips, enter the \"help\" command after starting a game.");
