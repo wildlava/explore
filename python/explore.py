@@ -572,7 +572,7 @@ class World:
                    new_room.init_neighbor("D", params)
 
             elif line.startswith("ITEM DESC "):
-                item_name, item_desc = line[10:].split(":")
+                item_name, item_desc = line[10:].split(":", 1)
                 self.item_descs[item_name] = item_desc
 
             elif line.startswith("PLURAL ITEM "):
@@ -582,11 +582,11 @@ class World:
                 self.mass_items.append(line[10:])
 
             elif line.startswith("SAME ITEM "):
-                equal_item, existing_item = line[10:].split("=")
+                equal_item, existing_item = line[10:].split("=", 1)
                 self.same_items[equal_item] = existing_item
 
             elif line.startswith("OLD ITEM "):
-                old_item, new_item = line[9:].split("=")
+                old_item, new_item = line[9:].split("=", 1)
                 self.old_items[old_item] = new_item
 
             elif line.startswith("OLD VERSION "):
