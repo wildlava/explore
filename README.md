@@ -69,15 +69,10 @@ a mystical inspiration I would say.
 De is no longer with us, but these games live on for me as a great memory
 of our friendship, and I hope that they allow a little piece of him to endure.
 
-Years later I dug up the old BASIC program and rewrote it in C (note that the
-C version and the BASIC version are no longer being maintained, so future
-adventure game files or newer revisions of the old ones won't work with the
-old code).
-
-A few years after this I rewrote the whole system in Java as a way to learn
+Years later, I dug up the old BASIC program and rewrote it in C.
+A few years after this, I rewrote the whole system in Java as a way to learn
 the language. And years after that, I rewrote the whole thing in Python and
-later in Ruby.
-
+later in Ruby. Currently, only the Python version is being maintained.
 
 ### To do ###
 
@@ -88,11 +83,6 @@ later in Ruby.
   (or there is an error in the adventure files with "OLD VERSION").
   Behavior in Android app has been improved if this (impossible?) case
   actually happens, but removing this case completely would be preferable.
-
-* Handle change in fixed objects when alternate room descriptions or
-  custom item descriptions are used. An example is the ruby in quartz
-  in "castle": the quartz slab should be a fixed object initially.
-  Other examples are in "haunt".
 
 
 ### Resolved questions ###
@@ -132,7 +122,7 @@ later in Ruby.
 * If commands typed too fast, they appear before prompt (Linux issue).
 
 
-### Java issues ###
+### Java issues (not maintained beyond commit d58e753) ###
 
 * Consider changing public member variables to package private.
 
@@ -160,13 +150,6 @@ later in Ruby.
   Also, it gets really slow when this gets too large!
 
 * Can't cut/paste in applet in order to suspend/resume.
-
-
-### Python issues ###
-
-* Some cases exist where checking first character in empty string,
-  if improper syntax used, could cause an exception (e.g. if string[0] == "+")
-  rather than using ".startswith()".
 
 
 ### C issues (no longer maintained) ###
