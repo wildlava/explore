@@ -30,6 +30,7 @@ DESC=You are in the Priest's chamber.  There are many sacred objects\and prayer 
 ALT_DESC=Imbedded in a quartz slab is a sparkling ruby!
 DESC_CONTROL=RC,R
 FIXED_OBJECTS=CHAMBER,OBJECT,OBJECTS,BOOK,BOOKS,CURTAIN
+ALT_FIXED_OBJECTS=RUBY,QUARTZ,SLAB
 SOUTH=3,1,0
 COMMAND=WAVE STAFF,SWING STAFF,MOVE STAFF:WIZARD'S STAFF
 ACTION=+RUBY;*+:The quartz disappears and the ruby falls to the ground.
