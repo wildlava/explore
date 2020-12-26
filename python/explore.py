@@ -16,10 +16,12 @@ import re
 trs_compat = False
 use_fixed_objects = False
 
+VOWELS = {'a', 'e', 'i', 'o', 'u'}
+
 def a_or_an(s):
     s_lower = s.lower()
 
-    if s_lower[0] in ['a', 'e', 'i', 'o', 'u']:
+    if s_lower[0] in VOWELS:
         return "an"
     else:
         return "a"
