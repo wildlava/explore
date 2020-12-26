@@ -82,7 +82,6 @@ COMMAND=TAKE UNDERGARMENTS,TAKE UNDERWEAR,TAKE CLOTHES
 ACTION=:Now that wouldn't be too nice, now would it???
 
 ROOM=2,3,0
-DESC=-
 ACTION=There is a couple fucking here.  The man sees you, and beats\the holy $H!T outa you for spying on them, chunks your battered\body over some shrubbery, and continues with Laura where he\left off!!!!
 
 ROOM=3,3,0
@@ -104,7 +103,6 @@ COMMAND=N,NORTH
 ACTION=/3,3,0
 
 ROOM=3,4,0
-DESC=-
 ACTION=/2,4,0
 
 ROOM=0,0,1

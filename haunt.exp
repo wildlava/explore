@@ -216,7 +216,6 @@ COMMAND=KILL GHOST,ATTACK GHOST,HIT GHOST,SMASH GHOST
 ACTION=:There's not one here.
 
 ROOM=BALCONY
-DESC=-
 COMMAND=$has_read_rusty_sign==true&-RUSTY SIGN
 ACTION=!You walk through a door and find yourself on a balcony. You climb down a tree and escape to safety! Congratulations! You made it!
 ACTION=You fall through a trap door to your death!
