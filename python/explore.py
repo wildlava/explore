@@ -389,8 +389,8 @@ class World:
         self.variables = {}
         self.item_descs = {}
 
-        self.plural_items = []
-        self.mass_items = []
+        self.plural_items = set()
+        self.mass_items = set()
 
         self.same_items = {}
         self.old_items = {}
@@ -576,10 +576,10 @@ class World:
                 self.item_descs[item_name] = item_desc
 
             elif line.startswith("PLURAL ITEM "):
-                self.plural_items.append(line[12:])
+                self.plural_items.add(line[12:])
 
             elif line.startswith("MASS ITEM "):
-                self.mass_items.append(line[10:])
+                self.mass_items.add(line[10:])
 
             elif line.startswith("SAME ITEM "):
                 equal_item, existing_item = line[10:].split("=", 1)
