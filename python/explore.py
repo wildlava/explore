@@ -173,8 +173,8 @@ class Room(ItemContainer):
         self.desc_ctrl = None
         self.desc = None
         self.desc_alt = None
-        self.fixed_objects = []
-        self.fixed_objects_alt = []
+        self.fixed_objects = set()
+        self.fixed_objects_alt = set()
         self.neighbors = [None, None, None, None, None, None]
         self.original_neighbors = [None, None, None, None, None, None]
 
@@ -535,12 +535,12 @@ class World:
 
             elif keyword == "FIXED_OBJECTS":
                 if new_room != None:
-                   new_room.fixed_objects = params.split(",")
+                   new_room.fixed_objects = set(params.split(","))
                    use_fixed_objects = True
 
             elif keyword == "ALT_FIXED_OBJECTS":
                 if new_room != None:
-                   new_room.fixed_objects_alt = params.split(",")
+                   new_room.fixed_objects_alt = set(params.split(","))
                    use_fixed_objects = True
 
             elif keyword == "CONTENTS":
