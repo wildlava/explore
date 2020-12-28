@@ -1096,8 +1096,8 @@ class World:
             else:
                 room_data_buf = ["."]
 
-            for dir in DIRECTIONS:
-                room_data_buf.append(room.neighbor_save_string(dir))
+            for direction in DIRECTIONS:
+                room_data_buf.append(room.neighbor_save_string(direction))
 
             # the items in the room
             room_data_buf.append(','.join(room.items))
@@ -1314,14 +1314,14 @@ class World:
                         if pos != -1:
                             room_code[i] = room_code[i][:pos]
 
-                dir = DIRECTIONS[i - 1]
+                direction = DIRECTIONS[i - 1]
 
                 if room_code[i] == "":
-                    room.revert_neighbor(dir)
+                    room.revert_neighbor(direction)
                 elif room_code[i][0] == "^":
-                    room.block_way(dir)
+                    room.block_way(direction)
                 else:
-                    room.make_way(dir, room_code[i])
+                    room.make_way(direction, room_code[i])
 
             # now the contents
             if room_code[7] == "":
