@@ -272,7 +272,7 @@ class Room(ItemContainer):
 
     def has_fixed_object(self, item):
         ctrl = self.active_ctrl()
-        return item in ((self.fixed_objects if ctrl.find("R") != -1 else []) +
+        return item in ((self.fixed_objects if ctrl.find("R") != -1 else []) |
                         (self.fixed_objects_alt if ctrl.find("C") != -1 else []))
 
 
